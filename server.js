@@ -7,6 +7,7 @@ const multer = require("multer"); // For file upload
 // Import routes
 const userRoutes = require("./routes/user.js");
 const productRoutes = require("./routes/product.js");
+const cartRoutes = require("./routes/cart.js");
 
 const app = express();
 const port = 3000;
@@ -52,6 +53,7 @@ app.get("/", (req, res) => {
 // Using Routes
 app.use(userRoutes); // Add user routes
 app.use(productRoutes); // Add product routes
+app.use(cartRoutes); // Ad cart routes
 
 // Start the server
 app.listen(port, () => {

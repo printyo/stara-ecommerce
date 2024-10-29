@@ -27,4 +27,20 @@ router.get("/category", (req, res) => {
     });
 });
 
+// Get single Product to Product Page
+router.get("/product/:id", (req, res) => {
+    const productID = req.params.id;
+    const sql =
+        "SELECT product.*, category.name AS categoryName, category.description AS categoryDescription FROM product JOIN category ON product.categoryID = category.ID WHERE product.ID = ?";
+    db.query(sql, [productID], (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            // Make sure that it returns data
+            res.json(results[0]);
+        } else {
+            res.status(404).send("Product not found");
+        }
+    });
+});
+
 module.exports = router;
