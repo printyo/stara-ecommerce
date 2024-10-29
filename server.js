@@ -4,6 +4,8 @@ const mysql = require("mysql2");
 const session = require("express-session"); // For session management
 const multer = require("multer"); // For file upload
 
+const userRoutes = require("./routes/user.js"); // Import user routes
+
 const app = express();
 const port = 3000;
 
@@ -44,6 +46,9 @@ app.use("/uploads", express.static("uploads")); // Serve uploaded files
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/home.html"); // Need to send a file to user, __dirname is a univseral variable to find the directory of this app
 });
+
+// Using Routes
+app.use(userRoutes); // Add user routes
 
 // Start the server
 app.listen(port, () => {
