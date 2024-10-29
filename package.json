@@ -5,7 +5,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build:css": "npx tailwindcss -i ./public/css/tailwindcss.css -o ./public/css/styles.css --watch",
-        "run:watch": "nodemon run --watch . server.js"
+        "start": "nodemon run --watch . server.js & npm run build:css"
     },
     "keywords": [],
     "author": "",
