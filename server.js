@@ -4,7 +4,9 @@ const mysql = require("mysql2");
 const session = require("express-session"); // For session management
 const multer = require("multer"); // For file upload
 
-const userRoutes = require("./routes/user.js"); // Import user routes
+// Import routes
+const userRoutes = require("./routes/user.js");
+const productRoutes = require("./routes/product.js");
 
 const app = express();
 const port = 3000;
@@ -19,7 +21,7 @@ app.use(express.static("public")); // Serve static files from 'public' directory
 // Session middleware (express-session (keeps cookies and info during whole session))
 app.use(
     session({
-        secret: "keyboard cat", // Copied from document
+        secret: "keyboard cat", // Copied from documentation
         resave: false,
         saveUninitialized: true,
     })
@@ -49,6 +51,7 @@ app.get("/", (req, res) => {
 
 // Using Routes
 app.use(userRoutes); // Add user routes
+app.use(productRoutes); // Add product routes
 
 // Start the server
 app.listen(port, () => {
