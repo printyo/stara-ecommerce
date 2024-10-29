@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("./db.js"); // Adjust the path to where your database connection is
+const db = require("./db.js");
 
 // Handle signup
 router.post("/signup", (req, res) => {
@@ -32,6 +32,12 @@ router.post("/login", (req, res) => {
             res.send("Invalid email or password");
         }
     });
+});
+
+// Handle login for Guest
+router.post("/login-guest", (req, res) => {
+    delete req.session.user;
+    res.redirect("/home.html");
 });
 
 module.exports = router;
