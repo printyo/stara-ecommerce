@@ -44,7 +44,7 @@ app.use("/uploads", express.static("uploads")); // Serve uploaded files
 
 // Landing page
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/login.html"); // Need to send a file to user, __dirname is a univseral variable to find the directory of this app
+    res.sendFile(__dirname + "/public/home.html"); // Need to send a file to user, __dirname is a univseral variable to find the directory of this app
 });
 
 // Using Routes
