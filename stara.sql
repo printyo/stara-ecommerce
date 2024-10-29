@@ -67,7 +67,7 @@ CREATE TABLE `orderDetails` (
   `orderID` int(11) NOT NULL,
   `Total` decimal(11,2) NOT NULL,
   `AddressID` int(11) NOT NULL,
-  `UserID` int(11) NOT NULL
+  `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -133,12 +133,12 @@ CREATE TABLE `product` (
 
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
-  `FirstName` varchar(30) NOT NULL,
-  `LastName` varchar(30) NOT NULL,
-  `Email` varchar(50) NOT NULL,
-  `Password` varchar(50) NOT NULL,
-  `Role` tinyint(4) NOT NULL COMMENT '1=customer,2=admin,3=developer',
-  `PhoneNumber` varchar(13) NOT NULL
+  `firstName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `role` tinyint(4) NOT NULL COMMENT '1=customer,2=admin,3=developer',
+  `phoneNumber` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -149,13 +149,13 @@ CREATE TABLE `user` (
 
 CREATE TABLE `userAddress` (
   `addressID` int(11) NOT NULL,
-  `AddressLine1` varchar(255) NOT NULL,
-  `AddressLine2` varchar(255) NOT NULL,
-  `Postcode` char(5) NOT NULL COMMENT 'must be 5 number long',
-  `City` varchar(20) NOT NULL,
-  `PhoneNumber` varchar(13) NOT NULL,
+  `addressLine1` varchar(255) NOT NULL,
+  `addressLine2` varchar(255) NOT NULL,
+  `postcode` char(5) NOT NULL COMMENT 'must be 5 number long',
+  `city` varchar(20) NOT NULL,
+  `phoneNumber` varchar(13) NOT NULL,
   `isActive` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0=inactive,1=active',
-  `UserID` int(11) NOT NULL
+  `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -187,8 +187,8 @@ ALTER TABLE `devChat`
 --
 ALTER TABLE `orderDetails`
   ADD PRIMARY KEY (`orderID`),
-  ADD KEY `AddressID` (`AddressID`),
-  ADD KEY `UserID` (`UserID`);
+  ADD KEY `addressID` (`addressID`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `orderItems`
@@ -222,16 +222,14 @@ ALTER TABLE `product`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`userID`),
-  ADD UNIQUE KEY `Email` (`Email`),
-  ADD UNIQUE KEY `PhoneNumber` (`PhoneNumber`);
+  ADD PRIMARY KEY (`userID`);
 
 --
 -- Indexes for table `userAddress`
 --
 ALTER TABLE `userAddress`
   ADD PRIMARY KEY (`addressID`),
-  ADD KEY `UserID` (`UserID`);
+  ADD KEY `userID` (`userID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -306,8 +304,8 @@ ALTER TABLE `devChat`
 -- Constraints for table `orderDetails`
 --
 ALTER TABLE `orderDetails`
-  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`userID`),
-  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`AddressID`) REFERENCES `userAddress` (`addressID`);
+  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
+  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`addressID`) REFERENCES `userAddress` (`addressID`);
 
 --
 -- Constraints for table `orderItems`
@@ -338,7 +336,7 @@ ALTER TABLE `product`
 -- Constraints for table `userAddress`
 --
 ALTER TABLE `userAddress`
-  ADD CONSTRAINT `useraddress_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`userID`);
+  ADD CONSTRAINT `useraddress_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
