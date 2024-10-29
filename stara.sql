@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 27, 2024 at 05:27 PM
+-- Generation Time: Oct 29, 2024 at 10:17 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -137,7 +137,7 @@ CREATE TABLE `user` (
   `lastName` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `role` tinyint(4) NOT NULL COMMENT '1=customer,2=admin,3=developer',
+  `role` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=customer,2=admin,3=developer',
   `phoneNumber` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -187,7 +187,7 @@ ALTER TABLE `devChat`
 --
 ALTER TABLE `orderDetails`
   ADD PRIMARY KEY (`orderID`),
-  ADD KEY `addressID` (`addressID`),
+  ADD KEY `addressID` (`AddressID`),
   ADD KEY `userID` (`userID`);
 
 --
@@ -305,7 +305,7 @@ ALTER TABLE `devChat`
 --
 ALTER TABLE `orderDetails`
   ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`addressID`) REFERENCES `userAddress` (`addressID`);
+  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`AddressID`) REFERENCES `userAddress` (`addressID`);
 
 --
 -- Constraints for table `orderItems`
