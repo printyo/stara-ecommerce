@@ -38,7 +38,6 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
         }
 
         const orderID = results.insertId; // InsertID is a value returned from INSERT query when you auto-increment PK
-
         // 2. Copy cart into orderItems
         const orderItems = cartItems.map((item) => [
             // Map transform array into new array / forEach executes on each item but does not create new array
