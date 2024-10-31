@@ -103,9 +103,82 @@ router.get("/user", (req, res) => {
 });
 
 // Display all addresses from user (account Page)
+router.get("/user/addresses", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    const userID = req.session.user.userID;
+
+    const sql = "SELECT * FROM useraddress WHERE userID = ? AND isActive = 1";
+
+    db.query(sql, [userID], (err, results) => {
+        if (err) {
+            console.error(error);
+            return res
+                .status(500)
+                .json({ error: "Database error while finding user" });
+        }
+        res.json(results);
+    });
+});
 
 // Add new Address for User (Account Page)
+router.post("/user/address", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
 
-// Delete address  for User (Account Page)
+    const userID = req.session.user.userID;
+    const { addressLine1, addressLine2, postcode, city, phoneNumber } =
+        req.body;
+
+    const sql =
+        "INSERT INTO userAddress (addressLine1, addressLine2, postcode, city, phoneNumber, userID) VALUES (?, ?, ?, ?, ?, ?)";
+    db.query(
+        sql,
+        [addressLine1, addressLine2, postcode, city, phoneNumber, userID],
+        (err, results) => {
+            if (err) {
+                console.error(err); //output error message
+                return res
+                    .status(500)
+                    .json({ error: "Database error while inserting address" });
+            }
+            res.status(201).json({ message: "Address added successfully" }); // 201 = Created
+        }
+    );
+});
+
+// Delete address  for User (Account Page) We do not delete the address because some orders may still require it
+router.patch("/user/address/:id", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    const userID = req.session.user.userID;
+    const addressID = req.params.id;
+
+    // userID is not necessary but it is just another security measure
+    const sql =
+        "UPDATE userAddress SET isActive = 0 WHERE addressID = ? AND userID = ?";
+    db.query(sql, [addressID, userID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error in updating isActive for userAddress",
+            }); // 500 = Internal Server Error
+        }
+
+        if (results.affectedRows > 0) {
+            res.status(200).json({ message: "userAddress has been removed" });
+        } else {
+            res.status(404).json({
+                message:
+                    "Address not found or Address already inActive or UserID and AddressID doesn't match",
+            });
+        }
+    });
+});
 
 module.exports = router;
