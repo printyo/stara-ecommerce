@@ -45,7 +45,7 @@ router.post("/cart", (req, res) => {
     });
 });
 
-// Geting cart products (in the Cart Page)
+// Geting user's cart  (in the Cart Page and Checkout Page)
 router.get("/cart", (req, res) => {
     const userID = req.session.user.userID; // Get user ID from session
 
