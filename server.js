@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser"); // For sending data between server and html
 const mysql = require("mysql2");
 const session = require("express-session"); // For session management
-const multer = require("multer"); // For file upload
 
 // Import routes
 const userRoutes = require("./routes/user.js");
@@ -28,23 +27,6 @@ app.use(
         saveUninitialized: true,
     })
 );
-
-// Set up storage for uploaded files
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/");
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // Save file with a unique name
-    },
-});
-
-const upload = multer({ storage: storage });
-
-// Middleware to parse incoming requests
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static("uploads")); // Serve uploaded files
 
 // Landing page
 app.get("/", (req, res) => {
