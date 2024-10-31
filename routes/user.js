@@ -113,7 +113,7 @@ router.get("/user", (req, res) => {
     });
 });
 
-// Display all addresses from user (account Page)
+// Display all addresses from user (Account Page and Checkout Page)
 router.get("/user/addresses", (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
