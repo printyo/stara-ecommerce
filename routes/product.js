@@ -33,12 +33,15 @@ router.get("/product/:id", (req, res) => {
     const sql =
         "SELECT product.*, category.name AS categoryName, category.description AS categoryDescription FROM product JOIN category ON product.categoryID = category.ID WHERE product.ID = ?";
     db.query(sql, [productID], (err, results) => {
-        if (err) throw err;
+        if (err) {
+            console.error(error);
+            return res.status(500).json({ error: "Database query error" }); // 500 Internal Server Error
+        }
         if (results.length > 0) {
             // Make sure that it returns data
             res.json(results[0]);
         } else {
-            res.status(404).send("Product not found");
+            res.status(404).send("Product not found"); // 404 = Not Found
         }
     });
 });
