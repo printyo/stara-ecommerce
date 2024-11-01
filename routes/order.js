@@ -145,4 +145,62 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
         });
     });
 });
+
+// Get Order Details (Order Page)
+router.get("/orders", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    const userID = req.session.user.userID;
+
+    const sql =
+        "SELECT orderDetails.*, userAddress.* FROM orderDetails JOIN userAddress ON orderDetails.addressID = userAddress.addressID WHERE orderDetails.userID = ?";
+    db.query(sql, [userID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while selecting orderDetails/userAddress",
+            });
+        }
+
+        res.json(results);
+    });
+});
+
+// Get All Order Items from OrderID (Order Page) Call this function inside the fetch("/orders") > forEach(...)
+router.get("/orderitems/:orderID", (req, res) => {
+    const orderID = req.params.orderID;
+
+    const sql =
+        "SELECT orderItems.*, product.name, product.price FROM orderItems JOIN product ON orderItems.productID = product.productID WHERE orderItems.orderID = ?";
+    db.query(sql, [orderID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while selecting from orderItems/product",
+            });
+        }
+
+        res.json(results);
+    });
+});
+
+// Get Order Status History (Order Page) Call this function inside the fetch("/orders") > forEach(...)
+router.get("/orderstatus/:orderID", (req, res) => {
+    const orderID = req.params.orderID;
+
+    const sql = "SELECT * FROM orderStatusHistory WHERE orderID = ?";
+    db.query(sql, [orderID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while selecting from orderStatusHistory",
+            });
+        }
+
+        res.json(results);
+    });
+});
+
 module.exports = router;
