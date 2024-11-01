@@ -8,6 +8,7 @@ const userRoutes = require("./routes/user.js");
 const productRoutes = require("./routes/product.js");
 const cartRoutes = require("./routes/cart.js");
 const orderRoutes = require("./routes/order.js");
+const adminRoutes = require("./routes/admin.js");
 
 const app = express();
 const port = 3000;
@@ -40,7 +41,8 @@ app.get("/", (req, res) => {
 app.use(userRoutes); // Add user routes
 app.use(productRoutes); // Add product routes
 app.use(cartRoutes); // Ad cart routes
-app.use(orderRoutes); // Add cart routes
+app.use(orderRoutes); // Add order routes
+app.use(adminRoutes); // Add admin routes
 
 // Start the server
 app.listen(port, () => {
