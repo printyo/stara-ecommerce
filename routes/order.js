@@ -167,4 +167,22 @@ router.get("/orders", (req, res) => {
         res.json(results);
     });
 });
+
+// Get Order Status History (Order Page) Call this function inside the fetch("/orders") > forEach(...)
+router.get("/orderstatus/:orderID", (req, res) => {
+    const orderID = req.params.orderID;
+
+    const sql = "SELECT * FROM orderStatusHistory WHERE orderID = ?";
+    db.query(sql, [orderID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while selecting from orderStatusHistory",
+            });
+        }
+
+        res.json(results);
+    });
+});
+
 module.exports = router;
