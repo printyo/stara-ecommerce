@@ -38,12 +38,111 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
         }
 
         const orderID = results.insertId; // InsertID is a value returned from INSERT query when you auto-increment PK
-        // TODO:
+
         // 2. Copy cart into orderItems
-        // 3. Update Product Stock
-        // 4. Delete Cart
-        // 5. Create new orderStatusHistory
-        // 6. Create new Payment with file
+        const orderItems = cartItems.map((item) => [
+            // Map transform array into new array / forEach executes on each item but does not create new array
+            orderID,
+            item.productID,
+            item.stock,
+        ]);
+        // Eg.
+        // [
+        //     { productID: 1, quantity: 2 },
+        //     { productID: 2, quantity: 1 }
+        // ]
+        // will turn to
+        // [
+        //     [13, 1, 2],
+        //     [13, 2, 1]
+        // ]
+
+        const insertSQLorderItems =
+            "INSERT INTO orderItems (orderID, productID, quantity) VALUES ?";
+        db.query(insertSQLorderItems, orderItems, (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    error: "Database error while inserting into orderItems",
+                });
+            }
+
+            // 3. Update Product Stock
+            const updateStock = orderItems.map((item) => {
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+                return new Promise((resolve, reject) => {
+                    const updateSQLstock =
+                        "UPDATE products SET stock = stock - ? WHERE productID = ?";
+
+                    db.query(updateSQLstock, [item[2], item[1]], (err) => {
+                        // item[2] = stock, item[1] = productID, item[0] = orderID (we don't use)
+                        if (err) {
+                            console.error(err);
+                            return reject(err);
+                        }
+                    });
+                });
+            });
+
+            // Promise.all()
+            // Takes an iterable of promises as input and returns a single Promise.
+            // This returned promise fulfills when all of the input's promises fulfill (including when an empty iterable is passed),
+            // with an array of the fulfillment values. It rejects when any of the input's promises reject, with this first rejection reason.
+            Promise.all(updateStock)
+                .then(() => {
+                    // Check if completed all update
+
+                    // 4. Delete Cart
+                    const deleteSQLcart = "DELETE FROM cart WHERE userID = ?";
+                    db.query(deleteSQLcart, [userID], (err) => {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).json({
+                                error: "Database error while deleting cart",
+                            });
+                        }
+
+                        // 5. Create new orderStatusHistory
+                        const insertSQLstatus =
+                            "INSERT INTO orderStatusHistory (orderID) VALUES (?)";
+
+                        db.query(insertSQLstatus, [orderID], (err, results) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({
+                                    error: "Database error while inserting into orderStatusHistory",
+                                });
+                            }
+
+                            // 6. Create new Payment with file
+                            const insertSQLpayment =
+                                "INSERT INTO payment (fileURL, orderID) VALUES (?, ?)";
+                            db.query(
+                                insertSQLpayment,
+                                [receiptPath, orderID],
+                                (err, results) => {
+                                    if (err) {
+                                        console.error(err);
+                                        return res.status(500).json({
+                                            error: "Database error while inserting into payment",
+                                        });
+                                    }
+                                    res.status(201).json({
+                                        message:
+                                            "Order have been placed successfully",
+                                    });
+                                }
+                            );
+                        });
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                    return res
+                        .status(500)
+                        .json({ error: "Failed to update product quantities" });
+                });
+        });
     });
 });
 module.exports = router;
