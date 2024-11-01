@@ -155,12 +155,30 @@ router.get("/orders", (req, res) => {
     const userID = req.session.user.userID;
 
     const sql =
-        "SELECT orderDetails.*, address.* FROM orderDetails JOIN userAddress ON orderDetails.addressID = userAddress.addressID WHERE orderDetails.userID = ?";
+        "SELECT orderDetails.*, userAddress.* FROM orderDetails JOIN userAddress ON orderDetails.addressID = userAddress.addressID WHERE orderDetails.userID = ?";
     db.query(sql, [userID], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).json({
                 error: "Database error while selecting orderDetails/userAddress",
+            });
+        }
+
+        res.json(results);
+    });
+});
+
+// Get All Order Items from OrderID (Order Page) Call this function inside the fetch("/orders") > forEach(...)
+router.get("/orderitems/:orderID", (req, res) => {
+    const orderID = req.params.orderID;
+
+    const sql =
+        "SELECT orderItems.*, product.name, product.price FROM orderItems JOIN product ON orderItems.productID = product.productID WHERE orderItems.orderID = ?";
+    db.query(sql, [orderID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while selecting from orderItems/product",
             });
         }
 
