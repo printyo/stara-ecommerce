@@ -145,4 +145,26 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
         });
     });
 });
+
+// Get Order Details (Order Page)
+router.get("/orders", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    const userID = req.session.user.userID;
+
+    const sql =
+        "SELECT orderDetails.*, address.* FROM orderDetails JOIN userAddress ON orderDetails.addressID = userAddress.addressID WHERE orderDetails.userID = ?";
+    db.query(sql, [userID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while selecting orderDetails/userAddress",
+            });
+        }
+
+        res.json(results);
+    });
+});
 module.exports = router;
