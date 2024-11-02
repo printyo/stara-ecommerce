@@ -94,7 +94,6 @@ router.get("/admindev/chat", (req, res) => {
         res.json(results);
     });
 });
-
 // POST new Product
 router.post("/admin/product/add", (req, res) => {
     if (!req.session.user || req.session.user.role != 2) {
