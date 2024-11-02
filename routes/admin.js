@@ -46,20 +46,37 @@ router.post("/admin/status", (req, res) => {
 
     const insertSql =
         "INSERT INTO orderStatusHistory (status, remark, orderID) VALUES (?, ?, ?)";
-    db.query(insertSql, [orderID, status, remark], (err) => {
+    db.query(insertSql, [orderID, status, remark], (err, results) => {
         if (err) {
             console.error(err);
-            return res
-                .status(500)
-                .json({
-                    error: "Database error while inserting into orderStatusHistory",
-                });
+            return res.status(500).json({
+                error: "Database error while inserting into orderStatusHistory",
+            });
         }
-        res.status(201).send("Order status updated successfully.");
+        res.status(201).json({ message: "Order status updated successfully." }); // 201 = Created
     });
 });
 
 // POST devChat (only allow role = 2 or 3)
+router.post("/admindev/chat", (req, res) => {
+    if (!req.session.user || req.session.user.role == 1) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const userID = req.session.user.userID;
+    const chat = req.body.chat;
+
+    sql = "INSERT INTO devChat (chat, userID) VALUE (?, ?)";
+    db.query(sql, [chat, userID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while inserting into devChat",
+            });
+        }
+        res.status(201).json({ message: "Chat added successfully" }); // 201 = Created
+    });
+});
 // GET all devChat (only allow role = 2 or 3)
 
 // POST new Product
