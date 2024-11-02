@@ -78,7 +78,22 @@ router.post("/admindev/chat", (req, res) => {
     });
 });
 // GET all devChat (only allow role = 2 or 3)
+router.get("/admindev/chat", (req, res) => {
+    if (!req.session.user || req.session.user.role == 1) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
 
+    sql = "SELECT * FROM devChat";
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error while selecting from devChat",
+            });
+        }
+        res.json(results);
+    });
+});
 // POST new Product
 
 // GET Product Information When searched via name
