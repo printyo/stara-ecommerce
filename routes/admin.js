@@ -4,9 +4,9 @@ const db = require("./db.js");
 
 // Get Order Details w/ Payment image (ALL orders - admin privileges) (maybe get only status that isn't 6=payment failed)
 router.get("/admin/orders", (req, res) => {
-    // if (!req.session.user || req.session.user.role != 2) {
-    //     return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
-    // }
+    if (!req.session.user || req.session.user.role != 2) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
 
     // Join 4 tables - orderDetails, Payment, userAddress, (and a modified orderStatusHistory that gets the highest value of status)
     const sql = `SELECT o.*, p.fileURL, ad.*  
@@ -35,7 +35,29 @@ router.get("/admin/orders", (req, res) => {
 
 // Get Order Items (reuse? from order.js?)
 // Get Order Status History (reuse? from order.js?)
+
 // POST orderStatusHistory
+router.post("/admin/status", (req, res) => {
+    if (!req.session.user || req.session.user.role != 2) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const { orderID, status, remark } = req.body;
+
+    const insertSql =
+        "INSERT INTO orderStatusHistory (status, remark, orderID) VALUES (?, ?, ?)";
+    db.query(insertSql, [orderID, status, remark], (err) => {
+        if (err) {
+            console.error(err);
+            return res
+                .status(500)
+                .json({
+                    error: "Database error while inserting into orderStatusHistory",
+                });
+        }
+        res.status(201).send("Order status updated successfully.");
+    });
+});
 
 // POST devChat (only allow role = 2 or 3)
 // GET all devChat (only allow role = 2 or 3)
