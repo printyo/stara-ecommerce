@@ -77,6 +77,7 @@ router.post("/admindev/chat", (req, res) => {
         res.status(201).json({ message: "Chat added successfully" }); // 201 = Created
     });
 });
+
 // GET all devChat (only allow role = 2 or 3)
 router.get("/admindev/chat", (req, res) => {
     if (!req.session.user || req.session.user.role == 1) {
@@ -94,6 +95,7 @@ router.get("/admindev/chat", (req, res) => {
         res.json(results);
     });
 });
+
 // POST new Product
 router.post("/admin/product/add", (req, res) => {
     if (!req.session.user || req.session.user.role != 2) {
