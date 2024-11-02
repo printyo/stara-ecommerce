@@ -77,6 +77,7 @@ router.post("/admindev/chat", (req, res) => {
         res.status(201).json({ message: "Chat added successfully" }); // 201 = Created
     });
 });
+
 // GET all devChat (only allow role = 2 or 3)
 router.get("/admindev/chat", (req, res) => {
     if (!req.session.user || req.session.user.role == 1) {
@@ -94,16 +95,43 @@ router.get("/admindev/chat", (req, res) => {
         res.json(results);
     });
 });
+
 // POST new Product
+router.post("/admin/product/add", (req, res) => {
+    if (!req.session.user || req.session.user.role != 2) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const { name, description, stock, price, imageURL, categoryID } = req.body;
+    //Fetch categoryID using same method as browse page.
+    const sql =
+        "INSERT INTO product (name, description, stock, price, imageURL, categoryID) VALUES (?, ?, ?, ?, ?, ?)";
+    db.query(
+        sql,
+        [name, description, stock, price, imageURL, categoryID],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    error: "Database error while inserting into products",
+                });
+            }
+            res.status(201).json({ message: "Product added successfully" });
+        }
+    );
+});
 
 // GET Product Information When searched via name
+
 // PATCH PRODUCT INFORMATION
 
 // DELETE PRODUCT VIA NAME
 
 // GET ALL USERS (CUSTOMER ONLY)
+
 // PATCH UPDATE ROLE = 2
 
 // GET ALL USERS (ADMIN ONLY)
+
 // PATCH UPDATE ROLE = 3
 module.exports = router;
