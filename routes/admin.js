@@ -122,6 +122,25 @@ router.post("/admin/product/add", (req, res) => {
 });
 
 // GET Product Information When searched via name
+router.get("/admin/product/get", (req, res) => {
+    if (!req.session.user || req.session.user.role != 2) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const productName = req.body.productName;
+
+    const sql = "SELECT * FROM product WHERE name LIKE ?";
+    db.query(sql, [`%${productName}%`], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res
+                .status(500)
+                .json({ error: "Database error while selecting producst" });
+        }
+
+        res.json(results[0]);
+    });
+});
 
 // PATCH PRODUCT INFORMATION
 
