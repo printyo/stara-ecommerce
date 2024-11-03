@@ -172,8 +172,26 @@ router.patch("/admin/product/patch", (req, res) => {
 });
 
 // DELETE PRODUCT VIA NAME
+// TODO:
 
 // GET ALL USERS (CUSTOMER ONLY)
+router.get("/admin/users/customer", (req, res) => {
+    if (!req.session.user || req.session.user.role != 2) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const sql = "SELECT * FROM user WHERE ROLE = 1";
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res
+                .status(500)
+                .json({ error: "Database error while selecting users" });
+        }
+
+        res.json(results);
+    });
+});
 
 // PATCH UPDATE ROLE = 2
 
