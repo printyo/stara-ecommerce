@@ -216,6 +216,23 @@ router.patch("/admin/user/:id", (req, res) => {
 });
 
 // GET ALL USERS (ADMIN ONLY)
+router.get("/dev/users/admin", (req, res) => {
+    if (!req.session.user || req.session.user.role != 3) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const sql = "SELECT * FROM user WHERE ROLE = 2";
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res
+                .status(500)
+                .json({ error: "Database error while selecting users" });
+        }
+
+        res.json(results);
+    });
+});
 
 // PATCH UPDATE ROLE = 3
 module.exports = router;
