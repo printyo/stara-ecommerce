@@ -135,7 +135,7 @@ router.get("/admin/product/get", (req, res) => {
             console.error(err);
             return res
                 .status(500)
-                .json({ error: "Database error while selecting producst" });
+                .json({ error: "Database error while selecting products" });
         }
 
         res.json(results[0]);
@@ -143,6 +143,33 @@ router.get("/admin/product/get", (req, res) => {
 });
 
 // PATCH PRODUCT INFORMATION
+router.patch("/admin/product/patch", (req, res) => {
+    if (!req.session.user || req.session.user.role != 2) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const { productID, name, description, stock, price, imageURL, categoryID } =
+        req.body;
+
+    const sql =
+        "UPDATE product SET name = ?, description = ?, stock = ?, price = ?, imageURL = ?, categoryID = ? WHERE productID = ?";
+    db.query(
+        sql,
+        [name, description, stock, price, imageURL, categoryID, productID],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res
+                    .status(500)
+                    .json({ error: "Database error while updating products" });
+            }
+
+            res.status(200).json({
+                message: "Update Product Information Successfully",
+            });
+        }
+    );
+});
 
 // DELETE PRODUCT VIA NAME
 
