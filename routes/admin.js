@@ -194,6 +194,26 @@ router.get("/admin/users/customer", (req, res) => {
 });
 
 // PATCH UPDATE ROLE = 2
+router.patch("/admin/user/:id", (req, res) => {
+    if (!req.session.user || req.session.user.role != 2) {
+        return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
+    }
+
+    const userID = req.params.id;
+
+    const sql = "UPDATE user SET role = 2 WHERE userID = ?";
+    db.query(sql, [userID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res
+                .status(500)
+                .json({ error: "Database error while updating user role" });
+        }
+        res.status(200).json({
+            message: "Update user role to admin successfully.",
+        });
+    });
+});
 
 // GET ALL USERS (ADMIN ONLY)
 
