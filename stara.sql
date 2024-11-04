@@ -65,8 +65,8 @@ CREATE TABLE `devChat` (
 
 CREATE TABLE `orderDetails` (
   `orderID` int(11) NOT NULL,
-  `Total` decimal(11,2) NOT NULL,
-  `AddressID` int(11) NOT NULL,
+  `total` decimal(11,2) NOT NULL,
+  `addressID` int(11) NOT NULL,
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
