@@ -9,13 +9,81 @@
 </head>
 
 <body>
-    <h1 class="text-3xl text-red-500 font-bold">Welcome to Our Stara!</h1>
     <a href="login.html">
-        <h2>login</h2>
+        <h2>SHOP NOW</h2>
     </a>
     <a href="browse.html">
         <h2>Browse</h2>
     </a>
+    <h1 id="h"></h1>
+
+    <!-- <p class="text-base text-black-500 font-afacad"> -->
+
+    <section class="home-section">
+        <div class="home">
+            <div class="leftdetail">
+                <div> id="horizontal-line"</div>
+                <h1 class="text-6xl text-black-500 font-rozha">WHERE STYLE <br> MEET SHINE</h1>
+                <p class="text-base text-black-500 font-afacad">At STARA, we believe in the power of individuality and self-expression. Our brand invites you to Define
+                    Your Shine—embracing your unique style and letting your personality radiate through every outfit.
+                    With a focus on timeless elegance, quality craftsmanship, and sustainable practices, STARA offers versatile
+                    pieces that empower you to express yourself confidently. Each collection is designed to inspire and uplift,
+                    ensuring you always look and feel your best. Step into the world of STARA, where your style tells your story,
+                    and every day is an opportunity to shine.</p>
+            
+                <div class="imagehome4">
+                    <div class="image-homeleft1">
+                        <img src="left1.png">
+                    </div>
+                    <div class="image-homeleft1">
+                        <img src="left2.png">
+                    </div>
+                    <div class="image-homeleft1">
+                        <img src="left3.png">
+                    </div>
+                    <div class="image-homeleft1">
+                        <img src="left4.png">
+                    </div>
+                </div>
+                
+                <div class="shopnow">
+                   
+
+                </div>
+                
+            </div>
+            
+            <div class="image-homeright">
+                <img src="homeright.png">
+            </div>
+        
+        
+            
+               
+            
+
+
+        </div>
+    </section>
+
+
+  
+
+
+
+
+
+
+
+
+    <script>
+        fetch("/checkrole")
+        .then(response => response.json())
+        .then(user => {
+            const h = document.getElementById("h");
+            h.innerText = user.roleName;
+        })
+    </script>
 </body>
 
 </html>

@@ -2,7 +2,13 @@
 module.exports = {
     content: ["./public/*.html"],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily:{
+                // didot
+                rozha:["Rozha One", "serif"],
+                afacad: ["Afacad", "serif"]
+            }
+        },
     },
     plugins: [],
 };
