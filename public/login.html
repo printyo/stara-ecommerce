@@ -18,12 +18,12 @@
                 aria-controls="navbar-default" aria-expanded="false">
                 <span class="sr-only">Open main menu</span> -->
 
-            </button>
+            <!-- </button> -->
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul
                     class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ml-9">
                     <li>
-                        <a href="/home.html"
+                        <a id="home" href="/home.html"
                             class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                             aria-current="page">Home</a>
                     </li>
@@ -81,7 +81,62 @@
                 here</a></p>
         <!-- link  -->
     </div>
+    <script>
+        function checkUserRole() {
+            fetch("/checkrole")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('User not logged in or error fetching role');
+                    }
 
+                    return response.json();
+                })
+                .then(data => {
+                    setupNavBar(data.role);
+                })
+                .catch(error => {
+                    setupNavBar(0);
+                })
+        }
+
+        function setupNavBar(role) {
+            const home = document.getElementById("home");
+            if (role == 0) {
+                // No users
+                // Right most = Login
+                home.innerText = "Home " + role;
+                // Remove cart
+                // Remove orders
+                // Remove account
+            } else if (role == 1) {
+                // Customer
+                // Right most = Logout
+                home.innerText = "Home " + role;
+                // Show Cart
+                // Show Orders
+                // Show account
+            } else if (role == 2) {
+                // Admin
+                // Right most = Logout
+                home.innerText = "Home " + role;
+                // Show Cart
+                // Show Orders
+                // Show account
+                // To the left of Logout Button = Admin Page
+            } else if (role == 3) {
+                // Developer
+                // Right most = Logout
+                home.innerText = "Home " + role;
+                // Show Cart
+                // Show Orders
+                // Show account
+                // To the left of Logout Button = Developer Page
+            }
+        }
+
+        window.onload = checkUserRole();
+
+    </script>
 </body>
 
 </html>
