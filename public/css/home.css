@@ -1,0 +1,54 @@
+body {
+    background: linear-gradient(to right, black);
+}
+
+.home {
+    display: flex;
+    flex-direction: row;
+}
+.home-section .home .leftdetail .imagehome4 {
+    display: flex;
+    align-items: center;
+}
+.home-section .home {
+    display: flex;
+    align-items: center;
+}
+
+.leftdetail {
+    display: flex;
+    flex-direction: column;
+}
+#image-homeleft1 {
+    width: 10%;
+    height: 13%;
+    border-radius: 3px;
+   
+}
+
+#image-homeleft2 {
+    width: 10%;
+    height: 13%;
+    border-radius: 3px;
+   
+}
+
+#image-homeleft3 {
+    width: 10%;
+    height: 13%;
+    border-radius: 3px;
+ 
+}
+
+#image-homeleft4 {
+    width: 10%;
+    height: 13%;
+    border-radius: 3px;
+   
+}
+
+.rightdetail {
+    width: 1000vh;
+    height: 1000vh;
+   
+}
