@@ -81,4 +81,15 @@ router.get("/checkrole", (req, res) => {
     });
 });
 
+// Log Out Button (call this when u log out)
+router.post("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Error logging out" });
+        }
+        res.status(200).json({ message: "Successfully logged out" });
+    });
+});
+
 module.exports = router;
