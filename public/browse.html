@@ -11,44 +11,46 @@
 <body>
 
     <!-- Navbar -->
-<nav class="bg-white  border-gray-200 dark:bg-gray-900 shadow-lg">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
-        <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
-        <!-- <button data-collapse-toggle="navbar-default" type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-default" aria-expanded="false">
-            <span class="sr-only">Open main menu</span> -->
-
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul
-                class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ml-9">
-                <li>
-                    <a id="home" href="/home.html"
-                        class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                        aria-current="page">Home</a>
-                </li>
-                <li>
-                    <a href="/browse.html"
-                        class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Browse</a>
-                </li>
-                <li>
-                    <a href="/cart.html"
-                        class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cart</a>
-                </li>
-                <li>
-                    <a href="/vieworder.html"
-                        class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">View
-                        Your Order</a>
-                </li>
-                <li>
-                    <a href="/account.html"
-                        class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Account</a>
-                </li>
-            </ul>
+    <nav class="bg-white  border-gray-200 dark:bg-gray-900 shadow-lg">
+        <div class="flex items-center justify-between">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                    <ul
+                        class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ml-9">
+                        <li id="home">
+                            <a href="/home.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                aria-current="page">Home</a>
+                        </li>
+                        <li id="browse">
+                            <a href="/browse.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Browse</a>
+                        </li>
+                        <li id="cart">
+                            <a href="/cart.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cart</a>
+                        </li>
+                        <li id="order">
+                            <a href="/vieworder.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">View
+                                Your Order</a>
+                        </li>
+                        <li id="account">
+                            <a href="/account.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Account</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="rightdiv" class="p-4 pr-10">
+                <a id="login"
+                    class="font-afacad  text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    href="/login.html">Log
+                    in</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
     <!-- Filter Section -->
@@ -64,9 +66,10 @@
     <div class="container mx-auto px-4 py-8">
 
         <!-- add class to use grid -->
-        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+        <div id="productGrid"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         </div>
-        
+
         <script>
             window.onload = function () {
                 loadCategory(); // Loads category into the selection bar
@@ -98,15 +101,15 @@
                     .then(products => {
                         const productContainer = document.getElementById("productGrid");
                         productContainer.innerHTML = ""; // To clear existing html in case we load in categories
-                        
+
                         products.forEach(product => {
                             const productCard = document.createElement("div");
 
                             // Frontend edit here!!
-                            
+
                             // add border for each, rounded, center, 
                             productCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
-                            
+
                             productCard.innerHTML = `
                             
                                 <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-full h-auto rounded-lg mb-4">
@@ -135,7 +138,7 @@
             }
 
 
-        
+
             function checkUserRole() {
                 fetch("/checkrole")
                     .then(response => {
@@ -146,76 +149,104 @@
                     })
                     .then(data => {
                         setupNavBar(data.role);
+                        setup = True;
                     })
                     .catch(error => {
                         setupNavBar(0);
                     })
             }
 
-        function setupNavBar(role) {
-            const home = document.getElementById("home"); // dont really need this but get other element (start by creating ids for each important component)
-            // In the logout button make sure you call the post /logout
-            if (role == 0) {
-                // No users
-                // Right most = Login (Navbar)
+            function setupNavBar(role) {
+                const cart = document.getElementById("cart");
+                const order = document.getElementById("order");
+                const account = document.getElementById("account");
+                const rightdiv = document.getElementById("rightdiv");
+                const login = document.getElementById("login");
 
-                home.innerText = "Home " + role;
-                // Remove cart
-                cart.remove();
-                // Remove orders
-                order
-                // Remove account
-            } else if (role == 1) {
-                // Customer
-                // Right most = Logout
-                home.innerText = "Home " + role;
-                // Show Cart
-                // Show Orders
-                // Show account
-            } else if (role == 2) {
-                // Admin
-                // Right most = Logout
-                home.innerText = "Home " + role;
-                // Show Cart
-                // Show Orders
-                // Show account
-                // To the left of Logout Button = Admin Page
-            } else if (role == 3) {
-                // Developer
-                // Right most = Logout
-                home.innerText = "Home " + role;
-                // Show Cart
-                // Show Orders
-                // Show account
-                // To the left of Logout Button = Developer Page
-            }
-        }
+                const admindev = document.createElement("a");
+                admindev.classList.add("font-afacad", "text-gray-900", "hover:bg-gray-100", "md:hover:bg-transparent", "md:border-0", "md:hover:text-gray-400", "md:p-0", "dark:text-white", "md:dark:hover:text-gray-400", "dark:hover:bg-gray-700", "dark:hover:text-white", "md:dark:hover:bg-transparent")
 
-        // The Log in and Sign up page doesnt need this but other pages do
-        // When doing make your you add id "logout" to the logout button
-        document.getElementById("logout").addEventListener("click", function () {
-            fetch("/logout", {
-                method: "POST",
-                headers: {
-                    // When post/patch need this to inform server what type you are sending, in our case we always send data through json
-                    "Content-Type": "application/json"
-                }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Logged out Successfully!");
-                        window.location.href = "/login.html"; // Redirect to login page
-                    } else {
-                        alert("Failed to log out!")
+                const logout = document.createElement("a");
+                logout.innerText = "Logout";
+                logout.id = "logout";
+                logout.classList.add("font-afacad", "text-gray-900", "hover:bg-gray-100", "md:hover:bg-transparent", "md:border-0", "md:hover:text-gray-400", "md:p-0", "dark:text-white", "md:dark:hover:text-gray-400", "dark:hover:bg-gray-700", "dark:hover:text-white", "md:dark:hover:bg-transparent")
+                if (role == 0) {
+                    // No users
+                    // Right most = Login (Navbar)
+                    if (!login) {
+                        return;
                     }
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("Error occured while logging out");
-                });
-        });
+                    // Remove cart
+                    cart.remove();
+                    // Remove orders
+                    order.remove();
+                    // Remove account
+                    account.remove();
+                } else if (role == 1) {
+                    // Customer
+                    // Right most = Logout
+                    login.remove();
+                    rightdiv.appendChild(logout);
+                    logout();
+                    // Show Cart
+                    // Show Orders
+                    // Show account
+                } else if (role == 2) {
+                    // Admin
+                    // Show Cart
+                    // Show Orders
+                    // Show account
+                    // To the left of Logout Button = Admin Page
+                    admindev.innerText = "Admin";
+                    admindev.href = "/admin.html";
+                    rightdiv.appendChild(admindev);
+                    // Right most = Logout
+                    login.remove();
+                    rightdiv.appendChild(logout);
+                    logout();
+                } else if (role == 3) {
+                    // Developer
+                    // Show Cart
+                    // Show Orders
+                    // Show account
+                    // To the left of Logout Button = Developer Page
+                    admindev.innerText = "Developer";
+                    admindev.href = "/developer.html";
+                    rightdiv.appendChild(admindev);
+                    // Right most = Logout
+                    login.remove();
+                    rightdiv.appendChild(logout);
+                    logout();
+                }
+            }
 
+            // The Log in and Sign up page doesnt need this but other pages do
+            // When doing make your you add id "logout" to the logout button
+            function logout() {
+                document.getElementById("logout").addEventListener("click", function () {
+                    fetch("/logout", {
+                        method: "POST",
+                        headers: {
+                            // When post/patch need this to inform server what type you are sending, in our case we always send data through json
+                            "Content-Type": "application/json"
+                        }
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert("Logged out Successfully!");
+                                window.location.href = "/login.html"; // Redirect to login page
+                            } else {
+                                alert("Failed to log out!")
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert("Error occured while logging out");
+                        });
+                });
+            }
         </script>
     </div>
 </body>
+
 </html>
