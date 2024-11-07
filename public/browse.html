@@ -75,6 +75,7 @@
                 loadCategory(); // Loads category into the selection bar
                 loadProducts();
                 checkUserRole();
+                logout();
             };
 
             function loadCategory() {
@@ -166,10 +167,10 @@
                 const admindev = document.createElement("a");
                 admindev.classList.add("font-afacad", "text-gray-900", "hover:bg-gray-100", "md:hover:bg-transparent", "md:border-0", "md:hover:text-gray-400", "md:p-0", "dark:text-white", "md:dark:hover:text-gray-400", "dark:hover:bg-gray-700", "dark:hover:text-white", "md:dark:hover:bg-transparent")
 
-                const logout = document.createElement("a");
-                logout.innerText = "Logout";
-                logout.id = "logout";
-                logout.classList.add("font-afacad", "text-gray-900", "hover:bg-gray-100", "md:hover:bg-transparent", "md:border-0", "md:hover:text-gray-400", "md:p-0", "dark:text-white", "md:dark:hover:text-gray-400", "dark:hover:bg-gray-700", "dark:hover:text-white", "md:dark:hover:bg-transparent")
+                const logoutLink = document.createElement("a");
+                logoutLink.innerText = "Logout";
+                logoutLink.id = "logout";
+                logoutLink.classList.add("font-afacad", "text-gray-900", "hover:bg-gray-100", "md:hover:bg-transparent", "md:border-0", "md:hover:text-gray-400", "md:p-0", "dark:text-white", "md:dark:hover:text-gray-400", "dark:hover:bg-gray-700", "dark:hover:text-white", "md:dark:hover:bg-transparent")
                 if (role == 0) {
                     // No users
                     // Right most = Login (Navbar)
@@ -186,7 +187,7 @@
                     // Customer
                     // Right most = Logout
                     login.remove();
-                    rightdiv.appendChild(logout);
+                    rightdiv.appendChild(logoutLink);
                     logout();
                     // Show Cart
                     // Show Orders
@@ -202,8 +203,7 @@
                     rightdiv.appendChild(admindev);
                     // Right most = Logout
                     login.remove();
-                    rightdiv.appendChild(logout);
-                    logout();
+                    rightdiv.appendChild(logoutLink);
                 } else if (role == 3) {
                     // Developer
                     // Show Cart
@@ -215,9 +215,9 @@
                     rightdiv.appendChild(admindev);
                     // Right most = Logout
                     login.remove();
-                    rightdiv.appendChild(logout);
-                    logout();
+                    rightdiv.appendChild(logoutLink);
                 }
+                logout();
             }
 
             // The Log in and Sign up page doesnt need this but other pages do
