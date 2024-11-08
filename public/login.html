@@ -12,33 +12,20 @@
 <body>
     <nav class="bg-white  border-gray-200 shadow-lg">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
-            <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
-
-            </button>
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul
                     class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
-                    <li>
+                    <li id="home">
                         <a href="/home.html"
                             class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 "
                             aria-current="page">Home</a>
                     </li>
-                    <li>
+                    <li id="browse">
                         <a href="/browse.html"
                             class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 ">Browse</a>
-                    </li>
-                    <li>
-                        <a href="/cart.html"
-                            class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 ">Cart</a>
-                    </li>
-                    <li>
-                        <a href="/order.html"
-                            class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 ">View
-                            Your Order</a>
-                    </li>
-                    <li>
-                        <a href="/account.html"
-                            class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400  md:p-0 ">Account</a>
                     </li>
                 </ul>
             </div>
@@ -57,7 +44,7 @@
 
                             <input type="email" class="form-control text-lg" id="exampleInputEmail1"
                                 placeholder="Enter email" name="email" required
-                                style="background-color: #f0f0f0; width: 450px;">
+                                style="background-color: #f0f0f0; width: 450%;">
                         </div>
 
 
@@ -66,7 +53,7 @@
                             <label for="exampleInputPassword1">Password</label><br>
                             <input type="password" class="form-control text-lg" id="exampleInputPassword1"
                                 placeholder="Enter password" name="password" required
-                                style="background-color: #f0f0f0; width: 450px;">
+                                style="background-color: #f0f0f0; width: 450%;">
                         </div>
 
                         <div class="mt-4 text-center" style="padding-top: 220px;">
@@ -95,124 +82,6 @@
             </form>
         </div>
     </div>
-
-    <script>
-        function checkUserRole() {
-            fetch("/checkrole")
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('User not logged in or error fetching role');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    setupNavBar(data.role);
-                })
-                .catch(error => {
-                    setupNavBar(0);
-                })
-        }
-
-        function setupNavBar(role) {
-            const home = document.getElementById("home");
-            const browse = document.getElementById("home");
-            const cart = document.getElementById("cart");
-            const view = document.getElementById("orders");
-            const account = document.getElementById("account");
-            const admin = document.getElementById("adminPage");
-            const dev = document.getElementById("devPage");
-            // dont really need this but get other element (start by creating ids for each important component)
-            // In the logout button make sure you call the post /logout
-            admin.style.display = "none";
-            dev.style.display = "none";
-            if (role == 0) {
-                // No users
-                // Right most = Login
-                logout.innerText = "Login";
-                logout.href = "/login.html";
-
-                home.innerText = "Home ";
-
-                // Remove cart
-                // Remove orders
-                // Remove account
-                cart.style.display = "none";
-                order.style.display = "none";
-                account.style.display = "none";
-
-            } else if (role == 1) {
-                // Customer
-                // Right most = Logout
-                logout.innerText = "Logout";
-                // logout.href = "/logout"; ja pai tee nai browse or home
-
-                home.innerText = "Home";
-                // Show Cart
-                // Show Orders
-                // Show account
-                cart.style.display = "inline";
-                order.style.display = "inline";
-                account.style.display = "inline";
-
-            } else if (role == 2) {
-                // Admin
-                // Right most = Logout
-                logout.innerText = "Logout";
-                // logout.href = "/logout"; 
-
-                home.innerText = "Home " + Admin;
-                // Show Cart
-                // Show Orders
-                // Show account
-                cart.style.display = "inline";
-                order.style.display = "inline";
-                account.style.display = "inline";
-                admin.style.display = "inline";
-                // To the left of Logout Button = Admin Page
-            } else if (role == 3) {
-                // Developer
-                // Right most = Logout
-                logout.innerText = "Logout";
-                // logout.href = "/logout";
-                home.innerText = "Home " + Developer;
-                // Show Cart
-                // Show Orders
-                // Show account
-                cart.style.display = "inline";
-                order.style.display = "inline";
-                account.style.display = "inline";
-                dev.style.display = "inline";
-                // To the left of Logout Button = Developer Page
-            }
-        }
-
-        // The Log in and Sign up page doesnt need this but other pages do
-        // When doing make your you add id "logout" to the logout button
-        document.getElementById("logout").addEventListener("click", function () {
-            fetch("/logout", {
-                method: "POST",
-                headers: {
-                    // When post/patch need this to inform server what type you are sending, in our case we always send data through json
-                    "Content-Type": "application/json"
-                }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Logged out Successfully!");
-                        window.location.href = "/login.html"; // Redirect to login page
-                    } else {
-                        alert("Failed to log out!")
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("Error occured while logging out");
-                });
-        });
-
-        window.onload = checkUserRole();
-
-    </script>
 </body>
 
 </html>
