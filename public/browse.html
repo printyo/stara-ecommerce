@@ -4,82 +4,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <title>Browse</title>
+    <link href="./css/styles.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="filter-section">
-        <h3>Filter</h3>
-        <h4>Categories</h4>
-        <select id="categoryFilter">
+    <!-- Navbar -->
+    <nav class="bg-white  border-gray-200 dark:bg-gray-900 shadow-lg">
+        <div class="flex items-center justify-between">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+                <a href="/home.html">
+                    <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+                </a>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                    <ul
+                        class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ml-9">
+                        <li id="home">
+                            <a href="/home.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                aria-current="page">Home</a>
+                        </li>
+                        <li id="browse">
+                            <a href="/browse.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Browse</a>
+                        </li>
+                        <li id="cart">
+                            <a href="/cart.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cart</a>
+                        </li>
+                        <li id="order">
+                            <a href="/vieworder.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">View
+                                Your Order</a>
+                        </li>
+                        <li id="account">
+                            <a href="/account.html"
+                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Account</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="rightdiv" class="p-4 pr-10">
+                <a id="login"
+                    class="font-afacad  text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    href="/login.html">Log
+                    in</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Filter Section -->
+    <div class="filter-section my-4 mx-auto w-full max-w-screen-xl px-4">
+        <select id="categoryFilter" class="border border-gray-300 p-2 rounded-md dark:bg-gray-800 dark:text-white">
             <option value="0">All Categories</option>
             <!-- Categories will be populated here -->
         </select>
         <button onclick="applyFilters()">Apply Filters</button>
     </div>
-    <div id="productGrid">
-    </div>
-    <script>
-        window.onload = function () {
-            loadCategory(); // Loads category into the selection bar
-            loadProducts();
-        };
 
-        function loadCategory() {
-            fetch("/category")
-                .then(response => response.json())
-                .then(categories => {
-                    const categoryFilter = document.getElementById("categoryFilter");
-                    categories.forEach(category => {
-                        const option = document.createElement("option");
-                        option.value = category.categoryID;
-                        option.text = category.categoryID;
-                        categoryFilter.appendChild(option);
+    <!-- Product Grid -->
+    <div class="container mx-auto px-4 py-8">
+        <div id="productGrid"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+        </div>
+        <script src="./navbar.js"
+            defer> // defer is an attribute that excutes after the html have finish loading</script>
+        <script>
+            window.onload = function () {
+                loadCategory(); // Loads category into the selection bar
+                loadProducts(); // Load products
+                checkUserRole(); // Load Navbar
+            };
+
+            function loadCategory() {
+                fetch("/category")
+                    .then(response => response.json())
+                    .then(categories => {
+                        const categoryFilter = document.getElementById("categoryFilter");
+                        categories.forEach(category => {
+                            const option = document.createElement("option");
+                            option.value = category.categoryID;
+                            option.text = category.name;
+                            categoryFilter.appendChild(option);
+                        })
                     })
-                })
-                .catch(error => {
-                    console.error("Error fetching categories:", error);
-                });
-        };
-
-        function loadProducts() {
-            const categoryValue = document.getElementById("categoryFilter").value
-            fetch(`/products?category=${categoryValue}`)
-                .then(response => response.json())
-                .then(products => {
-                    const productContainer = document.getElementById("productGrid");
-                    productContainer.innerHTML = ""; // To clear existing html incase we load in categories
-
-                    products.forEach(product => {
-                        const productCard = document.createElement("div");
-                        // Frontend edit here !!
-                        productCard.innerHTML = `
-                        <img src="/images/product/${product.imageURL}" alt="${product.name}">
-                        <div>
-                            <a href="product.html?id=${product.productID}">
-                            <h5>${product.name}</h5>
-                            <p>${product.description}</p>
-                            <div>
-                                <p>${product.price} baht</p>
-                                <p> Quantity: ${product.stock}</p>
-                            </div>
-                            </a>
-                        </div>
-                        `;
-                        productContainer.appendChild(productCard);
+                    .catch(error => {
+                        console.error("Error fetching categories:", error);
                     });
-                })
-                .catch(error => {
-                    console.error("Error fetching products:", error);
-                })
-        }
+            };
 
-        // Reload Products when pressed button
-        function applyFilters() {
-            loadProducts();
-        }
-    </script>
+            function loadProducts() {
+                const categoryValue = document.getElementById("categoryFilter").value;
+                fetch(`/products?category=${categoryValue}`)
+                    .then(response => response.json())
+                    .then(products => {
+                        const productContainer = document.getElementById("productGrid");
+                        productContainer.innerHTML = ""; // To clear existing html in case we load in categories
+
+                        products.forEach(product => {
+                            const productCard = document.createElement("div");
+
+                            // Frontend edit here!!
+
+                            // add border for each, rounded, center, 
+                            productCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
+
+                            productCard.innerHTML = `
+                            
+                                <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-full h-auto rounded-lg mb-4">
+                                <div class="product-details text-center">
+                                    <a href="product.html?id=${product.productID}">
+                                        <h5 class="text-lg font-semibold mb-2">${product.name}</h5>
+                                    </a>
+                                    <p class="text-sm text-gray-500">${product.description}</p>
+                                    <div class="product-price-stock flex justify-between w-full mt-4 text-sm text-gray-700">
+                                        <p>Price: ${product.price} baht</p>
+                                    
+                                        <p>Stock: ${product.stock}</p>
+                                    </div>
+                                </div>
+                            `;
+                            productContainer.appendChild(productCard);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching products:", error);
+                    });
+            }
+
+            function applyFilters() {
+                // when button is press, refreshed the products
+                loadProducts()
+            }
+        </script>
+    </div>
 </body>
 
 </html>
