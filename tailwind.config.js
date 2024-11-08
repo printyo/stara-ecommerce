@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./public/*.html"],
+    content: ["./public/*.{html, js}"],
     theme: {
         extend: {
-            fontFamily:{
+            fontFamily: {
                 // didot
-                rozha:["Rozha One", "serif"],
-                afacad: ["Afacad", "serif"]
-            }
+                rozha: ["Rozha One", "serif"],
+                afacad: ["Afacad", "serif"],
+            },
         },
     },
     plugins: [],

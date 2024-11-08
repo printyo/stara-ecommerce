@@ -32,12 +32,7 @@ function setupNavBar(role) {
         "md:hover:bg-transparent",
         "md:border-0",
         "md:hover:text-gray-400",
-        "md:p-0",
-        "dark:text-white",
-        "md:dark:hover:text-gray-400",
-        "dark:hover:bg-gray-700",
-        "dark:hover:text-white",
-        "md:dark:hover:bg-transparent"
+        "md:p-0"
     );
 
     //Create the logout button
@@ -51,12 +46,7 @@ function setupNavBar(role) {
         "md:hover:bg-transparent",
         "md:border-0",
         "md:hover:text-gray-400",
-        "md:p-0",
-        "dark:text-white",
-        "md:dark:hover:text-gray-400",
-        "dark:hover:bg-gray-700",
-        "dark:hover:text-white",
-        "md:dark:hover:bg-transparent"
+        "md:p-0"
     );
     if (role == 0) {
         // No users
