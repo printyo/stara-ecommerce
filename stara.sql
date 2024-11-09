@@ -50,12 +50,12 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`categoryID`, `name`, `description`) VALUES
-(25, 'T-Shirts', 'T-shirts are a basic cotton tees to graphic prints and performance fabrics, they offer comfort and endless styling options for any occasion.'),
-(27, 'Hoodie', 'Hoodies are comfortable, casual outerwear featuring a hood and often a front pocket. Made from soft fabrics, they offer warmth and versatility.\r\n\r\n'),
-(28, 'Dresses', 'Dresses are one-piece solution for any occasion. Available in various styles, dresses can be making a go-to choice for both day and evening wear.\r\n\r\n\r\n'),
-(29, 'Pants', 'Pants suit different occasions and preferences. From casual jeans and activewear, pants offer comfort and functionality for everyday wear.'),
-(30, 'Shorts', 'Shorts available in various styles, from athletic and cargo to denim and tailored, they are perfect for outdoor activities.'),
-(32, 'Coats', 'Coats are essential outerwear designed to provide warmth and style during colder months. Perfect for layering over outfits in cooler weather.');
+(1, 'T-Shirts', 'T-shirts are a basic cotton tees to graphic prints and performance fabrics, they offer comfort and endless styling options for any occasion.'),
+(2, 'Hoodie', 'Hoodies are comfortable, casual outerwear featuring a hood and often a front pocket. Made from soft fabrics, they offer warmth and versatility.\r\n\r\n'),
+(3, 'Dresses', 'Dresses are one-piece solution for any occasion. Available in various styles, dresses can be making a go-to choice for both day and evening wear.\r\n\r\n\r\n'),
+(4, 'Pants', 'Pants suit different occasions and preferences. From casual jeans and activewear, pants offer comfort and functionality for everyday wear.'),
+(5, 'Shorts', 'Shorts available in various styles, from athletic and cargo to denim and tailored, they are perfect for outdoor activities.'),
+(6, 'Coats', 'Coats are essential outerwear designed to provide warmth and style during colder months. Perfect for layering over outfits in cooler weather.');
 
 -- --------------------------------------------------------
 
@@ -194,8 +194,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `role`, `phoneNumber`) VALUES
-(1, 'Opal', 'arasrs', 'a@gmail.com', '123', 1, '099999999'),
-(2, 'Arsr', 'S', 'a@gmail.com', '1234', 1, '1234567891');
+(1, 'Customer', 'Account', 'c@gmail.com', '123', 1, '099999999'),
+(2, 'Admin', 'Acc', 'a@gmail.com', '123', 2, '1234567891'),
+(3, 'Dev', 'eloper', 'd@gmail.com', '123', 3, '0123456789');
 
 -- --------------------------------------------------------
 
@@ -295,7 +296,7 @@ ALTER TABLE `userAddress`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `categoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `categoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `devChat`
@@ -325,13 +326,13 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `userAddress`
