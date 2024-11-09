@@ -11,49 +11,48 @@
 
 <body class="bg-white text-gray-800 font-sans">
     <!-- Navbar -->
-    <nav class="bg-white  border-gray-200 dark:bg-gray-900 shadow-lg">
-        <div class="flex items-center justify-between">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <!-- Left side: STARA and Navbar Links -->
+            
+                <!-- STARA Logo -->
                 <a href="/home.html">
                     <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
                 </a>
+                
+                <!-- Navbar Links -->
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul
-                        class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ml-9">
+                    <ul 
+                    class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
                         <li id="home">
-                            <a href="/home.html"
-                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                                aria-current="page">Home</a>
+                            <a href="/home.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
                         </li>
                         <li id="browse">
-                            <a href="/browse.html"
-                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Browse</a>
+                            <a href="/browse.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
                         </li>
                         <li id="cart">
-                            <a href="/cart.html"
-                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cart</a>
+                            <a href="/cart.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
                         </li>
                         <li id="order">
-                            <a href="/vieworder.html"
-                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">View
-                                Your Order</a>
+                            <a href="/vieworder.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View Your Order</a>
                         </li>
                         <li id="account">
-                            <a href="/account.html"
-                                class="block py-2 px-3 font-afacad  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Account</a>
+                            <a href="/account.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
                         </li>
                     </ul>
                 </div>
-            </div>
-            <div id="rightdiv" class="p-4 pr-10">
-                <a id="login"
-                    class="font-afacad  text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0 dark:text-white md:dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                    href="/login.html">Log
-                    in</a>
+           
+    
+            <!-- Right side: Log in link -->
+            <div id="rightdiv" class="ml-auto">
+                <a id="login" 
+                    class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
+                    href="/login.html">
+                    Log in
+                </a>
             </div>
         </div>
     </nav>
-
 
     <!-- Hero Section -->
     <section class=" mx-auto flex flex-col lg:flex-row items-center lg:items-stretch py-12 px-6">
@@ -97,7 +96,7 @@
             <div class="flex items-center justify-center">
                 <a href="browse.html">
                     <button type="button"
-                        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">SHOP
+                        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2">SHOP
                         NOW</button>
                 </a>
             </div>
