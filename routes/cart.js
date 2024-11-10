@@ -50,7 +50,7 @@ router.get("/cart", (req, res) => {
     const userID = req.session.user.userID; // Get user ID from session
 
     const sql =
-        "SELECT cart.*, product.name, product.price FROM cart JOIN product ON cart.productID = product.productID WHERE cart.userID = ?";
+        "SELECT cart.*, product.name, product.price, product.imageURL FROM cart JOIN product ON cart.productID = product.productID WHERE cart.userID = ?";
 
     db.query(sql, [userID], (err, results) => {
         if (err) {

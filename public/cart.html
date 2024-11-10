@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/styles.css" rel="stylesheet">
+    <title>Cart</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <!-- Left side: STARA and Navbar Links -->
+
+            <!-- STARA Logo -->
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
+
+            <!-- Navbar Links -->
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul
+                    class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                    <li id="home">
+                        <a href="/home.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                    </li>
+                    <li id="browse">
+                        <a href="/browse.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                    </li>
+                    <li id="cart">
+                        <a href="/cart.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                    </li>
+                    <li id="order">
+                        <a href="/vieworder.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View
+                            Your Order</a>
+                    </li>
+                    <li id="account">
+                        <a href="/account.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Right side: Log in link -->
+            <div id="rightdiv" class="ml-auto">
+                <a id="login"
+                    class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
+                    href="/login.html">
+                    Log in
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div>
+        <div id="cartContainer">
+
+        </div>
+        <div>
+            <h2 id="total">Total: 0.00 baht</h2>
+            <button id="checkout">Checkout</button>
+        </div>
+    </div>
+    <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
+    <script>
+        window.onload = function () {
+            checkUserRole()
+            fetch("/checkrole")
+                .then((response) => {
+                    if (!response.ok) {
+                        // .ok is gives boolean of whether the response status is ok (ok = 200-299, not ok is all others egg 404 or 500)
+                        throw new Error("User not logged in or error fetching role");
+                        // creates a new error which will be caught by the .catch(err.....)
+                    }
+                    return response.json(); // parse the response to the next .then(....)
+                })
+                .then((data) => {
+                    loadCart();
+                    const checkoutBT = document.getElementById("checkout");
+                    checkoutBT.onclick = checkout;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        function loadCart() {
+            const cartContainer = document.getElementById("cartContainer");
+            fetch("/cart")
+                .then(response => response.json())
+                .then(product => {
+                    let totalprice = 0.00;
+                    cartContainer.innerHTML = ""; //clear stuff inside
+                    product.forEach(element => {
+                        productCart = document.createElement("div");
+                        productCart.innerHTML = `
+                        <div>
+                            <div>
+                                <img src="/image/product/${element.imageURL}" alt="${element.name}" class="w-32">
+                            </div>
+                            <div>
+                                <h2>${element.name}</h2>
+                                <p>${element.price} baht</p>
+                                <p>Quantity: ${element.quantity}</p>
+                                <br>
+                                <button onclick="removeItem(${element.productID})">Remove</button>
+                            </div>    
+                        </div>
+                        `;
+                        cartContainer.appendChild(productCart);
+                        totalprice += element.price * element.quantity;
+                    });
+                    const total = document.getElementById("total");
+                    total.innerText = `Total: ${totalprice} baht`;
+                })
+                .catch(err => {
+                    console.error("Error fetching product:", error);
+                })
+        }
+
+        function removeItem(productID) {
+            fetch(`/cart/${productID}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        loadCart(); // Reload cart after removal
+                    } else {
+                        alert('Error removing item from cart.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error removing item from cart:', error);
+                });
+        }
+
+        function checkout() {
+            window.location.href = 'checkout.html';
+        }
+    </script>
+</body>
+
+</html>
