@@ -105,26 +105,28 @@
                             const productCard = document.createElement("div");
 
                             // Frontend edit here!!
-
-                            // add border for each, rounded, center, 
+                            // Add product card classes for styling (add border for each, rounded, center)
                             productCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
 
-                            productCard.innerHTML = `
-                            
-                                <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-full h-auto rounded-lg mb-4">
+                            // Wrap the entire content in an <a> tag to make the the whole card clickable
+                            const productLink = document.createElement("a");
+                            productLink.href = `product.html?id=${product.productID}`;
+                            productLink.classList.add("w-full", "h-auto", "text-gray-900", "hover:bg-gray-50", "rounded-lg", "shadow-lg", "block", "p-4");
+
+                            productLink.innerHTML = `
+                                <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-full\] h-auto rounded-lg mb-4 text-center flex justify-between">
                                 <div class="product-details text-center">
-                                    <a href="product.html?id=${product.productID}">
-                                        <h5 class="text-lg font-semibold mb-2">${product.name}</h5>
-                                    </a>
+                                    <h5 class="text-lg font-semibold mb-2">${product.name}</h5>
                                     <p class="text-sm text-gray-500">${product.description}</p>
                                     <div class="product-price-stock flex justify-between w-full mt-4 text-sm text-gray-700">
                                         <p>Price: ${product.price} baht</p>
-                                    
                                         <p>Stock: ${product.stock}</p>
                                     </div>
                                 </div>
                             `;
-                            productContainer.appendChild(productCard);
+
+                            // Append the <a> link (entire card) to the product container
+                            productContainer.appendChild(productLink);
                         });
                     })
                     .catch(error => {
