@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Page</title>
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                    <li id="home">
+                        <a href="/home.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                    </li>
+                    <li id="browse">
+                        <a href="/browse.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                    </li>
+                    <li id="cart">
+                        <a href="/cart.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                    </li>
+                    <li id="order">
+                        <a href="/vieworder.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View Your Order</a>
+                    </li>
+                    <li id="account">
+                        <a href="/account.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="rightdiv" class="ml-auto">
+                <a id="login" class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0" href="/login.html">Log in</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-8">
+        <button onclick="goBack()" class="text-gray-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+            ← Go back
+        </button>
+
+        <!-- Personal Information Section -->
+        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Personal Information</h2>
+            <div class="mb-4">
+                <p><strong>First Name:</strong> John</p>
+                <p><strong>Last Name:</strong> lovehippopo</p>
+                <p><strong>Email:</strong> Moodeng@gmail.com</p>
+                <p><strong>Phone Number:</strong> 091-234-5678</p>
+            </div>
+        </div>
+
+        <!-- Address Section -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Address</h2>
+            <!-- Existing Addresses -->
+            <div id="addresses" class="space-y-4 mb-8">
+                <div id="addressContainer" class="flex justify-between items-center border-b pb-4">
+                  
+                </div>
+                <button onclick="deleteAddress('address2')" class="text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete</button>
+            </div>
+
+            <!-- Add New Address Form -->
+            <h2 class="text-2xl font-semibold mb-4">Add New Address</h2>
+            <form id="addressForm" class="space-y-4" onsubmit="addAddress(event)">
+                <div>
+                    <label class="block text-gray-700">Address line 1:</label>
+                    <input type="text" id="address1Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 1" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Address line 2:</label>
+                    <input type="text" id="address2Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 2" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Postcode:</label>
+                    <input type="text" id="postcodeField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Postcode" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">City:</label>
+                    <input type="text" id="cityField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="City" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Phone Number:</label>
+                    <input type="text" id="phoneField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Phone Number" required>
+                </div>
+                <button type="submit" class="w-full text-white bg-gray-800 py-2 rounded hover:bg-gray-900">Add</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
+    <script>
+        window.onload = function () {
+            checkUserRole();
+            loadAddresses();
+            loadUserData();
+        };
+
+        // Go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        function loadAddress() {
+                const addressValue = document.getElementById("address").value;
+                fetch(`/address?address=${addressValue}`)
+                    .then(response => response.json())
+                    .then(products => {
+                        const addressContainer = document.getElementById("addressContainer");
+                        addressContainer.innerHTML = ""; // To clear existing html in case we load in categories
+
+                        address.forEach(address => {
+                            const addressCard = document.createElement("div");
+
+                            // Frontend edit here!!
+                            // Add product card classes for styling (add border for each, rounded, center)
+                            addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
+
+                            // Wrap the entire content in an <a> tag to make the the whole card clickable
+                            
+                            productLink.innerHTML = `
+                                <alt="${userAddress.addressID}" class="w-full\] h-auto rounded-lg mb-4 text-center flex justify-between">
+                                <div class="product-details text-center">
+                                    <h5 class="text-lg font-semibold mb-2">${userAddress.addressLine1}</h5>
+                                    <p class="text-sm text-gray-500">${userAddress.addressLine2}</p>
+                                    <div class="product-price-stock flex justify-between w-full mt-4 text-sm text-gray-700">
+                                        <p>Postcode: ${userAddress.postcode}</p>
+                                        <p>City: ${userAddress.city}</p>
+                                        <p>Phone Number: ${userAddress.phoneNumber}</p>
+                                    </div>
+                                </div>
+                            `;
+
+                            // Append the <a> link (entire card) to the product container
+                            productContainer.appendChild(productLink);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching products:", error);
+                    });
+            }
+
+        // Function to add a new address
+        function addAddress(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get the values from the form fields
+            const address1 = document.getElementById("address1Field").value;
+            const address2 = document.getElementById("address2Field").value;
+            const postcode = document.getElementById("postcodeField").value;
+            const city = document.getElementById("cityField").value;
+            const phone = document.getElementById("phoneField").value;
+
+            // Create the new address element
+            const newAddress = document.createElement('div');
+            newAddress.classList.add('flex', 'justify-between', 'items-center', 'border-b', 'pb-4');
+
+            newAddress.innerHTML = `
+                <p>${address1}, ${address2}, ${city} ${postcode}<br>Tel: ${phone}</p>
+                <button onclick="deleteAddress('${address1}')" class="text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete</button>
+            `;
+
+            // Append the new address to the addresses container
+            document.getElementById('addresses').appendChild(newAddress);
+
+            // Optionally, clear the form fields after submission
+            document.getElementById('addressForm').reset();
+        }
+
+        // Function to delete an address
+        function deleteAddress(addressId) {
+            const address = document.getElementById(addressId);
+
+            if (address) {
+                address.remove(); // Remove the address from the DOM
+            }
+        }
+        
+    </script>
+
+</body>
+</html>
+
+
+
