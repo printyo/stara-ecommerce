@@ -82,8 +82,6 @@
                 })
                 .then((data) => {
                     loadCart();
-                    const checkoutBT = document.getElementById("checkout");
-                    checkoutBT.onclick = checkout;
                 })
                 .catch((error) => {
                     console.error(error);
@@ -97,9 +95,12 @@
                 .then(product => {
                     let totalprice = 0.00;
                     cartContainer.innerHTML = ""; //clear stuff inside
-                    product.forEach(element => {
-                        productCart = document.createElement("div");
-                        productCart.innerHTML = `
+                    if (product.length != 0) {
+                        const checkoutBT = document.getElementById("checkout");
+                        checkoutBT.onclick = checkout;
+                        product.forEach(element => {
+                            productCart = document.createElement("div");
+                            productCart.innerHTML = `
                         <div>
                             <div>
                                 <img src="/image/product/${element.imageURL}" alt="${element.name}" class="w-32">
@@ -113,11 +114,16 @@
                             </div>    
                         </div>
                         `;
-                        cartContainer.appendChild(productCart);
-                        totalprice += element.price * element.quantity;
-                    });
-                    const total = document.getElementById("total");
-                    total.innerText = `Total: ${totalprice} baht`;
+                            cartContainer.appendChild(productCart);
+                            totalprice += element.price * element.quantity;
+                        });
+                        const total = document.getElementById("total");
+                        total.innerText = `Total: ${totalprice} baht`;
+                    }
+                    else {
+                        cartContainer.innerHTML = "<h3> No Items in the Cart </h3>";
+                    };
+
                 })
                 .catch(err => {
                     console.error("Error fetching product:", error);
