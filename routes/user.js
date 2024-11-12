@@ -6,7 +6,7 @@ const db = require("./db.js");
 router.post("/signup", (req, res) => {
     const { firstName, lastName, email, password, phoneNumber } = req.body;
     const sql =
-        "INSERT INTO user (firstName, lastName, email, password, phoneNumber) VALUES (?, ?, ?, ?, ?)";
+        "INSERT INTO user (firstName, lastName, email, password, phoneNumber) VALUES (?, ?, ?, AES_ENCRYPT(?, 'lovelove'), ?)";
     db.query(
         sql,
         [firstName, lastName, email, password, phoneNumber],
@@ -30,7 +30,8 @@ router.post("/login", (req, res) => {
         return res.status(400).send("Email and password are required");
     }
 
-    const sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+    const sql =
+        "SELECT userID, firstName, lastName, email, role, phoneNumber  FROM user WHERE email = ? AND password = AES_ENCRYPT(?, 'lovelove')";
     db.query(sql, [email, password], (err, results) => {
         if (err) {
             console.error(err); //output error message
@@ -58,27 +59,17 @@ router.get("/checkrole", (req, res) => {
         return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
     }
 
-    const userID = req.session.user.userID;
+    const role = req.session.user.role;
 
-    const sql = "SELECT role FROM user WHERE userID = ?";
-    db.query(sql, [userID], (err, results) => {
-        if (err) {
-            console.error(err);
-            return res
-                .status(500)
-                .json({ error: "Database error while retrieving role" });
-        }
-        const role = results[0].role;
-        let roleName = null;
-        if (role == 1) {
-            roleName = "Customer";
-        } else if (role == 2) {
-            roleName = "Admin";
-        } else {
-            roleName = "Developer";
-        }
-        res.status(200).json({ role: role, roleName: roleName });
-    });
+    let roleName;
+    if (role == 1) {
+        roleName = "Customer";
+    } else if (role == 2) {
+        roleName = "Admin";
+    } else {
+        roleName = "Developer";
+    }
+    res.status(200).json({ role: role, roleName: roleName });
 });
 
 // Log Out Button (call this when u log out)
