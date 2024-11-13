@@ -41,10 +41,15 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container mx-auto mt-8">
-        <button onclick="goBack()" class="text-gray-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+
+    <!-- Back Button -->
+    <div class="mx-7 my-7">
+        <button onclick="goBack()" class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
             ← Go back
         </button>
+    </div>
+
+    <div class="container mx-auto mt-8">
 
         <!-- Personal Information Section -->
         <div class="bg-white shadow-md rounded-lg p-6 mb-8">
@@ -59,13 +64,13 @@
 
         <!-- Address Section -->
         <div class="bg-white shadow-md rounded-lg p-6">
-            <h2 class="text-2xl font-semibold mb-4">Address</h2>
+            <div class="text-2xl font-semibold mb-4">Address</div>
+
             <!-- Existing Addresses -->
             <div id="addresses" class="space-y-4 mb-8">
-                <div id="addressContainer" class="flex justify-between items-center border-b pb-4">
+                <ul id="addressContainer" class="flex justify-between items-center border-b pb-4">
                   
-                </div>
-                <button onclick="deleteAddress('address2')" class="text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete</button>
+                </ul>
             </div>
 
             <!-- Add New Address Form -->
@@ -101,11 +106,28 @@
     <script>
         window.onload = function () {
             checkUserRole();
-            loadUserData();
-            // loadAddresses();
-            
-        };
+        
 
+            
+            fetch("/checkrole")
+                .then((response) => {
+                    if (!response.ok) {
+                        // .ok is gives boolean of whether the response status is ok (ok = 200-299, not ok is all others egg 404 or 500)
+                        throw new Error("User not logged in or error fetching role");
+                        // creates a new error which will be caught by the .catch(err.....)
+                    }
+                    return response.json(); // parse the response to the next .then(....)
+                })
+                .then((data) => {
+                    loadUserData();
+                    loadAddress();
+                })
+                .catch((error) => {
+                    console.error(error);
+                    // show that user cannot acces this page
+                });
+        }
+            
         // Go back to the previous page
         function goBack() {
             window.history.back();
@@ -127,84 +149,94 @@
             })
             .catch(error=>{
                 console.error("Error fetching user info:", error);
-            })
-                
-            
+            })  
         }
 
         function loadAddress() {
-                const addressValue = document.getElementById("address").value;
-                fetch(`/address?address=${addressValue}`)
-                    .then(response => response.json())
-                    .then(products => {
-                        const addressContainer = document.getElementById("addressContainer");
-                        addressContainer.innerHTML = ""; // To clear existing html in case we load in categories
+            fetch('/user/addresses')
+            .then(response => response.json())
+            .then(addresses => {
+                console.log(addresses);
+                const addressContainer = document.getElementById("addressContainer");
+                addressContainer.innerHTML = ""; // To clear existing html in case we load in categories
 
-                        address.forEach(address => {
-                            const addressCard = document.createElement("div");
+                addresses.forEach(address => {
+                    const addressCard = document.createElement("li");
 
                             // Frontend edit here!!
                             // Add product card classes for styling (add border for each, rounded, center)
-                            addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
+                    addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
 
                             // Wrap the entire content in an <a> tag to make the the whole card clickable
                             
-                            productLink.innerHTML = `
-                                <alt="${userAddress.addressID}" class="w-full\] h-auto rounded-lg mb-4 text-center flex justify-between">
-                                <div class="product-details text-center">
-                                    <h5 class="text-lg font-semibold mb-2">${userAddress.addressLine1}</h5>
-                                    <p class="text-sm text-gray-500">${userAddress.addressLine2}</p>
-                                    <div class="product-price-stock flex justify-between w-full mt-4 text-sm text-gray-700">
-                                        <p>Postcode: ${userAddress.postcode}</p>
-                                        <p>City: ${userAddress.city}</p>
-                                        <p>Phone Number: ${userAddress.phoneNumber}</p>
-                                    </div>
-                                </div>
-                            `;
+                    addressCard.innerHTML = `
+                    <div>
+                        <h2> ${address.addressLine1} ${address.addressLine2} ${address.city} ${address.postcode} ${address.phoneNumber}
+                        </h2>
+                        <button onclick="deleteAddress(${address.addressID})" class="text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete
+                        </button>
+                    </div>
+                    `;
 
                             // Append the <a> link (entire card) to the product container
-                            productContainer.appendChild(productLink);
-                        });
-                    })
-                    .catch(error => {
-                        console.error("Error fetching products:", error);
-                    });
-            }
+                    addressContainer.appendChild(addressCard);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching address:", error);
+            });
+        }
 
         // Function to add a new address
-        function addAddress(event) {
-            event.preventDefault(); // Prevent form submission
+        function addAddress() {
+            const addressdata = {
+                addressLine1: document.getElementById("address1Field").value,
+                addressLine2: document.getElementById("address2Field").value,
+                postcode: document.getElementById("postcodeField").value,
+                city: document.getElementById("cityField").value,
+                phoneNumber: document.getElementById("phoneField").value
+            };
 
-            // Get the values from the form fields
-            const address1 = document.getElementById("address1Field").value;
-            const address2 = document.getElementById("address2Field").value;
-            const postcode = document.getElementById("postcodeField").value;
-            const city = document.getElementById("cityField").value;
-            const phone = document.getElementById("phoneField").value;
-
-            // Create the new address element
-            const newAddress = document.createElement('div');
-            newAddress.classList.add('flex', 'justify-between', 'items-center', 'border-b', 'pb-4');
-
-            newAddress.innerHTML = `
-                <p>${address1}, ${address2}, ${city} ${postcode}<br>Tel: ${phone}</p>
-                <button onclick="deleteAddress('${address1}')" class="text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete</button>
-            `;
-
-            // Append the new address to the addresses container
-            document.getElementById('addresses').appendChild(newAddress);
-
-            // Optionally, clear the form fields after submission
-            document.getElementById('addressForm').reset();
+            console.log(addressdata);
+    
+            fetch('/user/address', {
+                method:"POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(addressdata)
+            })
+            .then(response=>{
+                if (!response.ok){
+                    throw new Error("User error adding address");
+                }
+                else {
+                    loadAddress();
+                    document.getElementById('addressForm').reset();
+                }
+            })
+            .catch(error => {
+                console.error("Error adding address:", error);
+            });
         }
 
         // Function to delete an address
         function deleteAddress(addressId) {
-            const address = document.getElementById(addressId);
-
-            if (address) {
-                address.remove(); // Remove the address from the DOM
-            }
+            fetch(`/user/address/${addressId}`, {
+                method: "PATCH" 
+            })
+            .then(response=>{
+                if (!response.ok){
+                    throw new Error("User error deletting adddress");
+                }
+                else {
+                
+                    loadAddress();
+                }
+            })
+            .catch(error => {
+                console.error("Error deleting address:", error);
+            })
         }
         
     </script>
