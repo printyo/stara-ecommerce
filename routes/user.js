@@ -83,25 +83,13 @@ router.post("/logout", (req, res) => {
     });
 });
 
-// Display user infomration (Account Page)
+// Display user information (Account Page)
 router.get("/user", (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
     }
 
-    const userID = req.session.user.userID;
-
-    const sql = "SELECT * FROM user WHERE userID = ?";
-
-    db.query(sql, [userID], (err, results) => {
-        if (err) {
-            console.error(error);
-            return res
-                .status(500)
-                .json({ error: "Database error while finding user" });
-        }
-        res.json(results);
-    });
+    res.json(req.session.user);
 });
 
 // Display all addresses from user (Account Page and Checkout Page)
