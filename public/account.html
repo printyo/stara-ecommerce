@@ -86,23 +86,33 @@
                 <form id="addressForm" class="space-y-4" onsubmit="addAddress(event)">
                     <div>
                         <label class="block text-gray-700">Address line 1:</label>
-                        <input type="text" id="address1Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 1" required>
+                        <input type="text" id="address1Field"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Address 1" required maxlength="255">
                     </div>
                     <div>
                         <label class="block text-gray-700">Address line 2:</label>
-                        <input type="text" id="address2Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 2" required>
+                        <input type="text" id="address2Field"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Address 2" required maxlength="255">
                     </div>
                     <div>
                         <label class="block text-gray-700">Postcode:</label>
-                        <input type="text" id="postcodeField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Postcode" required>
+                        <input type="text" id="postcodeField"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Postcode" required maxlength="5">
                     </div>
                     <div>
                         <label class="block text-gray-700">City:</label>
-                        <input type="text" id="cityField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="City" required>
+                        <input type="text" id="cityField"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="City" required maxlength="20">
                     </div>
                     <div>
                         <label class="block text-gray-700">Phone Number:</label>
-                        <input type="text" id="phoneField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Phone Number" required>
+                        <input type="text" id="phoneField"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Phone Number" required maxlength="13">
                     </div>
                     <button type="submit" class="w-full text-white bg-gray-800 py-2 rounded hover:bg-gray-900">Add</button>
                 </form>
