@@ -38,10 +38,10 @@ router.get("/category", (req, res) => {
 router.get("/product/:id", (req, res) => {
     const productID = req.params.id;
     const sql =
-        "SELECT product.*, category.name AS categoryName, category.description AS categoryDescription FROM product JOIN category ON product.categoryID = category.ID WHERE product.ID = ?";
+        "SELECT product.*, category.name AS categoryName, category.description AS categoryDescription FROM product JOIN category ON product.categoryID = category.categoryID WHERE product.productID = ?";
     db.query(sql, [productID], (err, results) => {
         if (err) {
-            console.error(error);
+            console.error(err);
             return res.status(500).json({ error: "Database query error" }); // 500 Internal Server Error
         }
         if (results.length > 0) {
