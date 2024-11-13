@@ -6,7 +6,7 @@ const db = require("./db.js");
 router.post("/signup", (req, res) => {
     const { firstName, lastName, email, password, phoneNumber } = req.body;
     const sql =
-        "INSERT INTO user (firstName, lastName, email, password, phoneNumber) VALUES (?, ?, ?, ?, ?)";
+        "INSERT INTO user (firstName, lastName, email, password, phoneNumber) VALUES (?, ?, ?, AES_ENCRYPT(?, 'lovelove'), ?)";
     db.query(
         sql,
         [firstName, lastName, email, password, phoneNumber],
@@ -30,7 +30,8 @@ router.post("/login", (req, res) => {
         return res.status(400).send("Email and password are required");
     }
 
-    const sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+    const sql =
+        "SELECT userID, firstName, lastName, email, role, phoneNumber  FROM user WHERE email = ? AND password = AES_ENCRYPT(?, 'lovelove')";
     db.query(sql, [email, password], (err, results) => {
         if (err) {
             console.error(err); //output error message
@@ -58,27 +59,17 @@ router.get("/checkrole", (req, res) => {
         return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
     }
 
-    const userID = req.session.user.userID;
+    const role = req.session.user.role;
 
-    const sql = "SELECT role FROM user WHERE userID = ?";
-    db.query(sql, [userID], (err, results) => {
-        if (err) {
-            console.error(err);
-            return res
-                .status(500)
-                .json({ error: "Database error while retrieving role" });
-        }
-        const role = results[0].role;
-        let roleName = null;
-        if (role == 1) {
-            roleName = "Customer";
-        } else if (role == 2) {
-            roleName = "Admin";
-        } else {
-            roleName = "Developer";
-        }
-        res.status(200).json({ role: role, roleName: roleName });
-    });
+    let roleName;
+    if (role == 1) {
+        roleName = "Customer";
+    } else if (role == 2) {
+        roleName = "Admin";
+    } else {
+        roleName = "Developer";
+    }
+    res.status(200).json({ role: role, roleName: roleName });
 });
 
 // Log Out Button (call this when u log out)
@@ -89,6 +80,94 @@ router.post("/logout", (req, res) => {
             return res.status(500).json({ message: "Error logging out" });
         }
         res.status(200).json({ message: "Successfully logged out" });
+    });
+});
+
+// Display user information (Account Page)
+router.get("/user", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    res.json(req.session.user);
+});
+
+// Display all addresses from user (Account Page and Checkout Page)
+router.get("/user/addresses", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    const userID = req.session.user.userID;
+
+    const sql = "SELECT * FROM useraddress WHERE userID = ? AND isActive = 1";
+
+    db.query(sql, [userID], (err, results) => {
+        if (err) {
+            console.error(error);
+            return res
+                .status(500)
+                .json({ error: "Database error while finding user" });
+        }
+        res.json(results);
+    });
+});
+
+// Add new Address for User (Account Page)
+router.post("/user/address", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    const userID = req.session.user.userID;
+    const { addressLine1, addressLine2, postcode, city, phoneNumber } =
+        req.body;
+
+    const sql =
+        "INSERT INTO userAddress (addressLine1, addressLine2, postcode, city, phoneNumber, userID) VALUES (?, ?, ?, ?, ?, ?)";
+    db.query(
+        sql,
+        [addressLine1, addressLine2, postcode, city, phoneNumber, userID],
+        (err, results) => {
+            if (err) {
+                console.error(err); //output error message
+                return res
+                    .status(500)
+                    .json({ error: "Database error while inserting address" });
+            }
+            res.status(201).json({ message: "Address added successfully" }); // 201 = Created
+        }
+    );
+});
+
+// Delete address  for User (Account Page) We do not delete the address because some orders may still require it
+router.patch("/user/address/:id", (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
+    }
+
+    const userID = req.session.user.userID;
+    const addressID = req.params.id;
+
+    // userID is not necessary but it is just another security measure
+    const sql =
+        "UPDATE userAddress SET isActive = 0 WHERE addressID = ? AND userID = ?";
+    db.query(sql, [addressID, userID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                error: "Database error in updating isActive for userAddress",
+            }); // 500 = Internal Server Error
+        }
+
+        if (results.affectedRows > 0) {
+            res.status(200).json({ message: "userAddress has been removed" });
+        } else {
+            res.status(404).json({
+                message:
+                    "Address not found or Address already inActive or UserID and AddressID doesn't match",
+            });
+        }
     });
 });
 
