@@ -171,9 +171,6 @@ router.patch("/admin/product/patch", (req, res) => {
     );
 });
 
-// DELETE PRODUCT VIA NAME
-// TODO:
-
 // GET ALL USERS (CUSTOMER ONLY)
 router.get("/admin/users/customer", (req, res) => {
     if (!req.session.user || req.session.user.role != 2) {
