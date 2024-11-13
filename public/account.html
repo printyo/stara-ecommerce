@@ -49,55 +49,64 @@
         </button>
     </div>
 
-    <div class="container mx-auto mt-8">
+    <div class="container mx-auto mt-8 flex space-x-8">
+        <!-- Left Side: Personal Information and Existing Addresses -->
+        <div class="w-2/3 space-y-8">
 
-        <!-- Personal Information Section -->
-        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
-            <h2 class="text-2xl font-semibold mb-4">Personal Information</h2>
-            <div class="mb-4">
-                <p><strong>First Name:</strong><span id="firstname"></span></p>
-                <p><strong>Last Name:</strong> <span id="lastname"></span></p>
-                <p><strong>Email:</strong> <span id="email"></span></p>
-                <p><strong>Phone Number:</strong> <span id="phonenum"></span></p>
+            <!-- Personal Information Section -->
+            <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Personal Information</h2>
+                <div class="mb-4">
+                    <p><strong>First Name:</strong><span id="firstname"></span></p>
+                    <p><strong>Last Name:</strong> <span id="lastname"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p><strong>Phone Number:</strong> <span id="phonenum"></span></p>
+                </div>
+            </div>
+
+            <!-- Address Section -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="text-2xl font-semibold mb-4">Address</div>
+
+                <!-- Existing Addresses -->
+                <div id="addresses" class="space-y-4 mb-8">
+                    <ul id="addressContainer" class="space-y-4 items-left">
+                    
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Address Section -->
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <div class="text-2xl font-semibold mb-4">Address</div>
-
-            <!-- Existing Addresses -->
-            <div id="addresses" class="space-y-4 mb-8">
-                <ul id="addressContainer" class="flex justify-between items-center border-b pb-4">
-                  
-                </ul>
-            </div>
+        <!-- Right Side: Add New Address Form -->
+        <div class="w-1/3">
 
             <!-- Add New Address Form -->
-            <h2 class="text-2xl font-semibold mb-4">Add New Address</h2>
-            <form id="addressForm" class="space-y-4" onsubmit="addAddress(event)">
-                <div>
-                    <label class="block text-gray-700">Address line 1:</label>
-                    <input type="text" id="address1Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 1" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Address line 2:</label>
-                    <input type="text" id="address2Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 2" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Postcode:</label>
-                    <input type="text" id="postcodeField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Postcode" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">City:</label>
-                    <input type="text" id="cityField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="City" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Phone Number:</label>
-                    <input type="text" id="phoneField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Phone Number" required>
-                </div>
-                <button type="submit" class="w-full text-white bg-gray-800 py-2 rounded hover:bg-gray-900">Add</button>
-            </form>
+            <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Add New Address</h2>
+                <form id="addressForm" class="space-y-4" onsubmit="addAddress(event)">
+                    <div>
+                        <label class="block text-gray-700">Address line 1:</label>
+                        <input type="text" id="address1Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 1" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Address line 2:</label>
+                        <input type="text" id="address2Field" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Address 2" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Postcode:</label>
+                        <input type="text" id="postcodeField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Postcode" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">City:</label>
+                        <input type="text" id="cityField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="City" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Phone Number:</label>
+                        <input type="text" id="phoneField" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500" placeholder="Phone Number" required>
+                    </div>
+                    <button type="submit" class="w-full text-white bg-gray-800 py-2 rounded hover:bg-gray-900">Add</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -165,15 +174,18 @@
 
                             // Frontend edit here!!
                             // Add product card classes for styling (add border for each, rounded, center)
-                    addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
+                    addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col");
 
                             // Wrap the entire content in an <a> tag to make the the whole card clickable
                             
                     addressCard.innerHTML = `
                     <div>
-                        <h2> ${address.addressLine1} ${address.addressLine2} ${address.city} ${address.postcode} ${address.phoneNumber}
+                        <h2> ${address.addressLine1} <br>
+                            ${address.addressLine2} <br>
+                            ${address.city} ${address.postcode} <br>
+                            Tel.${address.phoneNumber}
                         </h2>
-                        <button onclick="deleteAddress(${address.addressID})" class="text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete
+                        <button onclick="deleteAddress(${address.addressID})" class="my-4 text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete
                         </button>
                     </div>
                     `;

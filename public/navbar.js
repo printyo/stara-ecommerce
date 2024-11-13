@@ -81,6 +81,7 @@ function setupNavBar(role) {
         // Right most = Logout
         login.remove();
         rightdiv.appendChild(logoutLink);
+        logout(); // call add event listener below
     } else if (role == 3) {
         // Developer
         // Show Cart
@@ -93,8 +94,8 @@ function setupNavBar(role) {
         // Right most = Logout
         login.remove();
         rightdiv.appendChild(logoutLink);
+        logout(); // call add event listener below
     }
-    logout(); // call add event listener below
 }
 
 function logout() {
