@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("./db.js");
 const multer = require("multer"); // For file upload
+const path = require("path");
 
 // Set up storage for uploaded files (Call function below in const upload)
 const storage = multer.diskStorage({
@@ -17,14 +18,22 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Checkout page
-router.post("/checkout", upload.single("reciept"), (req, res) => {
+router.post("/checkout", upload.single("receipt"), (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ error: "User not logged in" }); // 401 = unauthorized
     }
 
     const userID = req.session.user.userID;
     const { totalAmount, addressID, cartItems } = req.body;
-    const receiptPath = req.file ? req.file.path : null; // Get the path of the uploaded image (if uploaded if not then null)
+    let receiptPath = req.file ? req.file.path : null; // Get the path of the uploaded image (if uploaded if not then null)
+    receiptPath = receiptPath.replace("uploads/", ""); // Remove the folder location
+    // console.log(receiptPath);
+    // console.log(totalAmount);
+    // console.log(addressID);
+    // console.log(cartItems);
+
+    // From frontend you have an array, convert to JSON to be transfered to the backend and convert back to array
+    const parsedCartItems = JSON.parse(cartItems); // Convert cartItems from JSON string to an array
 
     // 1: Create a new entry in the orderDetails
     const insertSQL =
@@ -39,12 +48,13 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
 
         const orderID = results.insertId; // InsertID is a value returned from INSERT query when you auto-increment PK
         // 2. Copy cart into orderItems
-        const orderItems = cartItems.map((item) => [
+        const orderItems = parsedCartItems.map((item) => [
             // Map transform array into new array / forEach executes on each item but does not create new array
             orderID,
             item.productID,
-            item.stock,
+            item.quantity,
         ]);
+        // console.log([orderItems]);
         // Eg.
         // [
         //     { productID: 1, quantity: 2 },
@@ -58,7 +68,7 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
 
         const insertSQLorderItems =
             "INSERT INTO orderItems (orderID, productID, quantity) VALUES ?";
-        db.query(insertSQLorderItems, orderItems, (err) => {
+        db.query(insertSQLorderItems, [orderItems], (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).json({
@@ -71,7 +81,7 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
                 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
                 return new Promise((resolve, reject) => {
                     const updateSQLstock =
-                        "UPDATE products SET stock = stock - ? WHERE productID = ?";
+                        "UPDATE product SET stock = stock - ? WHERE productID = ?";
 
                     db.query(updateSQLstock, [item[2], item[1]], (err) => {
                         // item[2] = stock, item[1] = productID, item[0] = orderID (we don't use)
@@ -79,6 +89,7 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
                             console.error(err);
                             return reject(err);
                         }
+                        resolve();
                     });
                 });
             });
@@ -90,7 +101,6 @@ router.post("/checkout", upload.single("reciept"), (req, res) => {
             Promise.all(updateStock)
                 .then(() => {
                     // Check if completed all update
-
                     // 4. Delete Cart
                     const deleteSQLcart = "DELETE FROM cart WHERE userID = ?";
                     db.query(deleteSQLcart, [userID], (err) => {
