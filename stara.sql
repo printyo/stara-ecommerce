@@ -184,7 +184,7 @@ CREATE TABLE `user` (
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varbinary(500) NOT NULL,
   `role` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=customer,2=admin,3=developer',
   `phoneNumber` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -194,9 +194,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `role`, `phoneNumber`) VALUES
-(1, 'Customer', 'Account', 'c@gmail.com', '123', 1, '099999999'),
-(2, 'Admin', 'Acc', 'a@gmail.com', '123', 2, '1234567891'),
-(3, 'Dev', 'eloper', 'd@gmail.com', '123', 3, '0123456789');
+(1, 'Customer', 'Account', 'c@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '099999999'),
+(2, 'Admin', 'Acc', 'a@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 2, '1234567891'),
+(3, 'Dev', 'eloper', 'd@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 3, '0123456789');
 
 -- --------------------------------------------------------
 
