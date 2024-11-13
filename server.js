@@ -14,6 +14,9 @@ const port = 3000;
 
 const db = require("./routes/db");
 
+// Already Prevents SQL Injection: Prepared Statements or Bind Params
+// https://www.geeksforgeeks.org/how-to-use-prepared-statements-in-mysql-with-nodejs/
+
 // Middleware (need to send information back and forth from server.js to where you fetch data)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
