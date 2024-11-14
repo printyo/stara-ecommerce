@@ -85,7 +85,7 @@ router.get("/admindev/chat", (req, res) => {
     }
 
     sql =
-        "SELECT devChat.*, user.firstName, user.lastName, user.role, DATE_FORMAT(devChat.dateTime, '%d/%m/%Y %H:%i') AS date_time FROM devChat JOIN user ON devChat.userID = user.userID";
+        "SELECT devChat.*, user.firstName, user.lastName, user.role, DATE_FORMAT(devChat.dateTime, '%d/%m/%Y %H:%i') AS date_time FROM devChat JOIN user ON devChat.userID = user.userID ORDER BY dateTime DESC";
     db.query(sql, (err, results) => {
         if (err) {
             console.error(err);
@@ -178,7 +178,8 @@ router.get("/admin/users/customer", (req, res) => {
         return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
     }
 
-    const sql = "SELECT * FROM user WHERE ROLE = 1";
+    const sql =
+        "SELECT userID, firstName, lastName, role, email FROM user WHERE ROLE = 1";
     db.query(sql, (err, results) => {
         if (err) {
             console.error(err);
@@ -219,7 +220,8 @@ router.get("/dev/users/admin", (req, res) => {
         return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
     }
 
-    const sql = "SELECT * FROM user WHERE ROLE = 2";
+    const sql =
+        "SELECT userID, firstName, lastName, role, email FROM user WHERE ROLE = 2";
     db.query(sql, (err, results) => {
         if (err) {
             console.error(err);
