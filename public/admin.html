@@ -63,6 +63,8 @@
             <div id="orderContainer" class="bg-blue-500 p-5">
 
             </div>
+            <input id="chatInput" type="text" class="w-64 h-10 bg-gray-300">
+            <button onclick="sendChat()">Send</button>
             <div id="chatContainer" class="bg-pink-500 p-5">
 
             </div>
@@ -83,6 +85,16 @@
     <script>
         window.onload = function () {
             checkUserRole();
+            fetch("/checkrole")
+                .then(response => {
+                    if (response.ok) {
+                        loadChat();
+                        loadUsers();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
 
         function loadOrders() {
@@ -94,11 +106,61 @@
         }
 
         function loadChat() {
-
+            fetch("/admindev/chat")
+                .then(response => response.json())
+                .then(chat => {
+                    const chatContainer = document.getElementById("chatContainer");
+                    chatContainer.innerHTML = "";
+                    chat.forEach(element => {
+                        const chatCard = document.createElement("div");
+                        let rolename;
+                        if (element.role == 2) {
+                            rolename = "Admin";
+                        } else {
+                            rolename = "Developer";
+                        }
+                        chatCard.innerHTML = `
+                        
+                        <h3>${element.firstName} ${element.lastName} - ${rolename}</h3>
+                        <h3>${element.date_time}</h3>
+                        <p>${element.chat}</p>
+                        `;
+                        chatContainer.appendChild(chatCard);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
 
         function sendChat() {
+            const chatInput = document.getElementById("chatInput");
+            if (chatInput.value.trim() === "") {
+                alert("Cannot send empty message");
+                return;
+            }
+            const chatContent = chatInput.value;
+            chatInput.value = "";
 
+            fetch("/admindev/chat", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat: chatContent
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        loadChat();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
 
         function addProduct() {
@@ -114,11 +176,43 @@
         }
 
         function loadUsers() {
-
+            const userContainer = document.getElementById("userContainer");
+            userContainer.innerHTML = "";
+            fetch("/admin/users/customer")
+                .then(response => response.json())
+                .then(users => {
+                    users.forEach(user => {
+                        const userCard = document.createElement("div");
+                        userCard.innerHTML = `
+                        <div>
+                            <h3>${user.firstName} ${user.lastName} - Customer</h3>
+                            <h4>${user.email}</h4>
+                        </div>
+                        <button onclick="makeAdmin(${user.userID})">Make Admin</button>
+                        `;
+                        userContainer.appendChild(userCard);
+                    })
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
 
-        function makeAdmin() {
-
+        function makeAdmin(userID) {
+            fetch(`/admin/user/${userID}`, {
+                method: "PATCH"
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error changing to a Admin");
+                    } else {
+                        alert("Successfully changed to a Admin");
+                        loadUsers();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
     </script>
 </body>
