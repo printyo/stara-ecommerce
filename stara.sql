@@ -66,6 +66,7 @@ INSERT INTO `category` (`categoryID`, `name`, `description`) VALUES
 CREATE TABLE `devChat` (
   `devChatID` int(11) NOT NULL,
   `chat` varchar(255) NOT NULL COMMENT 'Discuss Problems with Developer',
+  `dateTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

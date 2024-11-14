@@ -84,7 +84,8 @@ router.get("/admindev/chat", (req, res) => {
         return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
     }
 
-    sql = "SELECT * FROM devChat";
+    sql =
+        "SELECT devChat.*, user.firstName, user.lastName, user.role, DATE_FORMAT(devChat.dateTime, '%d/%m/%Y %H:%i') AS date_time FROM devChat JOIN user ON devChat.userID = user.userID";
     db.query(sql, (err, results) => {
         if (err) {
             console.error(err);
