@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <!-- STARA Logo -->
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
+
+            <!-- Navbar Links -->
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                    <li id="home">
+                        <a href="/home.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                    </li>
+                    <li id="browse">
+                        <a href="/browse.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                    </li>
+                    <li id="cart">
+                        <a href="/cart.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                    </li>
+                    <li id="order">
+                        <a href="/vieworder.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View Your Order</a>
+                    </li>
+                    <li id="account">
+                        <a href="/account.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right side: Log in link -->
+            <div id="rightdiv" class="ml-auto">
+                <a id="login" class="text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0" href="/login.html">Log in</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 mt-8">
+        <!-- Back Button -->
+        <div class="mx-7 my-7">
+            <button onclick="goBack()" class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+                ← Go back
+            </button>
+        </div>
+
+        <!-- Order Container -->
+        <div id="orderContainer" class="space-y-6 mt-4">
+            <!-- Dynamic order content will be loaded here -->
+        </div>
+
+    </div>
+
+    <script>
+        window.onload = function () {
+            loadOrder();
+        }
+
+        function loadOrder() {
+            const orderContainer = document.getElementById("orderContainer");
+            fetch("/orders")
+                .then(response => response.json())
+                .then(orderSet => {
+                    orderContainer.innerHTML = ""; // Clear existing content
+                    orderSet.forEach(order => {
+                        const orderCon = document.createElement("div");
+                        orderCon.className = "bg-white shadow-md rounded-lg mt-6 p-4";
+
+                        orderCon.innerHTML = `
+                            <h2 class="text-2xl font-semibold mb-4">Order #${order.orderID}</h2>
+                            
+                            <div id="productContainer-${order.orderID}" class="space-y-4"></div>
+                            <div class="bg-white shadow-md rounded-lg p-4 mt-3">
+                                <h3 class="text-lg font-semibold mb-2">Shipping Address</h3>
+                                <p>${order.addressLine1} ${order.addressLine2} ${order.city}, ${order.postcode}</p>
+                                <p>Phone: ${order.phoneNumber}</p>
+                            </div>
+                            
+                            <div id="statusContainer-${order.orderID}" class="bg-white shadow-md rounded-lg p-4 mt-4"></div>
+                            
+                            <div class="bg-white shadow-md rounded-lg p-4 mt-4">
+                                <div class="text-lg font-semibold flex justify-between">
+                                    <span>Total:</span>
+                                    <span>${order.total} Baht</span>
+                                </div>
+                                <p class="text-gray-500 mt-4">Free Shipping</p>
+                            </div>
+                        `;
+
+                        // Fetch order items for this order
+                        fetch(`/orderitems/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(items => {
+                                const productContainer = document.getElementById(`productContainer-${order.orderID}`);
+                                items.forEach(product => {
+                                    const productItem = document.createElement("div");
+                                    productItem.className = "flex items-center border-b py-4";
+
+                                    productItem.innerHTML = `
+                                        <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-20 h-20 object-cover rounded mr-4">
+                                        <div class="flex-grow">
+                                            <h3 class="text-lg font-semibold">${product.name}</h3>
+                                            <p class="text-gray-600">${product.price} Baht</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-gray-600">x ${product.quantity}</p>
+                                        </div>
+                                    `;
+                                    productContainer.appendChild(productItem);
+                                });
+                            })
+                            .catch(error => console.error(error));
+
+                        // Fetch order status for this order
+                        fetch(`/orderstatus/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(statusSet => {
+                                const statusContainer = document.getElementById(`statusContainer-${order.orderID}`);
+                                statusSet.forEach(status => {
+                                    const statusItem = document.createElement("div");
+                                    statusItem.className = "border-b py-2";
+
+                                    let statusText = "";
+                                    switch (status.status) {
+                                        case "1": statusText = "Pending"; break;
+                                        case "2": statusText = "Payment Confirmed"; break;
+                                        case "3": statusText = "Processing"; break;
+                                        case "4": statusText = "Shipped"; break;
+                                        case "5": statusText = "Delivered"; break;
+                                        case "6": statusText = "Payment Failed"; break;
+                                        default: statusText = "Unknown"; break;
+                                    }
+
+                                    statusItem.innerHTML = `
+                                        <p class="text-sm text-gray-600">${status.dateTime} - ${status.remark || "No remarks"} (${statusText})</p>
+                                    `;
+                                    statusContainer.appendChild(statusItem);
+                                });
+                            })
+                            .catch(error => console.error(error));
+
+                        // Append the order details to the main container
+                        orderContainer.appendChild(orderCon);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>

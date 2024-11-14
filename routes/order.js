@@ -182,7 +182,7 @@ router.get("/orderitems/:orderID", (req, res) => {
     const orderID = req.params.orderID;
 
     const sql =
-        "SELECT orderItems.*, product.name, product.price FROM orderItems JOIN product ON orderItems.productID = product.productID WHERE orderItems.orderID = ?";
+        "SELECT orderItems.*, product.name, product.price, product.imageURL FROM orderItems JOIN product ON orderItems.productID = product.productID WHERE orderItems.orderID = ?";
     db.query(sql, [orderID], (err, results) => {
         if (err) {
             console.error(err);
