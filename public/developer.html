@@ -78,8 +78,16 @@
     <script>
         window.onload = function () {
             checkUserRole();
-            loadChat();
-            loadUsers();
+            fetch("/checkrole")
+                .then(response => {
+                    if (response.ok) {
+                        loadChat();
+                        loadUsers();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
 
         function loadChat() {
