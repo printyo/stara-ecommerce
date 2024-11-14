@@ -125,7 +125,7 @@
                 return;
             }
             const chatContent = chatInput.value;
-            console.log(chatContent);
+            chatInput.value = "";
 
             fetch("/admindev/chat", {
                 method: "POST",
