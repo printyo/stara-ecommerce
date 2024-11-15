@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Details</title>
-  <link href="./css/styles.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link href="./css/styles.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100">
@@ -12,38 +13,44 @@
     <nav class="bg-white border-gray-200 shadow-lg">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
             <!-- Left side: STARA and Navbar Links -->
-            
-                <!-- STARA Logo -->
-                <a href="/home.html">
-                    <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
-                </a>
-                
-                <!-- Navbar Links -->
-                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul 
+
+            <!-- STARA Logo -->
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
+
+            <!-- Navbar Links -->
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul
                     class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
-                        <li id="home">
-                            <a href="/home.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
-                        </li>
-                        <li id="browse">
-                            <a href="/browse.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
-                        </li>
-                        <li id="cart">
-                            <a href="/cart.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
-                        </li>
-                        <li id="order">
-                            <a href="/vieworder.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View Your Order</a>
-                        </li>
-                        <li id="account">
-                            <a href="/account.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
-                        </li>
-                    </ul>
-                </div>
-           
-    
+                    <li id="home">
+                        <a href="/home.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                    </li>
+                    <li id="browse">
+                        <a href="/browse.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                    </li>
+                    <li id="cart">
+                        <a href="/cart.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                    </li>
+                    <li id="order">
+                        <a href="/vieworder.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View
+                            Your Order</a>
+                    </li>
+                    <li id="account">
+                        <a href="/account.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                    </li>
+                </ul>
+            </div>
+
+
             <!-- Right side: Log in link -->
             <div id="rightdiv" class="ml-auto">
-                <a id="login" 
+                <a id="login"
                     class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
                     href="/login.html">
                     Log in
@@ -52,72 +59,165 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
 
     <!-- Back Button -->
     <div class="mx-7 my-7">
-        <button onclick="goBack()" class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+        <button onclick="goBack()"
+            class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
             ← Go back
         </button>
     </div>
 
     <div class="container mx-auto px-4">
-        <!-- Order ID -->
-        <h2 class="text-2xl font-semibold mt-4">Order ID: 000001</h2>
 
-        <!-- Product List -->
-        <div class="bg-white shadow-md rounded-lg mt-6">
-            <!-- Product Item 1 -->
-            <div class="flex items-center border-b border-gray-200 p-4">
-                <img src="path-to-basic-tshirt-image" alt="Basic T-Shirt" class="w-20 h-20 object-cover rounded-md mr-4">
-                <div class="flex-grow">
-                    <h3 class="text-lg font-semibold">Basic T-Shirt</h3>
-                    <p class="text-gray-600">1,190 Baht</p>
-                </div>
-                <div class="text-right">
-                    <p class="text-gray-600">x 1</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Price -->
-        <div class="flex  bg-white shadow-md rounded-lg p-4 mt-4">
-            <div class="text-lg font-semibold items-right">Total:</div>
-            <div class="text-lg font-semibold">3,780 Baht</div>
-            <p class="text-gray-500 mt-7">Free Shipping</p>
-        </div>
-
-        <!-- Shipping Address -->
-        <div class="bg-white shadow-md rounded-lg p-4 mt-3">
-            <h3 class="text-lg font-semibold mb-2">Shipping Address</h3>
-            <p>John Lovehippopo</p>
-            <p>123 Soi Moodeeng, Pestothepenguin Bangkok 101</p>
-            <p>Tel : 091-234-5678</p>
-        </div>
-
-        <!-- Order Status -->
-        <div class="bg-white shadow-md rounded-lg p-4 mt-6">
-            <h3 class="text-lg font-semibold mb-2">Status</h3>
-            <div class="border border-gray-300 p-2 rounded mb-2">
-            <p class="text-gray-600 text-sm">10/10/10 18:00 : "Remark" - Processing</p>
-            </div>
-            <div class="border border-gray-300 p-2 rounded">
-            <p class="text-gray-600 text-sm">10/10/10 19:00 : "Remark" - Payment Confirmed</p>
-            </div>
+        <!-- orderItems -->
+        <div id="orderContainer" class="space-y-2 mt-2">
         </div>
     </div>
 
-        <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
-        <script>
-            window.onload = function () {
-                checkUserRole();
-            };
+    <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
+    <script>
+        window.onload = function () {
+            checkUserRole();
+
+            fetch("/checkrole")
+                .then((response) => {
+                    if (!response.ok) {
+                        // .ok is gives boolean of whether the response status is ok (ok = 200-299, not ok is all others egg 404 or 500)
+                        throw new Error("User not logged in or error fetching role");
+                        // creates a new error which will be caught by the .catch(err.....)
+                    }
+                    return response.json(); // parse the response to the next .then(....)
+                })
+                .then((data) => {
+                    loadOrder();
+                })
+                .catch((error) => {
+                    console.error(error);
+                    // show that user cannot acces this page
+
+                });
+        }
+
+        function loadOrder() {
+            const orderContainer = document.getElementById("orderContainer");
+            fetch("/orders")
+                .then(response => response.json())
+                .then(orderSet => {
+                    orderContainer.innerHTML = ""; //clear stuff inside
+                    orderSet.forEach(order => {
+                        orderCon = document.createElement("div");
+                        // add to separate cart
+                        orderCon.className = "bg-white shadow-md rounded-lg mt-6 p-4";
+                        // productContainer-${order.orderID} = to separate each order that contain the same product
+                        orderCon.innerHTML = `
+                            <h2 class="text-2xl font-semibold ">Order #${order.orderID}</h2>
+                            
+                            <div id="productContainer-${order.orderID}" class="space-y-4"></div>
+                            <div class="bg-white shadow-md rounded-lg p-4 mt-3">
+                                <h3 class="text-lg font-semibold mb-2">Shipping Address</h3>
+                                <p>${order.addressLine1} <br>${order.addressLine2} <br>${order.city} ${order.postcode}</p>
+                                <p>Tel.${order.phoneNumber}</p>
+                            </div>
+                            <div id="statusContainer-${order.orderID}" class="bg-white shadow-md rounded-lg p-4 mt-4"></div>
+                            `;
+                        fetch(`/orderitems/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(items => {
+                                const productContainer = document.getElementById(`productContainer-${order.orderID}`);
+                                items.forEach(product => {
+                                    const productSingle = document.createElement("div");
+                                    productSingle.innerHTML = `
+                                            <div class="flex items-center space-x-4 mt-4">
+                                                <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-32 h-32 object-cover rounded mr-4 my-4">
+                                                <div class="flex-grow">
+                                                    <h3 class="text-lg font-semibold">${product.name}</h3>
+                                                    <p class="text-gray-600">${product.price} Baht</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-gray-600">x ${product.quantity}</p>
+                                                </div>
+                                            </div>
+                                        `;
+                                    productContainer.appendChild(productSingle);
+                                })
+                                const total = document.createElement('div');
+                                total.innerHTML = `
+                                    <div class="bg-white shadow-md rounded-lg p-4 mt-4 my-1">
+                                        <div class="text-lg font-semibold  text-right">
+                                            <span>Total: ${order.Total} Baht</span>
+                                        </div>
+                                        <p class="text-gray-500 mt-4 text-right">Free Shipping</p>
+                                    </div>
+                                    `;
+                                productContainer.appendChild(total);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            })
+
+                        fetch(`/orderstatus/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(statusSet => {
+                                const statusContainer = document.getElementById(`statusContainer-${order.orderID}`);
+                                statusSet.forEach(status => {
+                                    const statusSingle = document.createElement("div");
+                                    let remark;
+                                    if (!status.remark) {
+                                        remark = "";
+                                    }
+                                    else {
+                                        remark = status.remark;
+                                    }
+
+                                    let statusword;
+                                    if (status.status == "1") {
+                                        statusword = "Pending";
+                                    } else if (status.status == "2") {
+                                        statusword = "Payment Confirmed";
+                                    } else if (status.status == "3") {
+                                        statusword = "Processing";
+                                    } else if (status.status == "4") {
+                                        statusword = "Shipped";
+                                    } else if (status.status == "5") {
+                                        statusword = "Delivered";
+                                    } else if (status.status == "6") {
+                                        statusword = "Payment Failed";
+                                    }
+                                    statusSingle.innerHTML = `
+                                  
+                                            <p class="text-sm text-gray-600">
+                                                ${status.date_time} - ${remark || "No remarks"} (${statusword})
+                                            </p>   
+                                            `;
+
+                                    statusContainer.appendChild(statusSingle);
+                                })
+
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            })
 
 
-            // Go back to the previous page
-            function goBack() {
-                window.history.back();
-            }
-        </script>
 
-    </body>
+                        orderContainer.appendChild(orderCon);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+
+        }
+
+
+        // Go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+
 </html>
