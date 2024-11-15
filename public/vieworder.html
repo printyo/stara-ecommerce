@@ -76,43 +76,42 @@
         </div>
     </div>
 
-        <script src="./navbar.js"
-            defer> // defer is an attribute that excutes after the html have finish loading</script>
-        <script>
-            window.onload = function () {
-                checkUserRole();
+    <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
+    <script>
+        window.onload = function () {
+            checkUserRole();
 
-                fetch("/checkrole")
-                    .then((response) => {
-                        if (!response.ok) {
-                            // .ok is gives boolean of whether the response status is ok (ok = 200-299, not ok is all others egg 404 or 500)
-                            throw new Error("User not logged in or error fetching role");
-                            // creates a new error which will be caught by the .catch(err.....)
-                        }
-                        return response.json(); // parse the response to the next .then(....)
-                    })
-                    .then((data) => {
-                        loadOrder();
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                        // show that user cannot acces this page
+            fetch("/checkrole")
+                .then((response) => {
+                    if (!response.ok) {
+                        // .ok is gives boolean of whether the response status is ok (ok = 200-299, not ok is all others egg 404 or 500)
+                        throw new Error("User not logged in or error fetching role");
+                        // creates a new error which will be caught by the .catch(err.....)
+                    }
+                    return response.json(); // parse the response to the next .then(....)
+                })
+                .then((data) => {
+                    loadOrder();
+                })
+                .catch((error) => {
+                    console.error(error);
+                    // show that user cannot acces this page
 
-                    });
-            }
+                });
+        }
 
-            function loadOrder() {
-                const orderContainer = document.getElementById("orderContainer");
-                fetch("/orders")
-                    .then(response => response.json())
-                    .then(orderSet => {
-                        orderContainer.innerHTML = ""; //clear stuff inside
-                        orderSet.forEach(order => {
-                            orderCon = document.createElement("div");
-                            // add to separate cart
-                            orderCon.className = "bg-white shadow-md rounded-lg mt-6 p-4";
-                            // productContainer-${order.orderID} = to separate each order that contain the same product
-                            orderCon.innerHTML = `
+        function loadOrder() {
+            const orderContainer = document.getElementById("orderContainer");
+            fetch("/orders")
+                .then(response => response.json())
+                .then(orderSet => {
+                    orderContainer.innerHTML = ""; //clear stuff inside
+                    orderSet.forEach(order => {
+                        orderCon = document.createElement("div");
+                        // add to separate cart
+                        orderCon.className = "bg-white shadow-md rounded-lg mt-6 p-4";
+                        // productContainer-${order.orderID} = to separate each order that contain the same product
+                        orderCon.innerHTML = `
                             <h2 class="text-2xl font-semibold ">Order #${order.orderID}</h2>
                             
                             <div id="productContainer-${order.orderID}" class="space-y-4"></div>
@@ -123,13 +122,13 @@
                             </div>
                             <div id="statusContainer-${order.orderID}" class="bg-white shadow-md rounded-lg p-4 mt-4"></div>
                             `;
-                            fetch(`/orderitems/${order.orderID}`)
-                                .then(response => response.json())
-                                .then(items => {
-                                    const productContainer = document.getElementById(`productContainer-${order.orderID}`);
-                                    items.forEach(product => {
-                                        const productSingle = document.createElement("div");
-                                        productSingle.innerHTML = `
+                        fetch(`/orderitems/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(items => {
+                                const productContainer = document.getElementById(`productContainer-${order.orderID}`);
+                                items.forEach(product => {
+                                    const productSingle = document.createElement("div");
+                                    productSingle.innerHTML = `
                                             <div class="flex items-center space-x-4 mt-4">
                                                 <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-32 h-32 object-cover rounded mr-4 my-4">
                                                 <div class="flex-grow">
@@ -141,10 +140,10 @@
                                                 </div>
                                             </div>
                                         `;
-                                        productContainer.appendChild(productSingle);
-                                    })
-                                    const total = document.createElement('div');
-                                    total.innerHTML = `
+                                    productContainer.appendChild(productSingle);
+                                })
+                                const total = document.createElement('div');
+                                total.innerHTML = `
                                     <div class="bg-white shadow-md rounded-lg p-4 mt-4 my-1">
                                         <div class="text-lg font-semibold  text-right">
                                             <span>Total: ${order.Total} Baht</span>
@@ -152,83 +151,72 @@
                                         <p class="text-gray-500 mt-4 text-right">Free Shipping</p>
                                     </div>
                                     `;
-                                    productContainer.appendChild(total);
-                                })
-                                .catch(error => {
-                                    console.error(error);
-                                })
+                                productContainer.appendChild(total);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            })
 
-                            fetch(`/orderstatus/${order.orderID}`)
-                                .then(response => response.json())
-                                .then(statusSet => {
-                                    console.log(statusSet);
-                                    const statusContainer = document.getElementById(`statusContainer-${order.orderID}`);
-                                    statusSet.forEach(status => {
-                                        const statusSingle = document.createElement("div");
-                                        console.log(status.remark);
-                                        let remark;
-                                        if (!status.remark) {
-                                            remark = "";
-                                        }
-                                        else {
-                                            remark = status.remark;
-                                        }
+                        fetch(`/orderstatus/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(statusSet => {
+                                const statusContainer = document.getElementById(`statusContainer-${order.orderID}`);
+                                statusSet.forEach(status => {
+                                    const statusSingle = document.createElement("div");
+                                    let remark;
+                                    if (!status.remark) {
+                                        remark = "";
+                                    }
+                                    else {
+                                        remark = status.remark;
+                                    }
 
-                                        let statusword;
-                                        if (status.status = "1") {
-                                            statusword = "Pending";
-                                        }
-                                        if (status.status = "2") {
-                                            statusword = "Payment Confirmed";
-                                        }
-                                        if (status.status = "3") {
-                                            statusword = "Processing";
-                                        }
-                                        if (status.status = "4") {
-                                            statusword = "Shipped";
-                                        }
-                                        if (status.status = "5") {
-                                            statusword = "Delivered";
-                                        }
-                                        if (status.status = "6") {
-                                            statusword = "Payment Failed";
-                                        }
-                                        else {
-                                            status = "";
-                                        }
-
-                                        statusSingle.innerHTML = `
+                                    let statusword;
+                                    if (status.status == "1") {
+                                        statusword = "Pending";
+                                    } else if (status.status == "2") {
+                                        statusword = "Payment Confirmed";
+                                    } else if (status.status == "3") {
+                                        statusword = "Processing";
+                                    } else if (status.status == "4") {
+                                        statusword = "Shipped";
+                                    } else if (status.status == "5") {
+                                        statusword = "Delivered";
+                                    } else if (status.status == "6") {
+                                        statusword = "Payment Failed";
+                                    }
+                                    statusSingle.innerHTML = `
                                   
                                             <p class="text-sm text-gray-600">
-                                                ${status.dateTime} - ${remark || "No remarks"} (${statusword})
+                                                ${status.date_time} - ${remark || "No remarks"} (${statusword})
                                             </p>   
                                             `;
 
-                                        statusContainer.appendChild(statusSingle);
-                                    })
-
-                                })
-                                .catch(error => {
-                                    console.error(error);
+                                    statusContainer.appendChild(statusSingle);
                                 })
 
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            })
 
 
-                            orderContainer.appendChild(orderCon);
-                        });
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    })
 
-            }
+                        orderContainer.appendChild(orderCon);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+
+        }
 
 
-            // Go back to the previous page
-            function goBack() {
-                window.history.back();
-            }
-        </script>
+        // Go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 
 </body>
 

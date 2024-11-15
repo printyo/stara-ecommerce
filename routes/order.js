@@ -199,7 +199,8 @@ router.get("/orderitems/:orderID", (req, res) => {
 router.get("/orderstatus/:orderID", (req, res) => {
     const orderID = req.params.orderID;
 
-    const sql = "SELECT * FROM orderStatusHistory WHERE orderID = ?";
+    const sql =
+        "SELECT *, DATE_FORMAT(dateTime, '%d/%m/%Y %H:%i') AS date_time FROM orderStatusHistory WHERE orderID = ?";
     db.query(sql, [orderID], (err, results) => {
         if (err) {
             console.error(err);
