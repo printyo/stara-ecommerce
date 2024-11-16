@@ -58,20 +58,38 @@
             </div>
         </div>
     </nav>
+
+    <!-- Main Content -->
+    <div class="mx-7 my-7">
+        <button onclick="goBack()" class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+            ← Go back
+        </button>
+    </div>
+
+
     <main class="grid grid-cols-2">
         <div id="LHS" class="flex flex-col">
-            <div id="orderContainer" class="bg-blue-500 p-5">
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-20 mx-8 text-center">Order</h2>
+            <div id="orderContainer">
 
             </div>
-            <input id="chatInput" type="text" class="w-64 h-10 bg-gray-300">
-            <button onclick="sendChat()">Send</button>
-            <div id="chatContainer" class="bg-pink-500 p-5">
+
+            <div class="bg-white mt-6 p-4 my-4">
+                <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-48 mx-8 text-center">Chat with Developer</h2>
+                <input id="chatInput" type="text" class="w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Problem">
+                <button onclick="sendChat()" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Send</button>
+            </div>
+
+            <div id="chatContainer" class="text-sm text-black-600">
+            
 
             </div>
         </div>
+
         <div id="RHS" class="flex flex-col">
+
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">Add New Product</h2>
             <div id="addContainer" class="bg-green-500 p-5">
-                <h2>Add Products</h2>
                 <h3>Product Name:</h3>
                 <input type="text" id="productName" required>
                 <h3>Product Price:</h3>
@@ -88,8 +106,9 @@
                 </select>
                 <button onclick="addProduct()">Add Product</button>
             </div>
+
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">Edit Products</h2>
             <div id="editContainer" class="bg-red-500 p-5">
-                <h2>Edit Products</h2>
                 <h3>Product Name:</h3>
                 <input type="text" id="productNameEdit" required>
                 <button onclick="searchProduct()">Search</button>
@@ -108,11 +127,15 @@
                 </select>
                 <button onclick="editProduct()">Edit Product</button>
             </div>
+
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">List of Users</h2>
             <div id="userContainer" class="bg-yellow-500 p-5">
 
             </div>
         </div>
     </main>
+
+
     <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
     <script>
         window.onload = function () {
@@ -141,32 +164,34 @@
                     orderSet.forEach(order => {
                         orderCon = document.createElement("div");
                         // add to separate cart
-                        orderCon.className = "bg-white shadow-md rounded-lg mt-6 p-4";
+                        orderCon.className = "bg-white mt-6 p-4";
                         // productContainer-${order.orderID} = to separate each order that contain the same product
                         orderCon.innerHTML = `
-                            <h2 class="text-2xl font-semibold ">Order #${order.orderID}</h2>
+                            <h2 class="text-lg font-semibold">Order ID: 00000${order.orderID}</h2>
                             
-                            <div id="productContainer-${order.orderID}" class="space-y-4"></div>
-                            <div class="bg-white shadow-md rounded-lg p-4 mt-3">
-                                <h3 class="text-lg font-semibold mb-2">Shipping Address</h3>
-                                <p>${order.addressLine1} ${order.addressLine2} <br>${order.city} ${order.postcode}</p>
-                                <p>Tel.${order.phoneNumber}</p>
-                            </div>
-                            <div id="statusContainer-${order.orderID}" class="bg-white shadow-md rounded-lg p-4 mt-4"></div>
+                            <div id="productContainer-${order.orderID}" class="space-y-2"></div>
+                            
+                            <div id="statusContainer-${order.orderID}"></div>
                             <div>
-                                <h3>Payment Image</h3>
-                                <img src="/uploads/${order.fileURL}" alt="${order.orderID}'s Payment Image" class="">
-                                <select id="status-${order.orderID}">
-                                    <option value="1">Pending</option>
-                                    <option value="2">Payment Confirmed</option>
-                                    <option value="3">Processing</option>
-                                    <option value="4">Shipped</option>
-                                    <option value="5">Delivered</option>
-                                    <option value="6">Payment Failed</option>
-                                </select> 
-                                <h3>Remark</h3>
-                                <input type="text" id="remark-${order.orderID}">
-                                <button onclick="submitOrder(${order.orderID})">Submit</button>
+                                <h3>Payment Image: <img src="/uploads/${order.fileURL}" alt="${order.orderID}'s Payment Image" class="">
+                                
+                                </h3>
+                                
+                                <label for="orderStatus" class="block mt-4">Change Order Status:    
+                                    <select id="status-${order.orderID}" class="w-45 p-2 border border-gray-300 rounded mt-2">
+                                        <option value="1">Pending</option>
+                                        <option value="2">Payment Confirmed</option>
+                                        <option value="3">Processing</option>
+                                        <option value="4">Shipped</option>
+                                        <option value="5">Delivered</option>
+                                        <option value="6">Payment Failed</option>
+                                    </select> 
+                                </label>
+                                
+                                <h3>Remark: </h3>
+                                <input type="text" id="remark-${order.orderID}"" class="w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Remark">
+                                
+                                <button onclick="submitOrder(${order.orderID})" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Submit</button>
                             </div>
                             `;
                         fetch(`/orderitems/${order.orderID}`)
@@ -176,25 +201,14 @@
                                 items.forEach(product => {
                                     const productSingle = document.createElement("div");
                                     productSingle.innerHTML = `
-                                            <div class="flex items-center space-x-4 mt-4">
-                                                <div class="flex-grow">
-                                                    <h3 class="text-lg font-semibold">${product.name}</h3>
-                                                    <p class="text-gray-600">${product.price} Baht</p>
-                                                </div>
-                                                <div class="text-right">
-                                                    <p class="text-gray-600">x ${product.quantity}</p>
-                                                </div>
-                                            </div>
+                                            
                                         `;
                                     productContainer.appendChild(productSingle);
                                 })
                                 const total = document.createElement('div');
                                 total.innerHTML = `
-                                    <div class="bg-white shadow-md rounded-lg p-4 mt-4 my-1">
-                                        <div class="text-lg font-semibold  text-right">
-                                            <span>Total: ${order.Total} Baht</span>
-                                        </div>
-                                    </div>
+                                    <p>Total: ${order.Total} Baht</p>
+                                    
                                     `;
                                 productContainer.appendChild(total);
                             })
@@ -231,12 +245,10 @@
                                         statusword = "Payment Failed";
                                     }
                                     statusSingle.innerHTML = `
-                                  
-                                            <p class="text-sm text-gray-600">
-                                                ${status.date_time} - ${remark || "No remarks"} (${statusword})
+                                            <p>
+                                                ${statusword} - ${status.date_time} : "${remark || "No Remarks"}"
                                             </p>   
                                             `;
-
                                     statusContainer.appendChild(statusSingle);
                                 })
 
