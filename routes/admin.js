@@ -123,7 +123,7 @@ router.post("/admin/product/add", (req, res) => {
 });
 
 // GET Product Information When searched via name
-router.get("/admin/product/get", (req, res) => {
+router.post("/admin/product/search", (req, res) => {
     if (!req.session.user || req.session.user.role != 2) {
         return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
     }
