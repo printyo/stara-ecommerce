@@ -46,7 +46,7 @@ router.post("/admin/status", (req, res) => {
 
     const insertSql =
         "INSERT INTO orderStatusHistory (status, remark, orderID) VALUES (?, ?, ?)";
-    db.query(insertSql, [orderID, status, remark], (err, results) => {
+    db.query(insertSql, [status, remark, orderID], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).json({
