@@ -67,71 +67,107 @@
     </div>
 
 
-    <main class="grid grid-cols-2">
-        <div id="LHS" class="flex flex-col">
+    <main class="grid grid-cols-2 gap-8">
+        <!-- Left Column (LHS) -->
+        <div id="LHS" class="flex flex-col mx-8 mr-6">
             <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-20 mx-8 text-center">Order</h2>
-            <div id="orderContainer">
+            <div class="my-3"></div>
+            <div id="orderContainer" class="shadow rounded-lg p-6 space-y-6 max-h-[30rem] overflow-y-auto">
 
             </div>
 
-            <div class="bg-white mt-6 p-4 my-4">
-                <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-48 mx-8 text-center">Chat with Developer</h2>
-                <input id="chatInput" type="text" class="w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Problem">
-                <button onclick="sendChat()" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Send</button>
-            </div>
+            <div class="my-6"></div>
 
-            <div id="chatContainer" class="text-sm text-black-600">
-            
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-48 mx-8 text-center">Chat with Developer</h2>
+            <div class="my-3"></div>
+            <div class="shadow rounded-lg p-6 space-y-4">
+                <h2 class="text-lg font-semibold">Chat with Developer</h2>
+                <input id="chatInput" type="text" class="h-32 w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Problem">
+                <button onclick="sendChat()" class="w-16 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Send</button>
+                <div class="shadow rounded-lg max-h-40 overflow-y-auto">
+                    <div id="chatContainer" class="text-sm text-black-600">
 
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="RHS" class="flex flex-col">
-
+        <!-- Right Column (RHS) -->
+        <div id="RHS" class="flex flex-col space-y-6 mr-10">
+            <!-- Add New Product Section -->
             <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">Add New Product</h2>
-            <div id="addContainer" class="bg-green-500 p-5">
-                <h3>Product Name:</h3>
-                <input type="text" id="productName" required>
-                <h3>Product Price:</h3>
-                <input type="text" id="productPrice" required>
-                <h3>Product Description:</h3>
-                <input type="text" id="productDescription" required>
-                <h3>Product Stock:</h3>
-                <input type="text" id="productStock" required>
-                <h3>Product Image File Name:</h3>
-                <input type="text" id="productImageURL" required>
-                <h3>Category</h3>
-                <select id="categorySelect">
+            <div id="addContainer" class="bg-white shadow rounded-lg p-6">
+                <div class="grid grid-cols-2 gap-8">
+                    <!-- Left Side (Product Name, Price, Description) -->
+                    <div class="space-y-4">
+                        <h3>Product Name:</h3>
+                        <input type="text" id="productName" class="border bg-gray-300 rounded mt-2" placeholder="  Product Name" required>
+                        <h3>Product Price:</h3>
+                        <input type="text" id="productPrice" class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
+                        <h3>Product Description:</h3>
+                        <input type="text" id="productDescription" class="w-96 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description" required>
+                        <button onclick="addProduct()" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Add</button>
 
-                </select>
-                <button onclick="addProduct()">Add Product</button>
+                    </div>
+
+                    <!-- Right Side (Stock, Image Path, Category) -->
+                    <div class="space-y-4">
+                        <h3>Product Stock:</h3>
+                        <input type="text" id="productStock" class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
+                        <h3>Product Image File Name:</h3>
+                        <input type="text" id="productImageURL" class="border bg-gray-300 rounded mt-2" placeholder="  Image path" required>
+                        <h3>Category</h3>
+                        <select id="categorySelect">
+
+                        </select>
+                    </div>
+                </div>
             </div>
 
+            <div class="my-4"></div>
+
+            <!-- Edit Product Section -->
             <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">Edit Products</h2>
-            <div id="editContainer" class="bg-red-500 p-5">
-                <h3>Product Name:</h3>
-                <input type="text" id="productNameEdit" required>
-                <button onclick="searchProduct()">Search</button>
-                <h3>Product ID: <span id="productID"></span></h3>
-                <h3>Product Price:</h3>
-                <input type="text" id="productPriceEdit" required>
-                <h3>Product Description:</h3>
-                <input type="text" id="productDescriptionEdit" required>
-                <h3>Product Stock:</h3>
-                <input type="text" id="productStockEdit" required>
-                <h3>Product Image File Name:</h3>
-                <input type="text" id="productImageURLEdit" required>
-                <h3>Category</h3>
-                <select id="categorySelectEdit">
+            <div id="editContainer" class="bg-white shadow rounded-lg p-6">
+                <div class="grid grid-cols-2 gap-8">
+                    <!-- Left Side (Product Name, Price, Description) -->
+                    <div class="space-y-4">
+                        <h3>Product Name:</h3>
+                        <input type="text" id="productNameEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Product Name" required>
+                        <button onclick="searchProduct()">Search</button>
+                        <h3>Product Price:</h3>
+                        <input type="text" id="productPriceEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
+                        <h3>Product Description:</h3>
+                        <input type="text" id="productDescriptionEdit" class="w-96 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description" required>
+                        <button onclick="editProduct()" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Update</button>
 
-                </select>
-                <button onclick="editProduct()">Edit Product</button>
+                    </div>
+                    <!-- Right Side (Stock, Image Path, Category) -->
+                    <div class="space-y-4">
+                        <h3>Product Stock:</h3>
+                        <input type="text" id="productStockEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
+                        <h3>Product Image File Name:</h3>
+                        <input type="text" id="productImageURLEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Image path" required>
+                        <h3>Category</h3>
+                        <select id="categorySelectEdit">
+
+                        </select>
+
+                    </div>
+                </div>
             </div>
 
+
+            <!-- List of Users Section -->
             <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">List of Users</h2>
-            <div id="userContainer" class="bg-yellow-500 p-5">
-
+            <div>
+                <div class="shadow rounded-lg max-h-40 overflow-y-auto">
+                    <div id="userContainer" class="text-sm text-black-600">
+                </div>
             </div>
+
+            <div class="my-96"></div>
+
         </div>
     </main>
 
@@ -154,6 +190,11 @@
                 })
         }
 
+        // Go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+
         function loadOrders() {
             fetch("/admin/orders")
             const orderContainer = document.getElementById("orderContainer");
@@ -164,35 +205,28 @@
                     orderSet.forEach(order => {
                         orderCon = document.createElement("div");
                         // add to separate cart
-                        orderCon.className = "bg-white mt-6 p-4";
+                        orderCon.className = "bg-white";
                         // productContainer-${order.orderID} = to separate each order that contain the same product
                         orderCon.innerHTML = `
                             <h2 class="text-lg font-semibold">Order ID: 00000${order.orderID}</h2>
-                            
                             <div id="productContainer-${order.orderID}" class="space-y-2"></div>
-                            
                             <div id="statusContainer-${order.orderID}"></div>
-                            <div>
-                                <h3>Payment Image: <img src="/uploads/${order.fileURL}" alt="${order.orderID}'s Payment Image" class="">
-                                
-                                </h3>
-                                
-                                <label for="orderStatus" class="block mt-4">Change Order Status:    
-                                    <select id="status-${order.orderID}" class="w-45 p-2 border border-gray-300 rounded mt-2">
-                                        <option value="1">Pending</option>
-                                        <option value="2">Payment Confirmed</option>
-                                        <option value="3">Processing</option>
-                                        <option value="4">Shipped</option>
-                                        <option value="5">Delivered</option>
-                                        <option value="6">Payment Failed</option>
-                                    </select> 
-                                </label>
-                                
-                                <h3>Remark: </h3>
-                                <input type="text" id="remark-${order.orderID}"" class="w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Remark">
-                                
-                                <button onclick="submitOrder(${order.orderID})" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Submit</button>
-                            </div>
+                            <h3>Payment Image: <img src="/uploads/${order.fileURL}" alt="${order.orderID}'s Payment Image"></h3> 
+                            <label for="orderStatus" class="block mt-4">Change Order Status: 
+                                <select id="status-${order.orderID}" class="w-45 p-2 border border-gray-300 rounded mt-2">
+                                    <option value="1">Pending</option>
+                                    <option value="2">Payment Confirmed</option>
+                                    <option value="3">Processing</option>
+                                    <option value="4">Shipped</option>
+                                    <option value="5">Delivered</option>
+                                    <option value="6">Payment Failed</option>
+                                </select> 
+                            </label>   
+                            <h3>Remark: </h3>
+                            <input type="text" id="remark-${order.orderID}"" class="h-16 w-96 p-2 border bg-gray-300 rounded mt-2" placeholder="Remark">
+                            <div class="my-2"></div>
+                            <button onclick="submitOrder(${order.orderID})" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Submit</button>
+                            
                             `;
                         fetch(`/orderitems/${order.orderID}`)
                             .then(response => response.json())
@@ -296,6 +330,7 @@
                 .then(response => response.json())
                 .then(chat => {
                     const chatContainer = document.getElementById("chatContainer");
+                    chatContainer.className = "bg-white rounded-lg p-6 space-y-4 ";
                     chatContainer.innerHTML = "";
                     chat.forEach(element => {
                         const chatCard = document.createElement("div");
@@ -355,6 +390,8 @@
                 .then(categories => {
                     const categorySelect = document.getElementById("categorySelect");
                     const categorySelectEdit = document.getElementById("categorySelectEdit");
+                    categorySelectEdit.className ="w-45 p-1 border border-gray-300 rounded mt-2"
+                    categorySelect.className ="w-45 p-1 border border-gray-300 rounded mt-2"
                     categories.forEach(category => {
                         const option = document.createElement("option");
                         option.value = category.categoryID;
@@ -487,6 +524,7 @@
         function loadUsers() {
             const userContainer = document.getElementById("userContainer");
             userContainer.innerHTML = "";
+            userContainer.className = "bg-white rounded-lg p-6 space-y-4";
             fetch("/admin/users/customer")
                 .then(response => response.json())
                 .then(users => {
@@ -497,7 +535,7 @@
                             <h3>${user.firstName} ${user.lastName} - Customer</h3>
                             <h4>${user.email}</h4>
                         </div>
-                        <button onclick="makeAdmin(${user.userID})">Make Admin</button>
+                        <button onclick="makeAdmin(${user.userID})" class="w-45 mt-2 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Make Admin</button>
                         `;
                         userContainer.appendChild(userCard);
                     })
