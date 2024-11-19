@@ -46,7 +46,7 @@ router.post("/admin/status", (req, res) => {
 
     const insertSql =
         "INSERT INTO orderStatusHistory (status, remark, orderID) VALUES (?, ?, ?)";
-    db.query(insertSql, [orderID, status, remark], (err, results) => {
+    db.query(insertSql, [status, remark, orderID], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).json({
@@ -123,7 +123,7 @@ router.post("/admin/product/add", (req, res) => {
 });
 
 // GET Product Information When searched via name
-router.get("/admin/product/get", (req, res) => {
+router.post("/admin/product/search", (req, res) => {
     if (!req.session.user || req.session.user.role != 2) {
         return res.status(403).json({ error: "User doesn't have permission" }); // 403 = Forbidden
     }
