@@ -82,7 +82,7 @@
             <div class="my-3"></div>
             <div class="shadow rounded-lg p-6 space-y-4">
                 <h2 class="text-lg font-semibold">Chat with Developer</h2>
-                <input id="chatInput" type="text" class="h-32 w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Problem">
+                <input id="chatInput" type="text"  maxlength="255" class="h-32 w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Problem">
                 <button onclick="sendChat()" class="w-16 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Send</button>
                 <div class="shadow rounded-lg max-h-40 overflow-y-auto">
                     <div id="chatContainer" class="text-sm text-black-600">
@@ -101,11 +101,11 @@
                     <!-- Left Side (Product Name, Price, Description) -->
                     <div class="space-y-4">
                         <h3>Product Name:</h3>
-                        <input type="text" id="productName" class="border bg-gray-300 rounded mt-2" placeholder="  Product Name" required>
+                        <input type="text" id="productName"  maxlength="30" class="border bg-gray-300 rounded mt-2" placeholder="  Product Name" required>
                         <h3>Product Price:</h3>
-                        <input type="text" id="productPrice" class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
+                        <input type="number" min="1" step="0.01"  maxlength="11" id="productPrice" class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
                         <h3>Product Description:</h3>
-                        <input type="text" id="productDescription" class="w-72 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description" required>
+                        <input type="text" id="productDescription"  maxlength="255" class="w-72 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description" required>
                         <button onclick="addProduct()" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Add</button>
 
                     </div>
@@ -113,9 +113,9 @@
                     <!-- Right Side (Stock, Image Path, Category) -->
                     <div class="space-y-4">
                         <h3>Product Stock:</h3>
-                        <input type="text" id="productStock" class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
+                        <input type="number" min="1" id="productStock"  maxlength="11" class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
                         <h3>Product Image File Name:</h3>
-                        <input type="text" id="productImageURL" class="border bg-gray-300 rounded mt-2" placeholder="  Image path" required>
+                        <input type="text" id="productImageURL"  maxlength="255" class="border bg-gray-300 rounded mt-2" placeholder="  Image path E.g. xxx.jpg" required>
                         <h3>Category</h3>
                         <select id="categorySelect">
 
@@ -132,22 +132,24 @@
                 <div class="grid grid-cols-2 gap-8">
                     <!-- Left Side (Product Name, Price, Description) -->
                     <div class="space-y-4">
+                        <h3>Product ID: <span id="productID"></span></h3>
                         <h3>Product Name:</h3>
-                        <input type="text" id="productNameEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Product Name" required>
+                        <input type="text" maxlength="30" id="productNameEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Product Name" required>
                         <button onclick="searchProduct()">Search</button>
                         <h3>Product Price:</h3>
-                        <input type="text" id="productPriceEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
+                        <input type="number" min="1" step="0.01"  maxlength="11" id="productPriceEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
                         <h3>Product Description:</h3>
-                        <input type="text" id="productDescriptionEdit" class="w-72 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description" required>
+                        <input type="text" id="productDescriptionEdit"  maxlength="255" class="w-72 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description" required>
                         <button onclick="editProduct()" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Update</button>
+                        
 
                     </div>
                     <!-- Right Side (Stock, Image Path, Category) -->
                     <div class="space-y-4">
                         <h3>Product Stock:</h3>
-                        <input type="text" id="productStockEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
+                        <input type="number" min="1"  maxlength="11" id="productStockEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
                         <h3>Product Image File Name:</h3>
-                        <input type="text" id="productImageURLEdit" class="border bg-gray-300 rounded mt-2" placeholder="  Image path" required>
+                        <input type="text" id="productImageURLEdit"   maxlength="255" class="border bg-gray-300 rounded mt-2" placeholder="  Image path" required>
                         <h3>Category</h3>
                         <select id="categorySelectEdit">
 
@@ -223,7 +225,7 @@
                                 </select> 
                             </label>   
                             <h3>Remark: </h3>
-                            <input type="text" id="remark-${order.orderID}"" class="h-16 w-96 p-2 border bg-gray-300 rounded mt-2" placeholder="Remark">
+                            <input type="text" maxlength="255" id="remark-${order.orderID}"" class="h-16 w-96 p-2 border bg-gray-300 rounded mt-2" placeholder="Remark">
                             <div class="my-2"></div>
                             <button onclick="submitOrder(${order.orderID})" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Submit</button>
                             
