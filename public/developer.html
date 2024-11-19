@@ -93,18 +93,39 @@
     <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
     <script>
         window.onload = function () {
-            checkUserRole();
             fetch("/checkrole")
-                .then(response => {
-                    if (response.ok) {
+                .then((response) => {
+                    if (!response.ok) {
+                        window.location.href = '/home.html';
+                        throw new Error("User not logged in");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    const userRole = data.role;
+
+                    // If role is not authorized for this page, redirect them to a safe page
+                    if (window.location.pathname === "/developer.html" && userRole !== 'developer') {
+                        window.location.href = '/home.html';  // Redirect if not a developer
+                    } else if (window.location.pathname === "/admin.html" && userRole !== 'admin') {
+                        window.location.href = '/home.html';  // Redirect if not an admin
+                    }
+
+                    // If everything is fine, proceed with loading chat or user-specific features
+                    if (userRole === 'developer') {
+                        loadChat();
+                        loadUsers();
+                    } else if (userRole === 'admin') {
                         loadChat();
                         loadUsers();
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error(error);
-                })
+                    window.location.href = '/home.html';  // Redirect if any error occurs
+                });
         }
+
 
         function loadChat() {
             fetch("/admindev/chat")
