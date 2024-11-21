@@ -16,26 +16,35 @@
                 <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
             </a>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                <ul
+                    class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
                     <li id="home">
-                        <a href="/home.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                        <a href="/home.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
                     </li>
                     <li id="browse">
-                        <a href="/browse.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                        <a href="/browse.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
                     </li>
                     <li id="cart">
-                        <a href="/cart.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                        <a href="/cart.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
                     </li>
                     <li id="order">
-                        <a href="/vieworder.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View Your Order</a>
+                        <a href="/vieworder.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View
+                            Your Order</a>
                     </li>
                     <li id="account">
-                        <a href="/account.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                        <a href="/account.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
                     </li>
                 </ul>
             </div>
             <div id="rightdiv" class="ml-auto">
-                <a id="login" class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0" href="/login.html">Log in</a>
+                <a id="login"
+                    class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
+                    href="/login.html">Log in</a>
             </div>
         </div>
     </nav>
@@ -44,7 +53,8 @@
 
     <!-- Back Button -->
     <div class="mx-7 my-7">
-        <button onclick="goBack()" class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+        <button onclick="goBack()"
+            class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
             ← Go back
         </button>
     </div>
@@ -71,7 +81,7 @@
                 <!-- Existing Addresses -->
                 <div id="addresses" class="space-y-4 mb-8">
                     <ul id="addressContainer" class="space-y-4 items-left">
-                    
+
                     </ul>
                 </div>
             </div>
@@ -114,7 +124,8 @@
                             class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
                             placeholder="Phone Number" required maxlength="13">
                     </div>
-                    <button type="submit" class="w-full text-white bg-gray-800 py-2 rounded hover:bg-gray-900">Add</button>
+                    <button type="submit"
+                        class="w-full text-white bg-gray-800 py-2 rounded hover:bg-gray-900">Add</button>
                 </form>
             </div>
         </div>
@@ -125,15 +136,14 @@
     <script>
         window.onload = function () {
             checkUserRole();
-        
 
-            
+
+
             fetch("/checkrole")
                 .then((response) => {
                     if (!response.ok) {
-                        // .ok is gives boolean of whether the response status is ok (ok = 200-299, not ok is all others egg 404 or 500)
-                        throw new Error("User not logged in or error fetching role");
-                        // creates a new error which will be caught by the .catch(err.....)
+                        window.location.href = '/home.html';
+                        throw new Error("User not logged in");
                     }
                     return response.json(); // parse the response to the next .then(....)
                 })
@@ -146,7 +156,7 @@
                     // show that user cannot acces this page
                 });
         }
-            
+
         // Go back to the previous page
         function goBack() {
             window.history.back();
@@ -154,41 +164,41 @@
 
         function loadUserData() {
             fetch("/user")
-            .then(response => response.json())
-            .then(user => {
-                const firstname = document.getElementById("firstname");
-                const lastname = document.getElementById("lastname");
-                const email = document.getElementById("email");
-                const phonenum = document.getElementById("phonenum");
+                .then(response => response.json())
+                .then(user => {
+                    const firstname = document.getElementById("firstname");
+                    const lastname = document.getElementById("lastname");
+                    const email = document.getElementById("email");
+                    const phonenum = document.getElementById("phonenum");
 
-                firstname.innerText = user.firstName;
-                lastname.innerText = user.lastName;
-                email.innerText = user.email;
-                phonenum.innerText = user.phoneNumber;
-            })
-            .catch(error=>{
-                console.error("Error fetching user info:", error);
-            })  
+                    firstname.innerText = user.firstName;
+                    lastname.innerText = user.lastName;
+                    email.innerText = user.email;
+                    phonenum.innerText = user.phoneNumber;
+                })
+                .catch(error => {
+                    console.error("Error fetching user info:", error);
+                })
         }
 
         function loadAddress() {
             fetch('/user/addresses')
-            .then(response => response.json())
-            .then(addresses => {
-                console.log(addresses);
-                const addressContainer = document.getElementById("addressContainer");
-                addressContainer.innerHTML = ""; // To clear existing html in case we load in categories
+                .then(response => response.json())
+                .then(addresses => {
+                    console.log(addresses);
+                    const addressContainer = document.getElementById("addressContainer");
+                    addressContainer.innerHTML = ""; // To clear existing html in case we load in categories
 
-                addresses.forEach(address => {
-                    const addressCard = document.createElement("li");
+                    addresses.forEach(address => {
+                        const addressCard = document.createElement("li");
 
-                            // Frontend edit here!!
-                            // Add product card classes for styling (add border for each, rounded, center)
-                    addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col");
+                        // Frontend edit here!!
+                        // Add product card classes for styling (add border for each, rounded, center)
+                        addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col");
 
-                            // Wrap the entire content in an <a> tag to make the the whole card clickable
-                            
-                    addressCard.innerHTML = `
+                        // Wrap the entire content in an <a> tag to make the the whole card clickable
+
+                        addressCard.innerHTML = `
                     <div>
                         <h2> ${address.addressLine1} <br>
                             ${address.addressLine2} <br>
@@ -200,13 +210,13 @@
                     </div>
                     `;
 
-                            // Append the <a> link (entire card) to the product container
-                    addressContainer.appendChild(addressCard);
+                        // Append the <a> link (entire card) to the product container
+                        addressContainer.appendChild(addressCard);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching address:", error);
                 });
-            })
-            .catch(error => {
-                console.error("Error fetching address:", error);
-            });
         }
 
         // Function to add a new address
@@ -220,51 +230,49 @@
             };
 
             console.log(addressdata);
-    
+
             fetch('/user/address', {
-                method:"POST",
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(addressdata)
             })
-            .then(response=>{
-                if (!response.ok){
-                    throw new Error("User error adding address");
-                }
-                else {
-                    loadAddress();
-                    document.getElementById('addressForm').reset();
-                }
-            })
-            .catch(error => {
-                console.error("Error adding address:", error);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("User error adding address");
+                    }
+                    else {
+                        loadAddress();
+                        document.getElementById('addressForm').reset();
+                    }
+                })
+                .catch(error => {
+                    console.error("Error adding address:", error);
+                });
         }
 
         // Function to delete an address
         function deleteAddress(addressId) {
             fetch(`/user/address/${addressId}`, {
-                method: "PATCH" 
+                method: "PATCH"
             })
-            .then(response=>{
-                if (!response.ok){
-                    throw new Error("User error deletting adddress");
-                }
-                else {
-                
-                    loadAddress();
-                }
-            })
-            .catch(error => {
-                console.error("Error deleting address:", error);
-            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("User error deletting adddress");
+                    }
+                    else {
+
+                        loadAddress();
+                    }
+                })
+                .catch(error => {
+                    console.error("Error deleting address:", error);
+                })
         }
-        
+
     </script>
 
 </body>
+
 </html>
-
-
-

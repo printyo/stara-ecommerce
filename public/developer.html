@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-    <title>Admin Dashboard</title>
+    <title>Developer Dashboard</title>
 </head>
 
 <body>
@@ -66,7 +66,7 @@
             <div class="relative mt-4">
                 <!-- Floating Label Input -->
                 <label for="chatInput" class="absolute left-2 top-1 font-afacad text-gray-600 ">Problem</label>
-                <input id="chatInput"  maxlength="255" type="text" class="w-96 h-36 bg-gray-200 pl-6 pt-2 mt-0">
+                <input id="chatInput" maxlength="255" type="text" class="w-96 h-36 bg-gray-200 pl-6 pt-2 mt-0">
             </div>
 
             <button onclick="sendChat()" class="btn btn-secondary font-afacad text-black text-lg mt-4"
@@ -93,6 +93,7 @@
     <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
     <script>
         window.onload = function () {
+            checkUserRole();
             fetch("/checkrole")
                 .then((response) => {
                     if (!response.ok) {
@@ -102,29 +103,30 @@
                     return response.json();
                 })
                 .then((data) => {
-                    const userRole = data.role;
+                    console.log(data)
+                    const userRole = data.roleName;
 
                     // If role is not authorized for this page, redirect them to a safe page
-                    if (window.location.pathname === "/developer.html" && userRole !== 'developer') {
-                        window.location.href = '/home.html';  // Redirect if not a developer
-                    } else if (window.location.pathname === "/admin.html" && userRole !== 'admin') {
-                        window.location.href = '/home.html';  // Redirect if not an admin
+                    if (window.location.pathname === "/developer.html") {
+                        if (userRole !== "Developer") {
+                            // Redirect non-developers to home
+                            window.location.href = '/home.html';
+                        }
                     }
 
                     // If everything is fine, proceed with loading chat or user-specific features
-                    if (userRole === 'developer') {
+                    if (userRole == 'Developer') {
                         loadChat();
                         loadUsers();
-                    } else if (userRole === 'admin') {
-                        loadChat();
-                        loadUsers();
+
                     }
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.error(error);
-                    window.location.href = '/home.html';  // Redirect if any error occurs
-                });
+                })
         }
+
+
 
 
         function loadChat() {
