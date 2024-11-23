@@ -58,34 +58,48 @@
             </div>
         </div>
     </nav>
-    <main class="grid grid-cols-2 gap-10">
+    <main class="grid grid-cols-2 gap-8">
         <!-- Left Side Column -->
         <div id="LHS" class="flex flex-col ml-40 mt-14">
-            <h1 class="font-afacad font-semibold text-2xl">Chat with Admin</h1>
+            <h1 class="font-afacad font-semibold text-2xl border rounded-lg w-52 text-center">Chat with Admin</h1>
 
-            <div class="relative mt-4">
+            <div class="relative mt-4" style="width: 500px;"> <!-- Adjust width as needed -->
                 <!-- Floating Label Input -->
                 <label for="chatInput" class="absolute left-2 top-1 font-afacad text-gray-600 ">Problem</label>
-                <input id="chatInput" maxlength="255" type="text" class="w-96 h-36 bg-gray-200 pl-6 pt-2 mt-0">
+                <input id="chatInput" maxlength="255" type="text" class="w-full h-36 bg-gray-200 pl-6 pt-2 mt-0"
+                    style="width: 100%;"> <!-- Input takes full width of parent -->
             </div>
 
-            <button onclick="sendChat()" class="btn btn-secondary font-afacad text-black text-lg mt-4"
-                style="background-color: #bdbdbd; border-radius: 30px; border: none; padding: 5px 24px; width: 100px;">Send</button>
+
+            <button onclick="sendChat()" class="btn btn-secondary font-afacad text-black text-lg mt-4 bg-gray-200 
+                rounded-lg border-none px-6 py-2 hover:bg-black hover:text-white"
+                style="border: none; padding: 5px 24px; width: 100px;">Send</button>
+
         </div>
 
 
         <div class="ml-20 mt-14">
             <!-- List of Users Heading Above the Box -->
-            <h1 class="font-afacad font-semibold text-2xl mb-4">List of Users</h1>
-            <div id="userContainer" class="bg-gray-200 p-4 mr-32 w-96 h-48">
-
+            <h2 class="border font-afacad font-semibold text-2xl rounded-lg w-40 mx-8 text-center">
+                List of Users
+            </h2>
+            <div class="mx-8 p-4 bg-gray-200 mt-4 h-36" style="max-width: 500px; overflow-y: auto;">
+                <div id="userContainer" class="text-black-600 font-afacad" style="padding: 0; margin:0;">
+                    <!-- User content dynamically loaded here -->
+                </div>
             </div>
         </div>
 
-        <div id="RHS" class="flex flex-col">
-            <div id="chatContainer" class="bg-gray-200 p-5 ml-40 w-96 h-48">
 
+
+        <div id="RHS" class="flex flex-col">
+            <div id="chatContainer" class="bg-gray-200 p-5 ml-40 w-96">
             </div>
+        </div>
+
+        </div>
+        </div>
+        </div>
         </div>
     </main>
 
@@ -134,6 +148,13 @@
                 .then(response => response.json())
                 .then(chat => {
                     const chatContainer = document.getElementById("chatContainer");
+
+                    // Add styles for a visible vertical scroll bar
+                    chatContainer.style.maxHeight = "200px"; // Restrict container height
+                    chatContainer.style.overflowY = "scroll"; // Ensure vertical scrolling with a bar
+                    chatContainer.style.padding = "10px"; // Add internal spacing
+                    chatContainer.style.backgroundColor = "#F3F4F6;"; // Light background for visibility
+
                     chatContainer.innerHTML = "";
                     chat.forEach(element => {
                         const chatCard = document.createElement("div");
@@ -144,18 +165,21 @@
                             rolename = "Developer";
                         }
                         chatCard.innerHTML = `
-                        
-                        <h3 class = "font-afacad">${element.firstName} ${element.lastName} - ${rolename}</h3>
-                        <h3 class = "font-afacad">${element.date_time}</h3>
-                        <p class = "font-afacad">${element.chat}</p>
-                        `;
+                        <div style="border-bottom: 1px solid black; padding-bottom: 10px; margin-bottom: 10px;">
+                        <h3 class="font-afacad font-bold">${element.firstName} ${element.lastName} - ${rolename}</h3>
+                        <h3 class="font-afacad">${element.date_time}</h3>
+                        <p class="font-afacad">${element.chat}</p>
+                    </div>
+                `;
                         chatContainer.appendChild(chatCard);
                     });
                 })
                 .catch(error => {
                     console.error(error);
-                })
+                });
         }
+
+
 
         function sendChat() {
             const chatInput = document.getElementById("chatInput");
@@ -190,26 +214,41 @@
 
         function loadUsers() {
             const userContainer = document.getElementById("userContainer");
-            userContainer.innerHTML = "";
+            userContainer.innerHTML = ""; // Clear existing users
+
             fetch("/dev/users/admin")
                 .then(response => response.json())
                 .then(users => {
                     users.forEach(user => {
                         const userCard = document.createElement("div");
+                        userCard.style.cssText = `
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center; 
+                    padding-bottom: 10px; 
+                    border-bottom: 1px solid black; 
+                    border-radius: 0; 
+                `;
                         userCard.innerHTML = `
-                        <div>
-                            <h3>${user.firstName} ${user.lastName} - Admin</h3>
-                            <h4>${user.email}</h4>
-                        </div>
-                        <button onclick="makeDeveloper(${user.userID})">Make Developer</button>
-                        `;
+                    <div>
+                        <h3  class="font-afacad font-bold" style="margin: 0;">${user.firstName} ${user.lastName} - Admin</h3>
+                        <h4 style="margin: 0;">${user.email}</h4>
+                    </div>
+                    <button onclick="makeDeveloper(${user.userID})" 
+                        style="border: 1px solid black; padding: 2px 7px; border-radius: 5px; cursor: pointer; 
+                               background-color: #f9f9f9; transition: background-color 0.3s, color 0.3s;">
+                        Make Developer
+                    </button>
+                `;
                         userContainer.appendChild(userCard);
-                    })
+                    });
                 })
                 .catch(error => {
                     console.error(error);
-                })
+                });
         }
+
+
 
         function makeDeveloper(userID) {
             fetch(`/dev/user/${userID}`, {
