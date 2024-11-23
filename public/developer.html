@@ -58,7 +58,7 @@
             </div>
         </div>
     </nav>
-    <main class="grid grid-cols-2 gap-8">
+    <main class="grid grid-cols-2 gap-5">
         <!-- Left Side Column -->
         <div id="LHS" class="flex flex-col ml-40 mt-14">
             <h1 class="font-afacad font-semibold text-2xl border rounded-lg w-52 text-center">Chat with Admin</h1>
@@ -78,7 +78,7 @@
         </div>
 
 
-        <div class="ml-20 mt-14">
+        <div class="ml-4 mt-14">
             <!-- List of Users Heading Above the Box -->
             <h2 class="border font-afacad font-semibold text-2xl rounded-lg w-40 mx-8 text-center">
                 List of Users
@@ -93,7 +93,7 @@
 
 
         <div id="RHS" class="flex flex-col">
-            <div id="chatContainer" class="bg-gray-200 p-5 ml-40 w-96">
+            <div id="chatContainer" class="bg-gray-200 p-5 ml-40 w-96" style="width: 500px;">
             </div>
         </div>
 
@@ -150,7 +150,7 @@
                     const chatContainer = document.getElementById("chatContainer");
 
                     // Add styles for a visible vertical scroll bar
-                    chatContainer.style.maxHeight = "200px"; // Restrict container height
+                    chatContainer.style.maxHeight = "300px"; // Restrict container height
                     chatContainer.style.overflowY = "scroll"; // Ensure vertical scrolling with a bar
                     chatContainer.style.padding = "10px"; // Add internal spacing
                     chatContainer.style.backgroundColor = "#F3F4F6;"; // Light background for visibility
@@ -231,7 +231,7 @@
                 `;
                         userCard.innerHTML = `
                     <div>
-                        <h3  class="font-afacad font-bold" style="margin: 0;">${user.firstName} ${user.lastName} - Admin</h3>
+                        <h3  class="font-afacad font-bold"style="margin: 0;">${user.firstName} ${user.lastName} - Admin</h3>
                         <h4 style="margin: 0;">${user.email}</h4>
                     </div>
                     <button onclick="makeDeveloper(${user.userID})" 
