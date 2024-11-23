@@ -190,20 +190,20 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`productID`, `name`, `description`, `stock`, `price`, `imageURL`, `categoryID`) VALUES
-(1, 'Basic T-Shirt', '100% Organic Cotton: Soft, breathable, and hypoallergenic, perfect for all-day wear. Organic cotton is grown without harmful chemicals, making it an eco-friendly choice.', 10022, 1190.00, 'basict-shirts.jpg', 1),
-(2, 'The Stara Linen Pants', 'Linen and cotton from eco-friendly practices aligns with STARA’s commitment to sustainable fashion. Lightweight, durable, and has a unique texture that becomes softer with each wash. It also has a natural luster and drapes beautifully.\r\n', 99, 1590.00, 'linenpant.jpg', 4),
+(1, 'Basic T-Shirt', '100% Organic Cotton: Soft, breathable, and hypoallergenic, perfect for all-day wear. Organic cotton is grown without harmful chemicals, making it an eco-friendly choice.', 100, 1190.00, 'basict-shirts.jpg', 1),
+(2, 'The Stara Linen Pants', 'Linen and cotton from eco-friendly practices aligns with STARA’s commitment to sustainable fashion. Lightweight, durable, and has a unique texture that becomes softer with each wash. It also has a natural luster and drapes beautifully.\r\n', 100, 1590.00, 'linenpant.jpg', 4),
 (3, 'The Stara Gold Short', 'Silk Blend: A luxurious blend that provides a smooth, shiny finish while remaining lightweight and breathable.\r\n', 100, 2590.00, 'goldshort.jpg', 5),
 (4, 'Basic Hoodie', 'Organic Cotton Blend: A mix that provides softness, breathability, and durability while being eco-friendly.\r\n', 100, 1590.00, 'basichoodie.jpg', 2),
 (5, 'Wool  Brown Coat', 'a sophisticated yet casual brown coat designed for both style and warmth. It features a tailored silhouette with subtle modern touches.\r\n', 100, 1890.00, 'coat-1.jpg', 6),
 (6, 'Cinnamon Fur-Lined Trench Coat', 'High-quality wool blend outer fabric with a super-soft faux fur lining for added warmth. A versatile choice for work, casual weekends, or more elegant outings.', 100, 2390.00, 'coat-2.jpg', 6),
-(7, 'Onyx & Mocha Leather Long Coat', 'Luxurious, high-quality brown leather with a smooth texture that provides both comfort and durability. Perfect for transitional weather, travel, business, or a night out.', 99, 2590.00, 'coat-3.jpg', 6),
+(7, 'Onyx & Mocha Leather Long Coat', 'Luxurious, high-quality brown leather with a smooth texture that provides both comfort and durability. Perfect for transitional weather, travel, business, or a night out.', 100, 2590.00, 'coat-3.jpg', 6),
 (8, 'Sandstone Serenity Coat', 'an elegant and timeless outerwear piece designed for the woman who loves classic beauty with a modern edge. Made from soft beige fabric, neutral tone that pairs well with any wardrobe.', 100, 1990.00, 'coat-4.jpg', 6),
 (9, 'Shadow Luxe Fur Coat', 'The understated grey fabric serves as a perfect backdrop to the bold black fur collar and cuffs, adding a touch of drama and sophistication.', 100, 1790.00, 'coat-5.jpg', 6),
 (10, 'Pleated Jersey Dress', 'Ankle-length dress in pleated jersey designed with an A-line silhouette. Loose fit with a deep and spaghetti shoulder straps.', 100, 890.00, 'dress-1.jpg', 3),
 (11, 'Smock-topped Dress', 'Calf-length grey dress in a cotton weave with detachable and a smocked bodice featuring a frill-trimmed sweetheart neckline and an elasticated seam at the centre of the bust.', 100, 990.00, 'dress-2.jpg', 3),
 (12, 'The White Lace Dress', 'Layered Trim Crew Neck Dress with elegant short sleeve dress for spring and summer', 100, 1190.00, 'dress-3.jpg', 3),
 (13, 'Sage Green Tiered Mini Dress', 'A stylish and feminine piece that combines a soft, muted green hue with a playful and layered silhouette. The tiered design making a versatile and eye-catching', 100, 1390.00, 'dress-4.jpg', 3),
-(14, 'Floral Pink Maxi Dress', 'Elevate your summer wardrobe with this stunning multi-layered chiffon maxi dress, designed to turn heads wherever you go. Adorned with an eye-catching pink floral ', 99, 1290.00, 'dress-5.jpg', 3),
+(14, 'Floral Pink Maxi Dress', 'Elevate your summer wardrobe with this stunning multi-layered chiffon maxi dress, designed to turn heads wherever you go. Adorned with an eye-catching pink floral ', 100, 1290.00, 'dress-5.jpg', 3),
 (15, 'Black Zip-Through Hoodie', 'Short, fitted zip-through hoodie in sweatshirt fabric made from a cotton blend with a soft brushed inside. Jersey-lined, drawstring hood, a zip down the front, gently dropped shoulders and long sleeves. ', 100, 1550.00, 'hoodie-2.jpg', 2),
 (16, 'Gray Loose Fit Hoodie', 'Hoodie in midweight sweatshirt fabric made from a cotton blend with a soft brushed inside and a print motif. Double-layered, wrapover hood, dropped shoulders and long sleeves.', 100, 1159.00, 'hoodie-3.jpg', 2),
 (17, 'Beige Boxy Fit Washed Hoodie', 'Boxy fit hoodie sweatshirt. Collar with adjustable hood and long sleeves. Front pouch pocket. Washed effect. Rib trim.', 100, 1999.00, 'hoodie-4.jpg', 2),
@@ -219,8 +219,7 @@ INSERT INTO `product` (`productID`, `name`, `description`, `stock`, `price`, `im
 (27, 'Dark Geen Printed T-Shirt', 'Relaxed-fit dark green T-shirt featuring a round neck, short sleeves and contrast prints on the front.', 100, 890.00, 't-shirt2.jpg', 1),
 (28, 'White Contrast Printed T-Shirt', 'Relaxed-fit white T-shirt featuring a round neck, short sleeves and contrast prints on the front.', 100, 790.00, 't-shirt3.jpg', 1),
 (29, 'Pink Stretch Slim T-Shirt', 'This crew-neck tee is cut to a slim silhouette, with plenty of stretch to ensure a comfortable, close fit.', 100, 1190.00, 't-shirt4.jpg', 1),
-(30, 'White Slouchy T-shirt', 'A relaxed, almost \"slouchy\" style T-shirt with a loose, draped fit. Often featuring a wider neckline or dropped shoulders, it has a very effortless, cool vibe.', 99, 1290.00, 't-shirt5.jpg', 1),
-(31, 'wee', '22', 1, 1.03, 'ww', 1);
+(30, 'White Slouchy T-shirt', 'A relaxed, almost \"slouchy\" style T-shirt with a loose, draped fit. Often featuring a wider neckline or dropped shoulders, it has a very effortless, cool vibe.', 100, 1290.00, 't-shirt5.jpg', 1);
 
 -- --------------------------------------------------------
 
