@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Page</title>
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul
+                    class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                    <li id="home">
+                        <a href="/home.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                    </li>
+                    <li id="browse">
+                        <a href="/browse.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                    </li>
+                    <li id="cart">
+                        <a href="/cart.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                    </li>
+                    <li id="order">
+                        <a href="/vieworder.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View
+                            Your Order</a>
+                    </li>
+                    <li id="account">
+                        <a href="/account.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="rightdiv" class="ml-auto">
+                <a id="login"
+                    class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
+                    href="/login.html">Log in</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+
+    <!-- Back Button -->
+    <div class="mx-7 my-7">
+        <button onclick="goBack()"
+            class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+            ← Go back
+        </button>
+    </div>
+
+    <div class="container mx-auto mt-8 flex space-x-8">
+        <!-- Left Side: Personal Information and Existing Addresses -->
+        <div class="w-2/3 space-y-8">
+
+            <!-- Personal Information Section -->
+            <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Personal Information</h2>
+                <div class="mb-4">
+                    <p><strong>First Name:</strong><span id="firstname"></span></p>
+                    <p><strong>Last Name:</strong> <span id="lastname"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p><strong>Phone Number:</strong> <span id="phonenum"></span></p>
+                </div>
+            </div>
+
+            <!-- Address Section -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="text-2xl font-semibold mb-4">Address</div>
+
+                <!-- Existing Addresses -->
+                <div id="addresses" class="space-y-4 mb-8">
+                    <ul id="addressContainer" class="space-y-4 items-left">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Add New Address Form -->
+        <div class="w-1/3">
+
+            <!-- Add New Address Form -->
+            <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Add New Address</h2>
+                <form id="addressForm" class="space-y-4" onsubmit="addAddress(event)">
+                    <div>
+                        <label class="block text-gray-700">Address line 1:</label>
+                        <input type="text" id="address1Field"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Address 1" required maxlength="255">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Address line 2:</label>
+                        <input type="text" id="address2Field"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Address 2" required maxlength="255">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Postcode:</label>
+                        <input type="text" id="postcodeField"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Postcode" required maxlength="5">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">City:</label>
+                        <input type="text" id="cityField"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="City" required maxlength="20">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Phone Number:</label>
+                        <input type="text" id="phoneField"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                            placeholder="Phone Number" required maxlength="13">
+                    </div>
+                    <button type="submit"
+                        class="w-full text-white bg-gray-800 py-2 rounded hover:bg-gray-900">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
+    <script>
+        window.onload = function () {
+            checkUserRole();
+
+
+
+            fetch("/checkrole")
+                .then((response) => {
+                    if (!response.ok) {
+                        window.location.href = '/home.html';
+                        throw new Error("User not logged in");
+                    }
+                    return response.json(); // parse the response to the next .then(....)
+                })
+                .then((data) => {
+                    loadUserData();
+                    loadAddress();
+                })
+                .catch((error) => {
+                    console.error(error);
+                    // show that user cannot acces this page
+                });
+        }
+
+        // Go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        function loadUserData() {
+            fetch("/user")
+                .then(response => response.json())
+                .then(user => {
+                    const firstname = document.getElementById("firstname");
+                    const lastname = document.getElementById("lastname");
+                    const email = document.getElementById("email");
+                    const phonenum = document.getElementById("phonenum");
+
+                    firstname.innerText = user.firstName;
+                    lastname.innerText = user.lastName;
+                    email.innerText = user.email;
+                    phonenum.innerText = user.phoneNumber;
+                })
+                .catch(error => {
+                    console.error("Error fetching user info:", error);
+                })
+        }
+
+        function loadAddress() {
+            fetch('/user/addresses')
+                .then(response => response.json())
+                .then(addresses => {
+                    console.log(addresses);
+                    const addressContainer = document.getElementById("addressContainer");
+                    addressContainer.innerHTML = ""; // To clear existing html in case we load in categories
+
+                    addresses.forEach(address => {
+                        const addressCard = document.createElement("li");
+
+                        // Frontend edit here!!
+                        // Add product card classes for styling (add border for each, rounded, center)
+                        addressCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col");
+
+                        // Wrap the entire content in an <a> tag to make the the whole card clickable
+
+                        addressCard.innerHTML = `
+                    <div>
+                        <h2> ${address.addressLine1} <br>
+                            ${address.addressLine2} <br>
+                            ${address.city} ${address.postcode} <br>
+                            Tel.${address.phoneNumber}
+                        </h2>
+                        <button onclick="deleteAddress(${address.addressID})" class="my-4 text-white bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">Delete
+                        </button>
+                    </div>
+                    `;
+
+                        // Append the <a> link (entire card) to the product container
+                        addressContainer.appendChild(addressCard);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching address:", error);
+                });
+        }
+
+        // Function to add a new address
+        function addAddress() {
+            const addressdata = {
+                addressLine1: document.getElementById("address1Field").value,
+                addressLine2: document.getElementById("address2Field").value,
+                postcode: document.getElementById("postcodeField").value,
+                city: document.getElementById("cityField").value,
+                phoneNumber: document.getElementById("phoneField").value
+            };
+
+            console.log(addressdata);
+
+            fetch('/user/address', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(addressdata)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("User error adding address");
+                    }
+                    else {
+                        loadAddress();
+                        document.getElementById('addressForm').reset();
+                    }
+                })
+                .catch(error => {
+                    console.error("Error adding address:", error);
+                });
+        }
+
+        // Function to delete an address
+        function deleteAddress(addressId) {
+            fetch(`/user/address/${addressId}`, {
+                method: "PATCH"
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("User error deletting adddress");
+                    }
+                    else {
+
+                        loadAddress();
+                    }
+                })
+                .catch(error => {
+                    console.error("Error deleting address:", error);
+                })
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse</title>
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <!-- Left side: STARA and Navbar Links -->
+            
+                <!-- STARA Logo -->
+                <a href="/home.html">
+                    <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+                </a>
+                
+                <!-- Navbar Links -->
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                    <ul 
+                    class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                        <li id="home">
+                            <a href="/home.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                        </li>
+                        <li id="browse">
+                            <a href="/browse.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                        </li>
+                        <li id="cart">
+                            <a href="/cart.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                        </li>
+                        <li id="order">
+                            <a href="/vieworder.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View Your Order</a>
+                        </li>
+                        <li id="account">
+                            <a href="/account.html" class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                        </li>
+                    </ul>
+                </div>
+           
+    
+            <!-- Right side: Log in link -->
+            <div id="rightdiv" class="ml-auto">
+                <a id="login" 
+                    class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
+                    href="/login.html">
+                    Log in
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Filter Section -->
+    <div class="filter-section mx-auto w-full max-w-screen-xl px-4">
+        <select id="categoryFilter" class="border border-gray-300 p-2 rounded-md my-9">
+            <option value="0">All Categories</option>
+            <!-- Categories will be populated here -->
+        </select>
+        <button onclick="applyFilters()" class="mx-4">Apply Filters</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="container mx-auto px-4">
+        <div id="productGrid"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 ">
+        </div>
+        <script src="./navbar.js"
+            defer> // defer is an attribute that excutes after the html have finish loading</script>
+        <script>
+            window.onload = function () {
+                loadCategory(); // Loads category into the selection bar
+                loadProducts(); // Load products
+                checkUserRole(); // Load Navbar
+            };
+
+            function loadCategory() {
+                fetch("/category")
+                    .then(response => response.json())
+                    .then(categories => {
+                        const categoryFilter = document.getElementById("categoryFilter");
+                        categories.forEach(category => {
+                            const option = document.createElement("option");
+                            option.value = category.categoryID;
+                            option.text = category.name;
+                            categoryFilter.appendChild(option);
+                        })
+                    })
+                    .catch(error => {
+                        console.error("Error fetching categories:", error);
+                    });
+            };
+
+            function loadProducts() {
+                const categoryValue = document.getElementById("categoryFilter").value;
+                fetch(`/products?category=${categoryValue}`)
+                    .then(response => response.json())
+                    .then(products => {
+                        const productContainer = document.getElementById("productGrid");
+                        productContainer.innerHTML = ""; // To clear existing html in case we load in categories
+
+                        products.forEach(product => {
+                            const productCard = document.createElement("div");
+
+                            // Frontend edit here!!
+                            // Add product card classes for styling (add border for each, rounded, center)
+                            productCard.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4", "flex", "flex-col", "items-center");
+
+                            // Wrap the entire content in an <a> tag to make the the whole card clickable
+                            const productLink = document.createElement("a");
+                            productLink.href = `product.html?id=${product.productID}`;
+                            productLink.classList.add("w-full", "h-auto", "text-gray-900", "hover:bg-gray-50", "rounded-lg", "shadow-lg", "block", "p-4");
+
+                            productLink.innerHTML = `
+                                <img src="/image/product/${product.imageURL}" alt="${product.name}" class="w-full\] h-auto rounded-lg mb-4 text-center flex justify-between">
+                                <div class="product-details text-center">
+                                    <h5 class="text-lg font-semibold mb-2">${product.name}</h5>
+                                    <p class="text-sm text-gray-500">${product.description}</p>
+                                    <div class="product-price-stock flex justify-between w-full mt-4 text-sm text-gray-700">
+                                        <p>Price: ${product.price} baht</p>
+                                        <p>Stock: ${product.stock}</p>
+                                    </div>
+                                </div>
+                            `;
+
+                            // Append the <a> link (entire card) to the product container
+                            productContainer.appendChild(productLink);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching products:", error);
+                    });
+            }
+
+            function applyFilters() {
+                // when button is press, refreshed the products
+                loadProducts()
+            }
+        </script>
+    </div>
+</body>
+
+</html>

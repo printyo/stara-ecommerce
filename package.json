@@ -1,0 +1,26 @@
+{
+    "name": "stara-ecommerce",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build:css": "npx tailwindcss -i ./public/css/tailwindcss.css -o ./public/css/styles.css --watch",
+        "start": "nodemon run --watch . server.js & npm run build:css"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "body-parser": "^1.20.3",
+        "express": "^4.21.1",
+        "express-session": "^1.18.1",
+        "multer": "^1.4.5-lts.1",
+        "mysql2": "^3.11.3"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "postcss": "^8.4.47",
+        "tailwindcss": "^3.4.14"
+    }
+}

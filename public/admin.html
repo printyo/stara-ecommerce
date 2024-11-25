@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <!-- Left side: STARA and Navbar Links -->
+
+            <!-- STARA Logo -->
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
+
+            <!-- Navbar Links -->
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul
+                    class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                    <li id="home">
+                        <a href="/home.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                    </li>
+                    <li id="browse">
+                        <a href="/browse.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                    </li>
+                    <li id="cart">
+                        <a href="/cart.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                    </li>
+                    <li id="order">
+                        <a href="/vieworder.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View
+                            Your Order</a>
+                    </li>
+                    <li id="account">
+                        <a href="/account.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Right side: Log in link -->
+            <div id="rightdiv" class="ml-auto">
+                <a id="login"
+                    class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
+                    href="/login.html">
+                    Log in
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="mx-7 my-7">
+        <button onclick="goBack()"
+            class="text-black-500 hover:text-gray-700 mb-4 inline-block bg-transparent border-none cursor-pointer">
+            ← Go back
+        </button>
+    </div>
+
+
+    <main class="grid grid-cols-2 gap-8">
+        <!-- Left Column (LHS) -->
+        <div id="LHS" class="flex flex-col mx-8 mr-6">
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-20 mx-8 text-center">
+                Order</h2>
+            <div class="my-3"></div>
+            <div id="orderContainer" class="shadow rounded-lg p-6 space-y-6 max-h-[30rem] overflow-y-auto">
+
+            </div>
+
+            <div class="my-6"></div>
+
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-48 mx-8 text-center">
+                Chat with Developer</h2>
+            <div class="my-3"></div>
+            <div class="shadow rounded-lg p-6 space-y-4">
+                <h2 class="text-lg font-semibold">Chat with Developer</h2>
+                <input id="chatInput" type="text" maxlength="255"
+                    class="h-32 w-full p-2 border bg-gray-300 rounded mt-2" placeholder="Problem">
+                <button onclick="sendChat()"
+                    class="w-16 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Send</button>
+                <div class="shadow rounded-lg max-h-40 overflow-y-auto">
+                    <div id="chatContainer" class="text-sm text-black-600">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column (RHS) -->
+        <div id="RHS" class="flex flex-col space-y-6 mr-10">
+            <!-- Add New Product Section -->
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">
+                Add New Product</h2>
+            <div id="addContainer" class="bg-white shadow rounded-lg p-6">
+                <div class="grid grid-cols-2 gap-8">
+                    <!-- Left Side (Product Name, Price, Description) -->
+                    <div class="space-y-4">
+                        <h3>Product Name:</h3>
+                        <input type="text" id="productName" maxlength="30" class="border bg-gray-300 rounded mt-2"
+                            placeholder="  Product Name" required>
+                        <h3>Product Price:</h3>
+                        <input type="number" min="1" step="0.01" maxlength="11" id="productPrice"
+                            class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
+                        <h3>Product Description:</h3>
+                        <input type="text" id="productDescription" maxlength="255"
+                            class="w-72 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description"
+                            required>
+                        <button onclick="addProduct()"
+                            class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Add</button>
+
+                    </div>
+
+                    <!-- Right Side (Stock, Image Path, Category) -->
+                    <div class="space-y-4">
+                        <h3>Product Stock:</h3>
+                        <input type="number" min="1" id="productStock" maxlength="11"
+                            class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
+                        <h3>Product Image File Name:</h3>
+                        <input type="text" id="productImageURL" maxlength="255" class="border bg-gray-300 rounded mt-2"
+                            placeholder="  Image path E.g. xxx.jpg" required>
+                        <h3>Category</h3>
+                        <select id="categorySelect">
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-4"></div>
+
+            <!-- Edit Product Section -->
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">
+                Edit Products</h2>
+            <div id="editContainer" class="bg-white shadow rounded-lg p-6">
+                <div class="grid grid-cols-2 gap-8">
+                    <!-- Left Side (Product Name, Price, Description) -->
+                    <div class="space-y-4">
+                        <h3>Product ID: <span id="productID"></span></h3>
+                        <h3>Product Name:</h3>
+                        <input type="text" maxlength="30" id="productNameEdit" class="border bg-gray-300 rounded mt-2"
+                            placeholder="  Product Name" required>
+                        <button onclick="searchProduct()">Search</button>
+                        <h3>Product Price:</h3>
+                        <input type="number" min="1" step="0.01" maxlength="11" id="productPriceEdit"
+                            class="border bg-gray-300 rounded mt-2" placeholder="  Product Price" required>
+                        <h3>Product Description:</h3>
+                        <input type="text" id="productDescriptionEdit" maxlength="255"
+                            class="w-72 h-32 border bg-gray-300 rounded mt-2" placeholder="  Product Description"
+                            required>
+                        <button onclick="editProduct()"
+                            class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Update</button>
+
+
+                    </div>
+                    <!-- Right Side (Stock, Image Path, Category) -->
+                    <div class="space-y-4">
+                        <h3>Product Stock:</h3>
+                        <input type="number" min="1" maxlength="11" id="productStockEdit"
+                            class="border bg-gray-300 rounded mt-2" placeholder="  Stock" required>
+                        <h3>Product Image File Name:</h3>
+                        <input type="text" id="productImageURLEdit" maxlength="255"
+                            class="border bg-gray-300 rounded mt-2" placeholder="  Image path" required>
+                        <h3>Category</h3>
+                        <select id="categorySelectEdit">
+
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- List of Users Section -->
+            <h2 class="p-2 border font-afacad font-semibold text-xl border-gray-300 rounded-lg w-40 mx-8 text-center">
+                List of Users</h2>
+            <div>
+                <div class="shadow rounded-lg max-h-40 overflow-y-auto">
+                    <div id="userContainer" class="text-sm text-black-600">
+                    </div>
+                </div>
+
+                <div class="my-96"></div>
+
+            </div>
+    </main>
+
+
+    <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
+    <script>
+        window.onload = function () {
+            checkUserRole();
+            fetch("/checkrole")
+                .then((response) => {
+                    if (!response.ok) {
+                        window.location.href = '/home.html';
+                        throw new Error("User not logged in");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    const userRole = data.roleName;
+
+                    // If role is not authorized for this page, redirect them to a safe page
+                    if (window.location.pathname === "/admin.html") {
+                        if (userRole !== "Admin") {
+                            // Redirect non-developers to home
+                            window.location.href = '/home.html';
+                        }
+
+                    }
+
+                    // If everything is fine, proceed with loading chat or user-specific features
+                    if (userRole == 'Admin') {
+                        loadChat();
+                        loadUsers();
+                        loadCategory();
+                        loadOrders();
+
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+
+        // Go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        function loadOrders() {
+            fetch("/admin/orders")
+            const orderContainer = document.getElementById("orderContainer");
+            fetch("/admin/orders")
+                .then(response => response.json())
+                .then(orderSet => {
+                    orderContainer.innerHTML = ""; //clear stuff inside
+                    orderSet.forEach(order => {
+                        orderCon = document.createElement("div");
+                        // add to separate cart
+                        orderCon.className = "bg-white";
+                        // productContainer-${order.orderID} = to separate each order that contain the same product
+                        orderCon.innerHTML = `
+                            <h2 class="text-lg font-semibold">Order ID: 00000${order.orderID}</h2>
+                            <div id="productContainer-${order.orderID}" class="space-y-2"></div>
+                            <div id="statusContainer-${order.orderID}"></div>
+                            <h3>Payment Image: <img src="/uploads/${order.fileURL}" alt="${order.orderID}'s Payment Image"></h3> 
+                            <label for="orderStatus" class="block mt-4">Change Order Status: 
+                                <select id="status-${order.orderID}" class="w-45 p-2 border border-gray-300 rounded mt-2">
+                                    <option value="1">Pending</option>
+                                    <option value="2">Payment Confirmed</option>
+                                    <option value="3">Processing</option>
+                                    <option value="4">Shipped</option>
+                                    <option value="5">Delivered</option>
+                                    <option value="6">Payment Failed</option>
+                                </select> 
+                            </label>   
+                            <h3>Remark: </h3>
+                            <input type="text" maxlength="255" id="remark-${order.orderID}"" class="h-16 w-96 p-2 border bg-gray-300 rounded mt-2" placeholder="Remark">
+                            <div class="my-2"></div>
+                            <button onclick="submitOrder(${order.orderID})" class="w-45 mt-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Submit</button>
+                            
+                            `;
+                        fetch(`/orderitems/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(items => {
+                                const productContainer = document.getElementById(`productContainer-${order.orderID}`);
+                                items.forEach(product => {
+                                    const productSingle = document.createElement("div");
+                                    productSingle.innerHTML = `
+                                            
+                                        `;
+                                    productContainer.appendChild(productSingle);
+                                })
+                                const total = document.createElement('div');
+                                total.innerHTML = `
+                                    <p>Total: ${order.Total} Baht</p>
+                                    
+                                    `;
+                                productContainer.appendChild(total);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            })
+
+                        fetch(`/orderstatus/${order.orderID}`)
+                            .then(response => response.json())
+                            .then(statusSet => {
+                                const statusContainer = document.getElementById(`statusContainer-${order.orderID}`);
+                                statusSet.forEach(status => {
+                                    const statusSingle = document.createElement("div");
+                                    let remark;
+                                    if (!status.remark) {
+                                        remark = "";
+                                    }
+                                    else {
+                                        remark = status.remark;
+                                    }
+
+                                    let statusword;
+                                    if (status.status == "1") {
+                                        statusword = "Pending";
+                                    } else if (status.status == "2") {
+                                        statusword = "Payment Confirmed";
+                                    } else if (status.status == "3") {
+                                        statusword = "Processing";
+                                    } else if (status.status == "4") {
+                                        statusword = "Shipped";
+                                    } else if (status.status == "5") {
+                                        statusword = "Delivered";
+                                    } else if (status.status == "6") {
+                                        statusword = "Payment Failed";
+                                    }
+                                    statusSingle.innerHTML = `
+                                            <p>
+                                                ${statusword} - ${status.date_time} : "${remark || "No Remarks"}"
+                                            </p>   
+                                            `;
+                                    statusContainer.appendChild(statusSingle);
+                                })
+
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            })
+
+
+
+                        orderContainer.appendChild(orderCon);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+
+        }
+
+        function submitOrder(orderID) {
+            const status = document.getElementById(`status-${orderID}`).value;
+            const remark = document.getElementById(`remark-${orderID}`).value;
+            fetch("/admin/status", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ orderID, status, remark })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error adding new status to the order");
+                    } else {
+                        alert("Successfully Added New Status");
+                        loadOrders();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+        function loadChat() {
+            fetch("/admindev/chat")
+                .then(response => response.json())
+                .then(chat => {
+                    const chatContainer = document.getElementById("chatContainer");
+                    chatContainer.className = "bg-white rounded-lg p-6 space-y-4 ";
+                    chatContainer.innerHTML = "";
+                    chat.forEach(element => {
+                        const chatCard = document.createElement("div");
+                        let rolename;
+                        if (element.role == 2) {
+                            rolename = "Admin";
+                        } else {
+                            rolename = "Developer";
+                        }
+                        chatCard.innerHTML = `
+                        
+                        <h3>${element.firstName} ${element.lastName} - ${rolename}</h3>
+                        <h3>${element.date_time}</h3>
+                        <p>${element.chat}</p>
+                        `;
+                        chatContainer.appendChild(chatCard);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+        function sendChat() {
+            const chatInput = document.getElementById("chatInput");
+            if (chatInput.value.trim() === "") {
+                alert("Cannot send empty message");
+                return;
+            }
+            const chatContent = chatInput.value;
+            chatInput.value = "";
+
+            fetch("/admindev/chat", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat: chatContent
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        loadChat();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+        function loadCategory() {
+            fetch("/category")
+                .then(response => response.json())
+                .then(categories => {
+                    const categorySelect = document.getElementById("categorySelect");
+                    const categorySelectEdit = document.getElementById("categorySelectEdit");
+                    categorySelectEdit.className = "w-45 p-1 border border-gray-300 rounded mt-2"
+                    categorySelect.className = "w-45 p-1 border border-gray-300 rounded mt-2"
+                    categories.forEach(category => {
+                        const option = document.createElement("option");
+                        option.value = category.categoryID;
+                        option.text = category.name;
+                        const option2 = document.createElement("option");
+                        option2.value = category.categoryID;
+                        option2.text = category.name;
+                        categorySelect.appendChild(option);
+                        categorySelectEdit.appendChild(option2);
+                    })
+                })
+                .catch(error => {
+                    console.error("Error fetching categories:", error);
+                });
+        }
+
+        function addProduct() {
+            const name = document.getElementById("productName").value;
+            const price = document.getElementById("productPrice").value;
+            const description = document.getElementById("productDescription").value;
+            const stock = document.getElementById("productStock").value;
+            const imageURL = document.getElementById("productImageURL").value;
+            const categoryID = document.getElementById("categorySelect").value;
+
+            if (name.trim() == "" || price.trim() == "" || description.trim() == "" || stock.trim() == "" || imageURL.trim() == "") {
+                alert("Please add inputs")
+                return;
+            }
+
+            document.getElementById("productName").value = "";
+            document.getElementById("productPrice").value = "";
+            document.getElementById("productDescription").value = "";
+            document.getElementById("productStock").value = "";
+            document.getElementById("productImageURL").value = "";
+
+            fetch("/admin/product/add", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, description, stock, price, imageURL, categoryID })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Product Added Successfully");
+                    } else {
+                        throw new Error("Error adding Product");
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+
+        function searchProduct() {
+            const productName = document.getElementById("productNameEdit").value;
+            if (productName.trim() == "") {
+                alert("Please Enter a Product Name")
+                return;
+            }
+            fetch("/admin/product/search", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productName })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error searching Product");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById("productNameEdit").value = data.name;
+                    document.getElementById("productDescriptionEdit").value = data.description;
+                    document.getElementById("productStockEdit").value = data.stock;
+                    document.getElementById("productPriceEdit").value = data.price;
+                    document.getElementById("productImageURLEdit").value = data.imageURL;
+                    document.getElementById("categorySelectEdit").value = data.categoryID;
+
+                    document.getElementById("productID").innerText = data.productID;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+
+        function editProduct() {
+            const name = document.getElementById("productNameEdit").value;
+            const price = document.getElementById("productPriceEdit").value;
+            const description = document.getElementById("productDescriptionEdit").value;
+            const stock = document.getElementById("productStockEdit").value;
+            const imageURL = document.getElementById("productImageURLEdit").value;
+            const categoryID = document.getElementById("categorySelectEdit").value;
+
+            const productID = document.getElementById("productID").innerText;
+
+            document.getElementById("productNameEdit").value = "";
+            document.getElementById("productPriceEdit").value = "";
+            document.getElementById("productDescriptionEdit").value = "";
+            document.getElementById("productStockEdit").value = "";
+            document.getElementById("productImageURLEdit").value = "";
+            document.getElementById("productID").innerText = "";
+
+            if (name.trim() == "" || price.trim() == "" || description.trim() == "" || stock.trim() == "" || imageURL.trim() == "") {
+                alert("Please add inputs")
+                return;
+            }
+
+            fetch("/admin/product/patch", {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productID, name, description, stock, price, imageURL, categoryID })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error Editing Product");
+                    } else {
+                        alert("Successfully Updated the Product");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+        function loadUsers() {
+            const userContainer = document.getElementById("userContainer");
+            userContainer.innerHTML = "";
+            userContainer.className = "bg-white rounded-lg p-6 space-y-4";
+            fetch("/admin/users/customer")
+                .then(response => response.json())
+                .then(users => {
+                    users.forEach(user => {
+                        const userCard = document.createElement("div");
+                        userCard.innerHTML = `
+                        <div>
+                            <h3>${user.firstName} ${user.lastName} - Customer</h3>
+                            <h4>${user.email}</h4>
+                        </div>
+                        <button onclick="makeAdmin(${user.userID})" class="w-45 mt-2 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-800 md:hover:bg-gray-800  md:hover:text-gray-300">Make Admin</button>
+                        `;
+                        userContainer.appendChild(userCard);
+                    })
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+        function makeAdmin(userID) {
+            fetch(`/admin/user/${userID}`, {
+                method: "PATCH"
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error changing to a Admin");
+                    } else {
+                        alert("Successfully changed to a Admin");
+                        loadUsers();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+    </script>
+</body>
+
+</html>
