@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 09, 2024 at 08:21 AM
+-- Generation Time: Nov 23, 2024 at 12:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -66,8 +66,21 @@ INSERT INTO `category` (`categoryID`, `name`, `description`) VALUES
 CREATE TABLE `devChat` (
   `devChatID` int(11) NOT NULL,
   `chat` varchar(255) NOT NULL COMMENT 'Discuss Problems with Developer',
+  `dateTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `devChat`
+--
+
+INSERT INTO `devChat` (`devChatID`, `chat`, `dateTime`, `userID`) VALUES
+(5, 'Hey, we’ve had some issues with the checkout process. A few users reported that after adding items to their cart and proceeding to checkout, they’re getting a blank page. Can you take a look at it?', '2024-11-22 22:55:36', 2),
+(6, 'Sure! I’ll check it out right away. Are they getting any error message on the page, or is it just a blank screen?', '2024-11-22 22:56:23', 3),
+(7, 'No error message, just a blank page after they hit “Proceed to Checkout.” It seems to happen sometimes, but we’re not sure of the cause yet. I’ve also noticed it affects both desktop and mobile users.', '2024-11-22 22:57:21', 2),
+(8, 'Got it. I’ll go through the recent changes and see if anything\'s conflicting with the checkout page. It might also be related to the new payment gateway integration. I’ll need to check the API responses as well.', '2024-11-22 22:58:32', 3),
+(9, 'That sounds like a good place to start. In the meantime, I’ve had a few customers call in about this issue. It’s getting a bit frustrating for them, so we need to fix it ASAP.', '2024-11-22 22:59:24', 2),
+(10, 'Understood! I’ll prioritize this and keep you updated. I’ll also run some tests on the payment integration to ensure it’s working correctly. I’ll let you know if I find anything.', '2024-11-22 23:01:36', 3);
 
 -- --------------------------------------------------------
 
@@ -82,6 +95,14 @@ CREATE TABLE `orderDetails` (
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `orderDetails`
+--
+
+INSERT INTO `orderDetails` (`orderID`, `Total`, `AddressID`, `userID`) VALUES
+(1, 2880.00, 2, 2),
+(2, 3880.00, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -93,6 +114,16 @@ CREATE TABLE `orderItems` (
   `productID` int(11) NOT NULL,
   `quantity` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orderItems`
+--
+
+INSERT INTO `orderItems` (`orderID`, `productID`, `quantity`) VALUES
+(1, 2, 1),
+(1, 14, 1),
+(2, 7, 1),
+(2, 30, 1);
 
 -- --------------------------------------------------------
 
@@ -108,6 +139,15 @@ CREATE TABLE `orderStatusHistory` (
   `orderID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `orderStatusHistory`
+--
+
+INSERT INTO `orderStatusHistory` (`orderStatusID`, `dateTime`, `status`, `remark`, `orderID`) VALUES
+(1, '2024-11-16 23:29:26', 1, NULL, 1),
+(2, '2024-11-16 23:29:46', 2, 'Let\'s go', 1),
+(3, '2024-11-16 23:31:35', 1, NULL, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -120,6 +160,14 @@ CREATE TABLE `payment` (
   `dateTime` datetime NOT NULL DEFAULT current_timestamp(),
   `orderID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`paymentID`, `fileURL`, `dateTime`, `orderID`) VALUES
+(1, '1731774566070.png', '2024-11-16 23:29:26', 1),
+(2, '1731774695905.png', '2024-11-16 23:31:35', 2);
 
 -- --------------------------------------------------------
 
@@ -142,7 +190,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`productID`, `name`, `description`, `stock`, `price`, `imageURL`, `categoryID`) VALUES
-(1, 'Basic T-Shirt', '100% Organic Cotton: Soft, breathable, and hypoallergenic, perfect for all-day wear. Organic cotton is grown without harmful chemicals, making it an eco-friendly choice.', 100, 1190.00, 'basict-shirts.jpg', 1),
+(1, 'Basic T-Shirt', '100% Organic Cotton: Soft, breathable, and hypoallergenic, perfect for all-day wear. Organic cotton is grown without harmful chemicals, making it an eco-friendly choice.', 100, 1190.00, 'basict-shirts.jpg', 1),
 (2, 'The Stara Linen Pants', 'Linen and cotton from eco-friendly practices aligns with STARA’s commitment to sustainable fashion. Lightweight, durable, and has a unique texture that becomes softer with each wash. It also has a natural luster and drapes beautifully.\r\n', 100, 1590.00, 'linenpant.jpg', 4),
 (3, 'The Stara Gold Short', 'Silk Blend: A luxurious blend that provides a smooth, shiny finish while remaining lightweight and breathable.\r\n', 100, 2590.00, 'goldshort.jpg', 5),
 (4, 'Basic Hoodie', 'Organic Cotton Blend: A mix that provides softness, breathability, and durability while being eco-friendly.\r\n', 100, 1590.00, 'basichoodie.jpg', 2),
@@ -196,7 +244,14 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `role`, `phoneNumber`) VALUES
 (1, 'Customer', 'Account', 'c@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '099999999'),
 (2, 'Admin', 'Acc', 'a@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 2, '1234567891'),
-(3, 'Dev', 'eloper', 'd@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 3, '0123456789');
+(3, 'Dev', 'eloper', 'd@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 3, '0123456789'),
+(4, 'John', 'Walker', 'john@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '0987678990'),
+(5, 'Abby', 'Abigail', 'abby@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '0900990877'),
+(6, 'Brittany', 'Brogan', 'brit@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '0879890453'),
+(7, 'Calvin', 'Claudie', 'calvin@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '0987678987'),
+(8, 'Dulcie', 'Dozier', 'dulcie@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '0989990989'),
+(9, 'Ella', 'Eleanore', 'ella@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '0974647378'),
+(10, 'Fred', 'Fitzhugh', 'fred@gmail.com', 0xf6aaf044606fa3f847c93baa7ce50aba, 1, '0909088789');
 
 -- --------------------------------------------------------
 
@@ -214,6 +269,29 @@ CREATE TABLE `userAddress` (
   `isActive` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0=inactive,1=active',
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `userAddress`
+--
+
+INSERT INTO `userAddress` (`addressID`, `addressLine1`, `addressLine2`, `postcode`, `city`, `phoneNumber`, `isActive`, `userID`) VALUES
+(2, 'Hello Kitty', 'Sanrio, Japan', '12212', 'Bangkok', '1234567890', 0, 2),
+(3, '123/4 Soi Sukhumvit 21', 'Khlong Toei Nuea, Watthana', '10110', 'Bangkok', '1234567891', 1, 2),
+(4, '56/12 Moo 3', 'Taling Chan', '30000', 'Nakhon Ratchasima', '1234567891', 1, 2),
+(5, '89/15 Soi 18, Ratchadapisek Road', 'Dindaeng', '10400', 'Bangkok', '0123456789', 1, 3),
+(6, '22/9 Moo 7', 'Ban Phaeo', '74120', 'Samut Sakhon', '099999999', 1, 1),
+(7, '57/3 Soi Phahonyothin 32', 'Chatuchak', '10900', 'Bangkok', '0900990877', 1, 5),
+(8, '48/5 Moo 9, Chiang Mai Road', 'Hang Dong', '50230', 'Chiang Mai', '0900990877', 1, 5),
+(9, '110/8 Soi Phetchaburi 12', 'Ratchathewi', '10400', 'Bangkok', '0879890453', 1, 6),
+(10, '34/11 Moo 2, Kaeseamsuk', 'Tha Mai', '22000', 'Chanthaburi', '0987678987', 1, 7),
+(11, '75/8 Soi Charoen Krung 23', 'Bang Rak', '10500', 'Bangkok', '0987678987', 1, 7),
+(12, '21/6 Moo 4', 'Mae Rim', '50180', 'Chiang Mai ', '0987678987', 1, 7),
+(13, '60/10 Soi Bangna-Trad 14', 'Bang Na', '10260', 'Bangkok', '0989990989', 1, 8),
+(14, '72/13 Soi Rama 2', 'Samae Dam, Bang Khun Thian', '10150', 'Bangkok', '0909088789', 1, 10),
+(15, '19/7 Moo 6, Phitsanulok Road', 'Ao Nang', '65000', 'Phitsanulok', '0909088789', 1, 10),
+(16, '103/20 Soi Pradit Manutham 12', 'Lat Phrao', '10230', 'Bangkok', '0974647378', 1, 9),
+(17, '81/2 Soi Phaya Thai 24', 'Phaya Thai', '10400', 'Bangkok', '0974647378', 1, 9),
+(18, '124/7 Soi Nakhon In', 'Phutthamonthon', '73170', 'Nakhon Pathom', '0974647378', 1, 9);
 
 --
 -- Indexes for dumped tables
@@ -302,43 +380,43 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `devChat`
 --
 ALTER TABLE `devChat`
-  MODIFY `devChatID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `devChatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orderDetails`
 --
 ALTER TABLE `orderDetails`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orderStatusHistory`
 --
 ALTER TABLE `orderStatusHistory`
-  MODIFY `orderStatusID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `orderStatusID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `userAddress`
 --
 ALTER TABLE `userAddress`
-  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables

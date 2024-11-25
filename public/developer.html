@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Developer Dashboard</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="bg-white border-gray-200 shadow-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-start mx-auto p-4">
+            <!-- Left side: STARA and Navbar Links -->
+
+            <!-- STARA Logo -->
+            <a href="/home.html">
+                <h1 class="text-6xl text-black-500 font-rozha" style="margin-left: -70px;">STARA</h1>
+            </a>
+
+            <!-- Navbar Links -->
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul
+                    class="font-normal flex flex-col p-0 md:p-0 mt-4 border style= border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ml-9">
+                    <li id="home">
+                        <a href="/home.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Home</a>
+                    </li>
+                    <li id="browse">
+                        <a href="/browse.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Browse</a>
+                    </li>
+                    <li id="cart">
+                        <a href="/cart.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Cart</a>
+                    </li>
+                    <li id="order">
+                        <a href="/vieworder.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">View
+                            Your Order</a>
+                    </li>
+                    <li id="account">
+                        <a href="/account.html"
+                            class="block py-2 px-3 font-afacad text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0">Account</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Right side: Log in link -->
+            <div id="rightdiv" class="ml-auto">
+                <a id="login"
+                    class="font-afacad text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-400 md:p-0"
+                    href="/login.html">
+                    Log in
+                </a>
+            </div>
+        </div>
+    </nav>
+    <main class="grid grid-cols-2 gap-5">
+        <!-- Left Side Column -->
+        <div id="LHS" class="flex flex-col ml-40 mt-14">
+            <h1 class="font-afacad font-semibold text-2xl border rounded-lg w-52 text-center">Chat with Admin</h1>
+
+            <div class="relative mt-4" style="width: 500px;"> <!-- Adjust width as needed -->
+                <!-- Floating Label Input -->
+                <label for="chatInput" class="absolute left-2 top-1 font-afacad text-gray-600 ">Problem</label>
+                <input id="chatInput" maxlength="255" type="text" class="w-full h-36 bg-gray-200 pl-6 pt-2 mt-0"
+                    style="width: 100%;"> <!-- Input takes full width of parent -->
+            </div>
+
+
+            <button onclick="sendChat()" class="btn btn-secondary font-afacad text-black text-lg mt-4 bg-gray-200 
+                rounded-lg border-none px-6 py-2 hover:bg-black hover:text-white"
+                style="border: none; padding: 5px 24px; width: 100px;">Send</button>
+
+        </div>
+
+
+        <div class="ml-4 mt-14">
+            <!-- List of Users Heading Above the Box -->
+            <h2 class="border font-afacad font-semibold text-2xl rounded-lg w-40 mx-8 text-center">
+                List of Users
+            </h2>
+            <div class="mx-8 p-4 bg-gray-200 mt-4 h-36" style="max-width: 500px; overflow-y: auto;">
+                <div id="userContainer" class="text-black-600 font-afacad" style="padding: 0; margin:0;">
+                    <!-- User content dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="RHS" class="flex flex-col">
+            <div id="chatContainer" class="bg-gray-200 p-5 ml-40 w-96" style="width: 500px;">
+            </div>
+        </div>
+
+        </div>
+        </div>
+        </div>
+        </div>
+    </main>
+
+
+    <script src="./navbar.js" defer> // defer is an attribute that excutes after the html have finish loading</script>
+    <script>
+        window.onload = function () {
+            checkUserRole();
+            fetch("/checkrole")
+                .then((response) => {
+                    if (!response.ok) {
+                        window.location.href = '/home.html';
+                        throw new Error("User not logged in");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data)
+                    const userRole = data.roleName;
+
+                    // If role is not authorized for this page, redirect them to a safe page
+                    if (window.location.pathname === "/developer.html") {
+                        if (userRole !== "Developer") {
+                            // Redirect non-developers to home
+                            window.location.href = '/home.html';
+                        }
+                    }
+
+                    // If everything is fine, proceed with loading chat or user-specific features
+                    if (userRole == 'Developer') {
+                        loadChat();
+                        loadUsers();
+
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+
+
+
+        function loadChat() {
+            fetch("/admindev/chat")
+                .then(response => response.json())
+                .then(chat => {
+                    const chatContainer = document.getElementById("chatContainer");
+
+                    // Add styles for a visible vertical scroll bar
+                    chatContainer.style.maxHeight = "300px"; // Restrict container height
+                    chatContainer.style.overflowY = "scroll"; // Ensure vertical scrolling with a bar
+                    chatContainer.style.padding = "10px"; // Add internal spacing
+                    chatContainer.style.backgroundColor = "#F3F4F6;"; // Light background for visibility
+
+                    chatContainer.innerHTML = "";
+                    chat.forEach(element => {
+                        const chatCard = document.createElement("div");
+                        let rolename;
+                        if (element.role == 2) {
+                            rolename = "Admin";
+                        } else {
+                            rolename = "Developer";
+                        }
+                        chatCard.innerHTML = `
+                        <div style="border-bottom: 1px solid black; padding-bottom: 10px; margin-bottom: 10px;">
+                        <h3 class="font-afacad font-bold">${element.firstName} ${element.lastName} - ${rolename}</h3>
+                        <h3 class="font-afacad">${element.date_time}</h3>
+                        <p class="font-afacad">${element.chat}</p>
+                    </div>
+                `;
+                        chatContainer.appendChild(chatCard);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+
+
+        function sendChat() {
+            const chatInput = document.getElementById("chatInput");
+            if (chatInput.value.trim() === "") {
+                alert("Cannot send empty message");
+                return;
+            }
+            const chatContent = chatInput.value;
+            chatInput.value = "";
+
+            fetch("/admindev/chat", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat: chatContent
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        loadChat();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+
+        }
+
+        function loadUsers() {
+            const userContainer = document.getElementById("userContainer");
+            userContainer.innerHTML = ""; // Clear existing users
+
+            fetch("/dev/users/admin")
+                .then(response => response.json())
+                .then(users => {
+                    users.forEach(user => {
+                        const userCard = document.createElement("div");
+                        userCard.style.cssText = `
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center; 
+                    padding-bottom: 10px; 
+                    border-bottom: 1px solid black; 
+                    border-radius: 0; 
+                `;
+                        userCard.innerHTML = `
+                    <div>
+                        <h3  class="font-afacad font-bold"style="margin: 0;">${user.firstName} ${user.lastName} - Admin</h3>
+                        <h4 style="margin: 0;">${user.email}</h4>
+                    </div>
+                    <button onclick="makeDeveloper(${user.userID})" 
+                        style="border: 1px solid black; padding: 2px 7px; border-radius: 5px; cursor: pointer; 
+                               background-color: #f9f9f9; transition: background-color 0.3s, color 0.3s;">
+                        Make Developer
+                    </button>
+                `;
+                        userContainer.appendChild(userCard);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+
+
+        function makeDeveloper(userID) {
+            fetch(`/dev/user/${userID}`, {
+                method: "PATCH"
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error changing to a Developer");
+                    } else {
+                        alert("Successfully changed to a Developer");
+                        loadUsers();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+        function moveLabelUp() {
+            const label = document.getElementById('labelProblem');
+            label.classList.add('transform', '-translate-y-6', 'text-sm');
+        }
+
+        // Function to reset label position when input is blurred (and if input is empty)
+        function resetLabelPosition() {
+            const input = document.getElementById('chatInput');
+            const label = document.getElementById('labelProblem');
+            if (!input.value) {
+                label.classList.remove('transform', '-translate-y-6', 'text-sm');
+            }
+        }
+    </script>
+</body>
+
+</html>

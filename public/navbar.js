@@ -39,6 +39,7 @@ function setupNavBar(role) {
     const logoutLink = document.createElement("a");
     logoutLink.innerText = "Logout";
     logoutLink.id = "logout";
+    logoutLink.style.marginLeft = "20px";
     logoutLink.classList.add(
         "font-afacad",
         "text-gray-900",
@@ -46,7 +47,7 @@ function setupNavBar(role) {
         "md:hover:bg-transparent",
         "md:border-0",
         "md:hover:text-gray-400",
-        "md:p-0"
+        "md:p-0",
     );
     if (role == 0) {
         // No users
@@ -90,6 +91,9 @@ function setupNavBar(role) {
         // To the left of Logout Button = Developer Page
         admindev.innerText = "Developer";
         admindev.href = "/developer.html";
+        // Reset margin and padding to make it align correctly
+        admindev.style.marginLeft = "0px";  // Remove any left margin that might be pushing it right
+        admindev.style.paddingLeft = "0px";
         rightdiv.appendChild(admindev);
         // Right most = Logout
         login.remove();

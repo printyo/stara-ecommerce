@@ -7,7 +7,7 @@ const path = require("path");
 // Set up storage for uploaded files (Call function below in const upload)
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "uploads/"); // Destination Folder
+        cb(null, "public/uploads/"); // Destination Folder
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname)); // Rename file to Date now only (ps. renaming to orderID require too much steps)
@@ -26,7 +26,7 @@ router.post("/checkout", upload.single("receipt"), (req, res) => {
     const userID = req.session.user.userID;
     const { totalAmount, addressID, cartItems } = req.body;
     let receiptPath = req.file ? req.file.path : null; // Get the path of the uploaded image (if uploaded if not then null)
-    receiptPath = receiptPath.replace("uploads/", ""); // Remove the folder location
+    receiptPath = receiptPath.replace("public/uploads/", ""); // Remove the folder location
     // console.log(receiptPath);
     // console.log(totalAmount);
     // console.log(addressID);
