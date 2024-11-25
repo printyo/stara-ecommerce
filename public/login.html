@@ -37,45 +37,43 @@
 
             <h1 class="font-rozha md: text-black text-center text-4xl mt-12">WELCOME BACK!</h1>
             <div class="row justify-content-center">
-                <div class="col-md-6 col-12 mr-4">
-                    <form action="/login" method="POST">
-                        <div class="form-group font-afacad text-black text-xl mt-10"
-                            style="position: absolute; top: 220px; left: 520px;">
+                <form action="/login" method="POST">
+                    <div class="grid grid-cols-4">
+                        <div class=""></div>
+                        <div class="form-group font-afacad text-black text-xl mt-10 col-span-2">
                             <label for="exampleInputEmail1" class="d-block">Email</label><br>
 
                             <input type="email" class="form-control text-lg" id="exampleInputEmail1"
                                 placeholder="Enter email" name="email" required
-                                style="background-color: #f0f0f0; width: 270%;">
+                                style="background-color: #f0f0f0; width: 100%;">
                         </div>
-
-
-                        <div class="form-group font-afacad text-black text-xl mt-12"
-                            style="position: absolute; top: 300px; left: 520px;">
+                        <div class=""></div>
+                        <div class=""></div>
+                        <div class="form-group font-afacad text-black text-xl mt-12 col-span-2">
                             <label for="exampleInputPassword1">Password</label><br>
                             <input type="password" class="form-control text-lg" id="exampleInputPassword1"
                                 placeholder="Enter password" name="password" required
-                                style="background-color: #f0f0f0; width: 270%;">
+                                style="background-color: #f0f0f0; width: 100%;">
                         </div>
-
-                        <div class="mt-4 text-center" style="padding-top: 220px;">
+                        <div class=""></div>
+                        <div class=""></div>
+                        <div class="mt-4 text-center col-span-2">
                             <button type="submit"
                                 class="btn btn-primary font-afacad text-center text-white text-xl w-100"
                                 style="background-color: #000000; border-radius: 30px; border: none; padding: 5px 60px;">
                                 Login
                             </button>
                         </div>
-                    </form>
-                    <div class="mt-4 text-center">
-                        <form action="/login-guest" method="POST">
-                            <button type="submit" class="btn btn-secondary font-afacad  text-white text-xl w-100 mt-3"
-                                style="background-color: #939393; border-radius: 30px; border: none; padding: 5px 24px;">
-                                Login as Guest </button>
-                        </form>
                     </div>
+                </form>
+                <div class="mt-4 text-center">
+                    <form action="/login-guest" method="POST">
+                        <button type="submit" class="btn btn-secondary font-afacad  text-white text-xl w-100 mt-3"
+                            style="background-color: #939393; border-radius: 30px; border: none; padding: 5px 24px;">
+                            Login as Guest </button>
+                    </form>
                 </div>
             </div>
-
-
             <p class=" form-text text-muted font-afacad text-lg text-center mt-6">
                 Don't have an account? <a href="signup.html" class="font-semibold"> Sign up</a>
             </p>
